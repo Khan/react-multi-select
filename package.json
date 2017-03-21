@@ -1,0 +1,59 @@
+{
+  "name": "react-multi-select",
+  "version": "0.0.0",
+  "description": "React Multi Select Component",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/you/repo.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepublish": ". ./.scripts/prepublish.sh",
+    "lint": "eslint src",
+    "lintfix": "eslint src --fix",
+    "testonly": "mocha --require .scripts/mocha_runner src/**/tests/**/*.js",
+    "test": "npm run lint && npm run testonly",
+    "test-watch": "npm run testonly -- --watch --watch-extensions js",
+    "storybook": "start-storybook -p 9010",
+    "publish-storybook": "bash .scripts/publish_storybook.sh",
+    "flow": "flow; test $? -eq 0 -o $? -eq 2"
+  },
+  "devDependencies": {
+    "@kadira/storybook": "^2.18.1",
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-flow-react-proptypes": "^0.21.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-react-app": "^0.2.1",
+    "chai": "^3.5.0",
+    "enzyme": "^2.2.0",
+    "eslint": "^3.6.0",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+    "flow-bin": "^0.41.0",
+    "git-url-parse": "^6.0.1",
+    "jsdom": "^9.5.0",
+    "mocha": "^3.0.2",
+    "react": "^15.3.2",
+    "react-addons-test-utils": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "sinon": "^1.17.6",
+    "uglify-js": "^2.8.14",
+    "webpack": "^2.2.1"
+  },
+  "peerDependencies": {
+    "react": "^0.14.7 || ^15.0.0"
+  },
+  "dependencies": {},
+  "main": "dist/index.js",
+  "engines": {
+    "npm": "^3.0.0"
+  }
+}

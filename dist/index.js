@@ -1,0 +1,123 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _dropdown = require('./dropdown.js');
+
+var _dropdown2 = _interopRequireDefault(_dropdown);
+
+var _selectPanel = require('./select-panel.js');
+
+var _selectPanel2 = _interopRequireDefault(_selectPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MultiSelect = function (_Component) {
+    _inherits(MultiSelect, _Component);
+
+    function MultiSelect() {
+        _classCallCheck(this, MultiSelect);
+
+        return _possibleConstructorReturn(this, (MultiSelect.__proto__ || Object.getPrototypeOf(MultiSelect)).apply(this, arguments));
+    }
+
+    _createClass(MultiSelect, [{
+        key: 'getSelectedText',
+        value: function getSelectedText() {
+            var _props = this.props,
+                options = _props.options,
+                selected = _props.selected;
+
+
+            var selectedOptions = selected.map(function (s) {
+                return options.find(function (o) {
+                    return o.value === s;
+                });
+            });
+
+            var selectedLabels = selectedOptions.map(function (s) {
+                return s ? s.label : "";
+            });
+
+            return selectedLabels.join(", ");
+        }
+    }, {
+        key: 'renderHeader',
+        value: function renderHeader() {
+            var _props2 = this.props,
+                options = _props2.options,
+                selected = _props2.selected,
+                valueRenderer = _props2.valueRenderer;
+
+
+            var noneSelected = selected.length === 0;
+            var allSelected = selected.length === options.length;
+
+            var customText = valueRenderer ? valueRenderer(selected, options) : undefined;
+
+            if (noneSelected) {
+                return _react2.default.createElement(
+                    'span',
+                    { style: styles.noneSelected },
+                    customText || "Select some items..."
+                );
+            }
+
+            if (customText) {
+                return _react2.default.createElement(
+                    'span',
+                    null,
+                    customText
+                );
+            }
+
+            return _react2.default.createElement(
+                'span',
+                null,
+                allSelected ? "All items were selected" : this.getSelectedText()
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props3 = this.props,
+                options = _props3.options,
+                selected = _props3.selected,
+                onSelectedChanged = _props3.onSelectedChanged;
+
+
+            return _react2.default.createElement(
+                _dropdown2.default,
+                {
+                    contentComponent: _selectPanel2.default,
+                    contentProps: { options: options, selected: selected, onSelectedChanged: onSelectedChanged }
+                },
+                this.renderHeader()
+            );
+        }
+    }]);
+
+    return MultiSelect;
+}(_react.Component);
+
+var styles = {
+    noneSelected: {
+        color: "#aaa"
+    }
+};
+
+exports.default = MultiSelect;
