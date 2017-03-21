@@ -1,4 +1,7 @@
 // @flow
+/**
+ * This component represents an individual item in the multi-select drop-down
+ */
 import React, {Component} from 'react';
 
 export type Option = {
@@ -31,8 +34,8 @@ class SelectItem extends Component {
 
     onChecked = (e: {target: {checked: bool}}) => {
         const {onSelectionChanged} = this.props;
+        const {checked} = e.target;
 
-        const checked = e.target.checked;
         onSelectionChanged(checked);
     }
 
@@ -55,7 +58,7 @@ class SelectItem extends Component {
         }
     }
 
-    handleKeypress = (e: KeyboardEvent) => {
+    handleKeyDown = (e: KeyboardEvent) => {
         switch (e.which) {
             case 13: // Enter
             case 32: // Space
@@ -76,7 +79,7 @@ class SelectItem extends Component {
             ? styles.itemContainerHover
             : undefined;
 
-        return <div
+        return <label
             role="option"
             aria-selected={checked}
             selected={checked}
@@ -84,7 +87,7 @@ class SelectItem extends Component {
             style={{...styles.itemContainer, ...focusStyle}}
             onClick={this.handleClick}
             ref={ref => this.itemRef = ref}
-            onKeyDown={this.handleKeypress}
+            onKeyDown={this.handleKeyDown}
             onMouseOver={() => this.setState({hovered: true})}
             onMouseOut={() => this.setState({hovered: false})}
         >
@@ -97,7 +100,7 @@ class SelectItem extends Component {
             <span style={styles.label}>
                 {option.label}
             </span>
-        </div>;
+        </label>;
     }
 }
 

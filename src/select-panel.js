@@ -1,3 +1,9 @@
+// @flow
+/**
+ * This component represents the entire panel which gets dropped down when the
+ * user selects the component.  It encapsulates the search filter, the
+ * Select-all item, and the list of options.
+ */
 import React, {Component} from 'react';
 
 import {filterOptions} from './fuzzy-string-matching.js';
@@ -33,7 +39,7 @@ class SelectPanel extends Component {
         onSelectedChanged([]);
     }
 
-    selectAllChanged = (checked) => {
+    selectAllChanged = (checked: boolean) => {
         if (checked) {
             this.selectAll();
         } else {
@@ -41,14 +47,14 @@ class SelectPanel extends Component {
         }
     }
 
-    handleSearchChange = (e) => {
+    handleSearchChange = (e: {target: {value: any}}) => {
         this.setState({
             searchText: e.target.value,
             focusIndex: -1,
         });
     }
 
-    handleItemClicked = index => {
+    handleItemClicked = (index: number) => {
         this.setState({focusIndex: index});
     }
 
@@ -56,7 +62,7 @@ class SelectPanel extends Component {
         this.setState({searchText: ""});
     }
 
-    handleKeypress = (e: KeyboardEvent) => {
+    handleKeyDown = (e: KeyboardEvent) => {
         switch (e.which) {
             case 38: // Up Arrow
                 if (e.altKey) {
@@ -92,13 +98,13 @@ class SelectPanel extends Component {
         return filterOptions(options, searchText);
     }
 
-    updateFocus(offset) {
+    updateFocus(offset: number) {
         const {focusIndex} = this.state;
         const {options} = this.props;
 
         let newFocus = focusIndex + offset;
-        newFocus = newFocus < 0 ? 0 : newFocus;
-        newFocus = newFocus > options.length ? options.length : newFocus;
+        newFocus = Math.max(0, newFocus);
+        newFocus = Math.min(newFocus, options.length);
 
         this.setState({focusIndex: newFocus});
     }
@@ -113,7 +119,7 @@ class SelectPanel extends Component {
         return <div
             style={styles.panel}
             role="listbox"
-            onKeyDown={this.handleKeypress}
+            onKeyDown={this.handleKeyDown}
         >
             <div style={styles.searchContainer}>
                 <input
@@ -146,11 +152,6 @@ const styles = {
     panel: {
         boxSizing : 'border-box',
     },
-    searchContainer: {
-        width: "100%",
-        boxSizing : 'border-box',
-        padding: "0.5em",
-    },
     search: {
         display: "block",
 
@@ -163,6 +164,11 @@ const styles = {
         border: '1px solid #dee2e4',
         padding: '10px',
         width: "100%",
+    },
+    searchContainer: {
+        width: "100%",
+        boxSizing : 'border-box',
+        padding: "0.5em",
     },
 };
 

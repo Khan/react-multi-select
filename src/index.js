@@ -1,4 +1,16 @@
 // @flow
+/**
+ * This component is designed to be a multi-selct component which supports
+ * the selection of several items in a picklist.  It was meant to mimic the
+ * style of react-select but the multi-select behavior didn't work for our
+ * our needs.
+ *
+ * Arguments:
+ * - options: The {value, label}[] options to be displayed
+ * - values: The currently selected values []
+ * - onSelectedChanged: An event to notify the caller of new values
+ * - valueRenderer: A fn to support overriding the message in the component
+ */
 import React, {Component} from 'react';
 
 import Dropdown from './dropdown.js';
@@ -40,9 +52,7 @@ class MultiSelect extends Component {
         const noneSelected = selected.length === 0;
         const allSelected = selected.length === options.length;
 
-        const customText = valueRenderer
-            ? valueRenderer(selected, options)
-            : undefined;
+        const customText = valueRenderer && valueRenderer(selected, options);
 
         if (noneSelected) {
             return <span style={styles.noneSelected}>
@@ -56,7 +66,7 @@ class MultiSelect extends Component {
 
         return <span>
             {allSelected
-                ? "All items were selected"
+                ? "All items are selected"
                 : this.getSelectedText()
             }
         </span>;

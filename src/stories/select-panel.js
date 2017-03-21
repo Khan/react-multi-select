@@ -31,8 +31,8 @@ class StatefulSelectPanel extends Component {
                 selected={selected}
             />
 
-        <h2>Selected:</h2>
-        {selected.join(', ')}
+            <h2>Selected:</h2>
+            {selected.join(', ')}
         </div>;
     }
 }

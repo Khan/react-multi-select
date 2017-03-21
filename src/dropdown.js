@@ -1,4 +1,9 @@
 // @flow
+/**
+ * A generic dropdown component.  It takes the children of the component
+ * and hosts it in the component.  When the component is selected, it
+ * drops-down the contentComponent and applies the contentProps.
+ */
 import React, {Component} from 'react';
 
 class Dropdown extends Component {
@@ -9,12 +14,12 @@ class Dropdown extends Component {
 
     componentWillUpdate() {
         document.addEventListener('touchstart', this.handleDocumentClick);
-        document.addEventListener('click', this.handleDocumentClick);
+        document.addEventListener('mousedown', this.handleDocumentClick);
     }
 
     componentWillUnmount() {
         document.removeEventListener('touchstart', this.handleDocumentClick);
-        document.removeEventListener('click', this.handleDocumentClick);
+        document.removeEventListener('mousedown', this.handleDocumentClick);
     }
 
     props: {
@@ -31,7 +36,7 @@ class Dropdown extends Component {
         }
     }
 
-    handleKeypress = (e: KeyboardEvent) => {
+    handleKeyDown = (e: KeyboardEvent) => {
         switch (e.which) {
             case 27: // Escape
                 this.toggleExpanded(false);
@@ -62,8 +67,11 @@ class Dropdown extends Component {
     }
 
     renderPanel() {
-        const {contentComponent, contentProps} = this.props;
-        return React.createElement(contentComponent, contentProps);
+        const {contentComponent: ContentComponent, contentProps} = this.props;
+
+        return <div style={styles.panelContainer}>
+            <ContentComponent {...contentProps} />
+        </div>;
     }
 
     render() {
@@ -81,15 +89,13 @@ class Dropdown extends Component {
             aria-readonly="true"
             style={styles.dropdownContainer}
             ref={ref => this.wrapper = ref}
-            onKeyDown={this.handleKeypress}
+            onKeyDown={this.handleKeyDown}
         >
             <div
                 style={{...styles.dropdownHeader, ...expandedHeaderStyle}}
                 onClick={() => this.toggleExpanded()}
             >
-                <span
-                    style={styles.dropdownChildren}
-                >
+                <span style={styles.dropdownChildren}>
                     {children}
                 </span>
                 <span style={styles.dropdownArrow}>
@@ -99,59 +105,12 @@ class Dropdown extends Component {
                     }
                 </span>
             </div>
-            {expanded ? <div
-                style={styles.panelContainer}
-            >
-                {this.renderPanel()}
-            </div>
-            : ""
-            }
+            {expanded && this.renderPanel()}
         </div>;
     }
 }
 
 const styles = {
-    dropdownContainer: {
-        position: 'relative',
-        boxSizing: 'border-box',
-    },
-    dropdownHeader: {
-        boxSizing: 'border-box',
-        backgroundColor: '#fff',
-        borderColor: '#d9d9d9 #ccc #b3b3b3',
-        borderRadius: 4,
-        border: '1px solid #ccc',
-        color: '#333',
-        cursor: 'default',
-        display: 'table',
-        borderSpacing: 0,
-        borderCollapse: 'separate',
-        height: 36,
-        outline: 'none',
-        overflow: 'hidden',
-        position: 'relative',
-        width: '100%',
-    },
-    dropdownHeaderExpanded: {
-        borderBottomRightRadius: '0px',
-        borderBottomLeftRadius: '0px',
-    },
-    dropdownChildren: {
-        boxSizing: 'border-box',
-        bottom: 0,
-        color: '#333',
-        left: 0,
-        lineHeight: '34px',
-        paddingLeft: 10,
-        paddingRight: 10,
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        maxWidth: '100%',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteWpace: 'nowrap',
-    },
     dropdownArrow: {
         boxSizing: 'border-box',
         cursor: 'pointer',
@@ -182,6 +141,47 @@ const styles = {
         height: 0,
         width: 0,
         position: 'relative',
+    },
+    dropdownChildren: {
+        boxSizing: 'border-box',
+        bottom: 0,
+        color: '#333',
+        left: 0,
+        lineHeight: '34px',
+        paddingLeft: 10,
+        paddingRight: 10,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        maxWidth: '100%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteWpace: 'nowrap',
+    },
+    dropdownContainer: {
+        position: 'relative',
+        boxSizing: 'border-box',
+    },
+    dropdownHeader: {
+        boxSizing: 'border-box',
+        backgroundColor: '#fff',
+        borderColor: '#d9d9d9 #ccc #b3b3b3',
+        borderRadius: 4,
+        border: '1px solid #ccc',
+        color: '#333',
+        cursor: 'default',
+        display: 'table',
+        borderSpacing: 0,
+        borderCollapse: 'separate',
+        height: 36,
+        outline: 'none',
+        overflow: 'hidden',
+        position: 'relative',
+        width: '100%',
+    },
+    dropdownHeaderExpanded: {
+        borderBottomRightRadius: '0px',
+        borderBottomLeftRadius: '0px',
     },
     panelContainer: {
         borderBottomRightRadius: '4px',

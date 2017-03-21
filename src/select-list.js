@@ -1,4 +1,7 @@
 // @flow
+/**
+ * This component represents an unadorned list of SelectItem (s).
+ */
 import React, {Component} from 'react';
 
 import SelectItem from './select-item.js';
@@ -34,25 +37,35 @@ class SelectList extends Component {
     renderItems() {
         const {options, selected, focusIndex, onClick} = this.props;
 
-        const isSelected = value => selected.includes(value);
-
         return options.map((o, i) =>
-            <SelectItem
-                focused={focusIndex === i}
-                key={i}
-                option={o}
-                onSelectionChanged={c => this.handleSelectionChanged(o, c)}
-                checked={isSelected(o.value)}
-                onClick={e => onClick(e, i)}
-            />
+            <li style={styles.listItem}>
+                <SelectItem
+                    focused={focusIndex === i}
+                    key={i}
+                    option={o}
+                    onSelectionChanged={c => this.handleSelectionChanged(o, c)}
+                    checked={selected.includes(o.value)}
+                    onClick={e => onClick(e, i)}
+                />
+            </li>
         );
     }
 
     render() {
-        return <div>
+        return <ul style={styles.list}>
             {this.renderItems()}
-        </div>;
+        </ul>;
     }
 }
+
+const styles = {
+    list: {
+        margin: 0,
+        paddingLeft: 0,
+    },
+    listItem: {
+        listStyle: 'none',
+    },
+};
 
 export default SelectList;
