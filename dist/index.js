@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Dropdown = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -25,6 +26,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component is designed to be a multi-selct component which supports
+ * the selection of several items in a picklist.  It was meant to mimic the
+ * style of react-select but the multi-select behavior didn't work for our
+ * our needs.
+ *
+ * Arguments:
+ * - options: The {value, label}[] options to be displayed
+ * - values: The currently selected values []
+ * - onSelectedChanged: An event to notify the caller of new values
+ * - valueRenderer: A fn to support overriding the message in the component
+ */
+
 
 var MultiSelect = function (_Component) {
     _inherits(MultiSelect, _Component);
@@ -67,7 +81,7 @@ var MultiSelect = function (_Component) {
             var noneSelected = selected.length === 0;
             var allSelected = selected.length === options.length;
 
-            var customText = valueRenderer ? valueRenderer(selected, options) : undefined;
+            var customText = valueRenderer && valueRenderer(selected, options);
 
             if (noneSelected) {
                 return _react2.default.createElement(
@@ -88,15 +102,17 @@ var MultiSelect = function (_Component) {
             return _react2.default.createElement(
                 'span',
                 null,
-                allSelected ? "All items were selected" : this.getSelectedText()
+                allSelected ? "All items are selected" : this.getSelectedText()
             );
         }
     }, {
         key: 'render',
         value: function render() {
             var _props3 = this.props,
+                itemRenderer = _props3.itemRenderer,
                 options = _props3.options,
                 selected = _props3.selected,
+                selectAllLabel = _props3.selectAllLabel,
                 onSelectedChanged = _props3.onSelectedChanged;
 
 
@@ -104,7 +120,13 @@ var MultiSelect = function (_Component) {
                 _dropdown2.default,
                 {
                     contentComponent: _selectPanel2.default,
-                    contentProps: { options: options, selected: selected, onSelectedChanged: onSelectedChanged }
+                    contentProps: {
+                        itemRenderer: itemRenderer,
+                        options: options,
+                        selected: selected,
+                        selectAllLabel: selectAllLabel,
+                        onSelectedChanged: onSelectedChanged
+                    }
                 },
                 this.renderHeader()
             );
@@ -121,3 +143,4 @@ var styles = {
 };
 
 exports.default = MultiSelect;
+exports.Dropdown = _dropdown2.default;

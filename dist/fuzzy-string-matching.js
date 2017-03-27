@@ -1,17 +1,10 @@
 'use strict';
 
-/* TODO(csilvers): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable brace-style */
-/* To fix, remove an entry above, run "make linc", and fix errors. */
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-// A collection of string matching algorithms used for school and filter
-// matching in the LearnStorm signup process.
 
-// Filters react-select options and sorts by similarity to a search filter.
-// Handles partial matches, ex. searching for Waberg High will find Raoul
-// Wallenberg Traditional High School. Case insensitive. Ignores
-// nonalphanumeric characters, and treats unaccented and Irish accented
-// characters as matching (ex, Í and I).
 function filterOptions(options, filter) {
     // If the filter is blank, return the full list of options.
     if (!filter) {
@@ -56,13 +49,23 @@ function filterOptions(options, filter) {
 //
 // Meant for use in an instant search box where results are being fetched
 // as a user is typing.
+
+// A collection of string matching algorithms used for school and filter
+// matching in the LearnStorm signup process.
+
+// Filters react-select options and sorts by similarity to a search filter.
+// Handles partial matches, ex. searching for Waberg High will find Raoul
+// Wallenberg Traditional High School. Case insensitive. Ignores
+// nonalphanumeric characters, and treats unaccented and Irish accented
+// characters as matching (ex, Í and I).
+
 function typeaheadSimilarity(a, b) {
     var aLength = a.length;
     var bLength = b.length;
     var table = [];
 
     if (!aLength || !bLength) {
-        return;
+        return 0;
     }
 
     // Early exit if `a` startsWith `b`; these will be scored higher than any
@@ -71,10 +74,6 @@ function typeaheadSimilarity(a, b) {
     if (a.indexOf(b) === 0) {
         return bLength + 1 / aLength;
     }
-
-    // TODO(riley): It would be nice if subsequence *proximity* was factored
-    //              in. For example, a filter string of "AL" should match
-    //              "wALnut grove" before it matches "wAtsonviLle"
 
     // Initialize the table axes:
     //
@@ -97,54 +96,6 @@ function typeaheadSimilarity(a, b) {
     for (var _x = 1; _x <= aLength; ++_x) {
         for (var _y = 1; _y <= bLength; ++_y) {
             table[_x][_y] = a[_x - 1] === b[_y - 1] ? 1 + table[_x - 1][_y - 1] : Math.max(table[_x][_y - 1], table[_x - 1][_y]);
-        }
-    }
-
-    // TODO(riley): If we end up wanting to highlight matched characters in the
-    // results list, we can add a backtrack function here to return the full
-    // subsequence.
-    return table[aLength][bLength];
-}
-
-// Returns the Levenshtein distance between two strings.
-// NOTE(riley): The Jaro-Winkler distance also worked well and is slightly
-//              more performant. Levenshtein seems to match more
-//              reliably, which is the important metric here.
-function fullStringDistance(a, b) {
-    var aLength = a.length;
-    var bLength = b.length;
-    var table = [];
-
-    if (!aLength) {
-        return bLength;
-    }
-    if (!bLength) {
-        return aLength;
-    }
-
-    // Initialize the table axes:
-    //
-    //    0 1 2 3 4 ... bLength
-    //    1
-    //    2
-    //
-    //   ...
-    //
-    // aLength
-    //
-    for (var x = 0; x <= aLength; ++x) {
-        table[x] = [x];
-    }
-    for (var y = 0; y <= bLength; ++y) {
-        table[0][y] = y;
-    }
-
-    // Populate the rest of the table with a dynamic programming algorithm.
-    for (var _x2 = 1; _x2 <= aLength; ++_x2) {
-        for (var _y2 = 1; _y2 <= bLength; ++_y2) {
-            table[_x2][_y2] = a[_x2 - 1] === b[_y2 - 1] ? table[_x2 - 1][_y2 - 1] : 1 + Math.min(table[_x2 - 1][_y2], // Substitution,
-            table[_x2][_y2 - 1], // insertion,
-            table[_x2 - 1][_y2 - 1]); // and deletion.
         }
     }
 
@@ -173,7 +124,6 @@ function cleanUpText(name) {
 
 // A collection of strings with multiple spellings or variations that we expect
 // to match, for example accented characters or abbreviatable words.
-// TODO(riley): Open this up to the whole team.
 var stringSubstitutions = {
     'Á': 'A',
     'À': 'A',
@@ -199,9 +149,4 @@ var stringSubstitutions = {
     '\\\.': ''
 };
 
-module.exports = {
-    cleanUpText: cleanUpText,
-    filterOptions: filterOptions,
-    fullStringDistance: fullStringDistance,
-    typeaheadSimilarity: typeaheadSimilarity
-};
+exports.filterOptions = filterOptions;

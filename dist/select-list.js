@@ -23,6 +23,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component represents an unadorned list of SelectItem (s).
+ */
+
 
 var SelectList = function (_Component) {
     _inherits(SelectList, _Component);
@@ -60,47 +64,48 @@ var SelectList = function (_Component) {
             var _this2 = this;
 
             var _props = this.props,
+                itemRenderer = _props.itemRenderer,
                 options = _props.options,
                 selected = _props.selected,
                 focusIndex = _props.focusIndex,
                 onClick = _props.onClick;
 
 
-            var isSelected = function isSelected(value) {
-                return selected.includes(value);
-            };
-
             return options.map(function (o, i) {
-                return _react2.default.createElement(_selectItem2.default, {
-                    focused: focusIndex === i,
-                    key: i,
-                    option: o,
-                    onSelectionChanged: function onSelectionChanged(c) {
-                        return _this2.handleSelectionChanged(o, c);
-                    },
-                    checked: isSelected(o.value),
-                    onClick: function (_onClick) {
-                        function onClick(_x) {
-                            return _onClick.apply(this, arguments);
-                        }
+                return _react2.default.createElement(
+                    'li',
+                    { style: styles.listItem, key: i },
+                    _react2.default.createElement(_selectItem2.default, {
+                        focused: focusIndex === i,
+                        option: o,
+                        onSelectionChanged: function onSelectionChanged(c) {
+                            return _this2.handleSelectionChanged(o, c);
+                        },
+                        checked: selected.includes(o.value),
+                        onClick: function (_onClick) {
+                            function onClick(_x) {
+                                return _onClick.apply(this, arguments);
+                            }
 
-                        onClick.toString = function () {
-                            return _onClick.toString();
-                        };
+                            onClick.toString = function () {
+                                return _onClick.toString();
+                            };
 
-                        return onClick;
-                    }(function (e) {
-                        return onClick(e, i);
+                            return onClick;
+                        }(function (e) {
+                            return onClick(e, i);
+                        }),
+                        itemRenderer: itemRenderer
                     })
-                });
+                );
             });
         }
     }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                'div',
-                null,
+                'ul',
+                { style: styles.list },
                 this.renderItems()
             );
         }
@@ -108,5 +113,15 @@ var SelectList = function (_Component) {
 
     return SelectList;
 }(_react.Component);
+
+var styles = {
+    list: {
+        margin: 0,
+        paddingLeft: 0
+    },
+    listItem: {
+        listStyle: 'none'
+    }
+};
 
 exports.default = SelectList;

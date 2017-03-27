@@ -9,7 +9,36 @@ export type Option = {
     label: string,
 };
 
+class DefaultItemRenderer extends Component {
+    props: {
+        checked: boolean,
+        option: Option,
+
+        onClick: (event: MouseEvent) => void,
+    }
+
+    render() {
+        const {checked, option, onClick} = this.props;
+
+        return <span>
+            <input
+                type="checkbox"
+                onChange={onClick}
+                checked={checked}
+                tabIndex="-1"
+            />
+            <span style={styles.label}>
+                {option.label}
+            </span>
+        </span>;
+    }
+}
+
 class SelectItem extends Component {
+    static defaultProps = {
+        ItemRenderer: DefaultItemRenderer,
+    }
+
     state = {
         hovered: false,
     }
@@ -25,14 +54,15 @@ class SelectItem extends Component {
     itemRef: HTMLElement
 
     props: {
+        ItemRenderer: Function,
         option: Option,
         checked: boolean,
         focused?: boolean,
-        onSelectionChanged: (checked: bool) => void,
+        onSelectionChanged: (checked: boolean) => void,
         onClick: (event: MouseEvent) => void,
     }
 
-    onChecked = (e: {target: {checked: bool}}) => {
+    onChecked = (e: {target: {checked: boolean}}) => {
         const {onSelectionChanged} = this.props;
         const {checked} = e.target;
 
@@ -48,6 +78,8 @@ class SelectItem extends Component {
         const {onClick} = this.props;
         this.toggleChecked();
         onClick(e);
+
+        e.preventDefault();
     }
 
     updateFocus() {
@@ -72,7 +104,7 @@ class SelectItem extends Component {
     }
 
     render() {
-        const {option, checked, focused} = this.props;
+        const {ItemRenderer, option, checked, focused} = this.props;
         const {hovered} = this.state;
 
         const focusStyle = (focused || hovered)
@@ -91,18 +123,15 @@ class SelectItem extends Component {
             onMouseOver={() => this.setState({hovered: true})}
             onMouseOut={() => this.setState({hovered: false})}
         >
-            <input
-                type="checkbox"
-                onChange={this.onChecked}
+            <ItemRenderer
+                option={option}
                 checked={checked}
-                tabIndex="-1"
+                onClick={this.handleClick}
             />
-            <span style={styles.label}>
-                {option.label}
-            </span>
         </label>;
     }
 }
+
 
 const styles = {
     itemContainer: {
@@ -114,7 +143,7 @@ const styles = {
         padding: '8px 10px',
     },
     itemContainerHover: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#ebf5ff',
         outline: 0,
     },
     label: {

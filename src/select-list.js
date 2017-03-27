@@ -13,13 +13,14 @@ import type {
 class SelectList extends Component {
     props: {
         focusIndex: number,
+        ItemRenderer?: Function,
         options: Array<Option>,
         selected: Array<Object>,
         onSelectedChanged: (selected: any) => void,
-        onClick: (event: MouseEvent, index: number) => void
+        onClick: (event: MouseEvent, index: number) => void,
     }
 
-    handleSelectionChanged = (option: Option, checked: bool) => {
+    handleSelectionChanged = (option: Option, checked: boolean) => {
         const {selected, onSelectedChanged} = this.props;
 
         if (checked) {
@@ -35,17 +36,23 @@ class SelectList extends Component {
     }
 
     renderItems() {
-        const {options, selected, focusIndex, onClick} = this.props;
+        const {
+            ItemRenderer,
+            options,
+            selected,
+            focusIndex,
+            onClick,
+        } = this.props;
 
         return options.map((o, i) =>
-            <li style={styles.listItem}>
+            <li style={styles.listItem} key={i}>
                 <SelectItem
                     focused={focusIndex === i}
-                    key={i}
                     option={o}
                     onSelectionChanged={c => this.handleSelectionChanged(o, c)}
                     checked={selected.includes(o.value)}
                     onClick={e => onClick(e, i)}
+                    ItemRenderer={ItemRenderer}
                 />
             </li>
         );

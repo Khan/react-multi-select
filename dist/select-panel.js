@@ -29,6 +29,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component represents the entire panel which gets dropped down when the
+ * user selects the component.  It encapsulates the search filter, the
+ * Select-all item, and the list of options.
+ */
+
 
 var SelectPanel = function (_Component) {
     _inherits(SelectPanel, _Component);
@@ -45,6 +51,7 @@ var SelectPanel = function (_Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectPanel.__proto__ || Object.getPrototypeOf(SelectPanel)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            searchHasFocus: false,
             searchText: "",
             focusIndex: 0
         }, _this.selectAll = function () {
@@ -69,12 +76,15 @@ var SelectPanel = function (_Component) {
                 _this.selectNone();
             }
         }, _this.handleSearchChange = function (e) {
-            _this.setState({ searchText: e.target.value });
+            _this.setState({
+                searchText: e.target.value,
+                focusIndex: -1
+            });
         }, _this.handleItemClicked = function (index) {
             _this.setState({ focusIndex: index });
         }, _this.clearSearch = function () {
             _this.setState({ searchText: "" });
-        }, _this.handleKeypress = function (e) {
+        }, _this.handleKeyDown = function (e) {
             switch (e.which) {
                 case 38:
                     // Up Arrow
@@ -98,6 +108,11 @@ var SelectPanel = function (_Component) {
 
             e.stopPropagation();
             e.preventDefault();
+        }, _this.handleSearchFocus = function (searchHasFocus) {
+            _this.setState({
+                searchHasFocus: searchHasFocus,
+                focusIndex: -1
+            });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -127,8 +142,8 @@ var SelectPanel = function (_Component) {
 
 
             var newFocus = focusIndex + offset;
-            newFocus = newFocus < 0 ? 0 : newFocus;
-            newFocus = newFocus > options.length ? options.length : newFocus;
+            newFocus = Math.max(0, newFocus);
+            newFocus = Math.min(newFocus, options.length);
 
             this.setState({ focusIndex: newFocus });
         }
@@ -137,19 +152,27 @@ var SelectPanel = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var focusIndex = this.state.focusIndex;
+            var _state = this.state,
+                focusIndex = _state.focusIndex,
+                searchHasFocus = _state.searchHasFocus;
+            var _props2 = this.props,
+                itemRenderer = _props2.itemRenderer,
+                selectAllLabel = _props2.selectAllLabel;
 
 
             var selectAllOption = {
-                label: "Select All",
+                label: selectAllLabel || "Select All",
                 value: ""
             };
+
+            var focusedSearchStyle = searchHasFocus ? styles.searchFocused : undefined;
+
             return _react2.default.createElement(
                 'div',
                 {
                     style: styles.panel,
                     role: 'listbox',
-                    onKeyDown: this.handleKeypress
+                    onKeyDown: this.handleKeyDown
                 },
                 _react2.default.createElement(
                     'div',
@@ -158,7 +181,13 @@ var SelectPanel = function (_Component) {
                         placeholder: 'Search',
                         type: 'text',
                         onChange: this.handleSearchChange,
-                        style: styles.search
+                        style: _extends({}, styles.search, focusedSearchStyle),
+                        onFocus: function onFocus() {
+                            return _this2.handleSearchFocus(true);
+                        },
+                        onBlur: function onBlur() {
+                            return _this2.handleSearchFocus(false);
+                        }
                     })
                 ),
                 _react2.default.createElement(_selectItem2.default, {
@@ -168,14 +197,16 @@ var SelectPanel = function (_Component) {
                     onSelectionChanged: this.selectAllChanged,
                     onClick: function onClick() {
                         return _this2.handleItemClicked(0);
-                    }
+                    },
+                    itemRenderer: itemRenderer
                 }),
                 _react2.default.createElement(_selectList2.default, _extends({}, this.props, {
                     options: this.filteredOptions(),
                     focusIndex: focusIndex - 1,
                     onClick: function onClick(e, index) {
                         return _this2.handleItemClicked(index + 1);
-                    }
+                    },
+                    itemRenderer: itemRenderer
                 }))
             );
         }
@@ -188,11 +219,6 @@ var styles = {
     panel: {
         boxSizing: 'border-box'
     },
-    searchContainer: {
-        width: "100%",
-        boxSizing: 'border-box',
-        padding: "0.5em"
-    },
     search: {
         display: "block",
 
@@ -202,9 +228,19 @@ var styles = {
         boxSizing: 'border-box',
         height: '30px',
         lineHeight: '24px',
-        border: '1px solid #dee2e4',
+        border: '1px solid',
+        borderColor: '#dee2e4',
         padding: '10px',
-        width: "100%"
+        width: "100%",
+        outline: "none"
+    },
+    searchFocused: {
+        borderColor: "#78c008"
+    },
+    searchContainer: {
+        width: "100%",
+        boxSizing: 'border-box',
+        padding: "0.5em"
     }
 };
 

@@ -16,13 +16,16 @@ import type {
 
 class SelectPanel extends Component {
     state = {
+        searchHasFocus: false,
         searchText: "",
         focusIndex: 0,
     }
 
     props: {
+        ItemRenderer?: Function,
         options: Array<Option>,
         selected: Array<any>,
+        selectAllLabel?: string,
         onSelectedChanged: (selected: Array<any>) => void,
     }
 
@@ -86,6 +89,13 @@ class SelectPanel extends Component {
         e.preventDefault();
     }
 
+    handleSearchFocus = (searchHasFocus: boolean) => {
+        this.setState({
+            searchHasFocus,
+            focusIndex: -1,
+        });
+    }
+
     allAreSelected() {
         const {options, selected} = this.props;
         return options.length === selected.length;
@@ -110,12 +120,18 @@ class SelectPanel extends Component {
     }
 
     render() {
-        const {focusIndex} = this.state;
+        const {focusIndex, searchHasFocus} = this.state;
+        const {ItemRenderer, selectAllLabel} = this.props;
 
         const selectAllOption = {
-            label: "Select All",
+            label: selectAllLabel || "Select All",
             value: "",
         };
+
+        const focusedSearchStyle = searchHasFocus
+            ? styles.searchFocused
+            : undefined;
+
         return <div
             style={styles.panel}
             role="listbox"
@@ -126,7 +142,9 @@ class SelectPanel extends Component {
                     placeholder="Search"
                     type="text"
                     onChange={this.handleSearchChange}
-                    style={styles.search}
+                    style={{...styles.search, ...focusedSearchStyle}}
+                    onFocus={() => this.handleSearchFocus(true)}
+                    onBlur={() => this.handleSearchFocus(false)}
                 />
             </div>
 
@@ -136,6 +154,7 @@ class SelectPanel extends Component {
                 option={selectAllOption}
                 onSelectionChanged={this.selectAllChanged}
                 onClick={() => this.handleItemClicked(0)}
+                ItemRenderer={ItemRenderer}
             />
 
             <SelectList
@@ -143,6 +162,7 @@ class SelectPanel extends Component {
                 options={this.filteredOptions()}
                 focusIndex={focusIndex - 1}
                 onClick={(e, index) => this.handleItemClicked(index + 1)}
+                ItemRenderer={ItemRenderer}
             />
         </div>;
     }
@@ -161,9 +181,14 @@ const styles = {
         boxSizing : 'border-box',
         height: '30px',
         lineHeight: '24px',
-        border: '1px solid #dee2e4',
+        border: '1px solid',
+        borderColor: '#dee2e4',
         padding: '10px',
         width: "100%",
+        outline: "none",
+    },
+    searchFocused: {
+        borderColor: "#78c008",
     },
     searchContainer: {
         width: "100%",

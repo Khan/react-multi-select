@@ -19,14 +19,57 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component represents an individual item in the multi-select drop-down
+ */
 
-var SelectItem = function (_Component) {
-    _inherits(SelectItem, _Component);
+
+var DefaultItemRenderer = function (_Component) {
+    _inherits(DefaultItemRenderer, _Component);
+
+    function DefaultItemRenderer() {
+        _classCallCheck(this, DefaultItemRenderer);
+
+        return _possibleConstructorReturn(this, (DefaultItemRenderer.__proto__ || Object.getPrototypeOf(DefaultItemRenderer)).apply(this, arguments));
+    }
+
+    _createClass(DefaultItemRenderer, [{
+        key: "render",
+        value: function render() {
+            var _props = this.props,
+                checked = _props.checked,
+                option = _props.option,
+                onClick = _props.onClick;
+
+
+            return _react2.default.createElement(
+                "span",
+                null,
+                _react2.default.createElement("input", {
+                    type: "checkbox",
+                    onChange: onClick,
+                    checked: checked,
+                    tabIndex: "-1"
+                }),
+                _react2.default.createElement(
+                    "span",
+                    { style: styles.label },
+                    option.label
+                )
+            );
+        }
+    }]);
+
+    return DefaultItemRenderer;
+}(_react.Component);
+
+var SelectItem = function (_Component2) {
+    _inherits(SelectItem, _Component2);
 
     function SelectItem() {
         var _ref;
 
-        var _temp, _this, _ret;
+        var _temp, _this2, _ret;
 
         _classCallCheck(this, SelectItem);
 
@@ -34,38 +77,40 @@ var SelectItem = function (_Component) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectItem.__proto__ || Object.getPrototypeOf(SelectItem)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = SelectItem.__proto__ || Object.getPrototypeOf(SelectItem)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
             hovered: false
-        }, _this.onChecked = function (e) {
-            var onSelectionChanged = _this.props.onSelectionChanged;
-
-
+        }, _this2.onChecked = function (e) {
+            var onSelectionChanged = _this2.props.onSelectionChanged;
             var checked = e.target.checked;
+
+
             onSelectionChanged(checked);
-        }, _this.toggleChecked = function () {
-            var _this$props = _this.props,
-                checked = _this$props.checked,
-                onSelectionChanged = _this$props.onSelectionChanged;
+        }, _this2.toggleChecked = function () {
+            var _this2$props = _this2.props,
+                checked = _this2$props.checked,
+                onSelectionChanged = _this2$props.onSelectionChanged;
 
             onSelectionChanged(!checked);
-        }, _this.handleClick = function (e) {
-            var onClick = _this.props.onClick;
+        }, _this2.handleClick = function (e) {
+            var onClick = _this2.props.onClick;
 
-            _this.toggleChecked();
+            _this2.toggleChecked();
             onClick(e);
-        }, _this.handleKeypress = function (e) {
+
+            e.preventDefault();
+        }, _this2.handleKeyDown = function (e) {
             switch (e.which) {
                 case 13: // Enter
                 case 32:
                     // Space
-                    _this.toggleChecked();
+                    _this2.toggleChecked();
                     break;
                 default:
                     return;
             }
 
             e.preventDefault();
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        }, _temp), _possibleConstructorReturn(_this2, _ret);
     }
 
     _createClass(SelectItem, [{
@@ -91,19 +136,22 @@ var SelectItem = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
-            var _props = this.props,
-                option = _props.option,
-                checked = _props.checked,
-                focused = _props.focused;
+            var _props2 = this.props,
+                itemRenderer = _props2.itemRenderer,
+                option = _props2.option,
+                checked = _props2.checked,
+                focused = _props2.focused;
             var hovered = this.state.hovered;
 
 
             var focusStyle = focused || hovered ? styles.itemContainerHover : undefined;
 
+            var ItemRenderer = itemRenderer || DefaultItemRenderer;
+
             return _react2.default.createElement(
-                "div",
+                "label",
                 {
                     role: "option",
                     "aria-selected": checked,
@@ -112,27 +160,21 @@ var SelectItem = function (_Component) {
                     style: _extends({}, styles.itemContainer, focusStyle),
                     onClick: this.handleClick,
                     ref: function ref(_ref2) {
-                        return _this2.itemRef = _ref2;
+                        return _this3.itemRef = _ref2;
                     },
-                    onKeyDown: this.handleKeypress,
+                    onKeyDown: this.handleKeyDown,
                     onMouseOver: function onMouseOver() {
-                        return _this2.setState({ hovered: true });
+                        return _this3.setState({ hovered: true });
                     },
                     onMouseOut: function onMouseOut() {
-                        return _this2.setState({ hovered: false });
+                        return _this3.setState({ hovered: false });
                     }
                 },
-                _react2.default.createElement("input", {
-                    type: "checkbox",
-                    onChange: this.onChecked,
+                _react2.default.createElement(ItemRenderer, {
+                    option: option,
                     checked: checked,
-                    tabIndex: "-1"
-                }),
-                _react2.default.createElement(
-                    "span",
-                    { style: styles.label },
-                    option.label
-                )
+                    onClick: this.handleClick
+                })
             );
         }
     }]);
@@ -150,7 +192,7 @@ var styles = {
         padding: '8px 10px'
     },
     itemContainerHover: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#ebf5ff',
         outline: 0
     },
     label: {

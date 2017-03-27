@@ -113,6 +113,8 @@ class StatefulMultiSelect extends Component {
     props: {
         options: Option[],
         valueRenderer?: (values: Array<any>, options: Array<Option>) => string,
+        ItemRenderer?: Function,
+        selectAllLabel?: string,
     }
 
     handleSelectedChanged(selected) {
@@ -120,7 +122,12 @@ class StatefulMultiSelect extends Component {
     }
 
     render() {
-        const {options, valueRenderer} = this.props;
+        const {
+            ItemRenderer,
+            options,
+            selectAllLabel,
+            valueRenderer,
+        } = this.props;
         const {selected} = this.state;
 
         return <div>
@@ -129,6 +136,8 @@ class StatefulMultiSelect extends Component {
                 onSelectedChanged={this.handleSelectedChanged.bind(this)}
                 selected={selected}
                 valueRenderer={valueRenderer}
+                ItemRenderer={ItemRenderer}
+                selectAllLabel={selectAllLabel}
             />
 
         <h2>Selected:</h2>
@@ -149,6 +158,32 @@ function studentValueRenderer(selected, options) {
     return `Selected ${selected.length} Students`;
 }
 
+class StudentItemRenderer extends Component {
+    props: {
+        checked: boolean,
+        option: Option,
+
+        onClick: (event: MouseEvent) => void,
+    }
+
+    render() {
+        const {checked, option, onClick} = this.props;
+
+        return <span>
+            <span>
+                {option.label}
+            </span>
+            <input
+                type="checkbox"
+                onChange={onClick}
+                checked={checked}
+                tabIndex="-1"
+                style={{float: 'right'}}
+            />
+        </span>;
+    }
+}
+
 storiesOf('MultiSelect', module)
     .add('default view', () => <StatefulMultiSelect options={shortList} />)
     .add('long list view', () => <StatefulMultiSelect options={longList} />)
@@ -157,10 +192,17 @@ storiesOf('MultiSelect', module)
         () => <StatefulMultiSelect
             options={studentsList}
             valueRenderer={studentValueRenderer}
+            selectAllLabel="All students"
         />
     )
-    .add('tab test', () => <div>
+    .add('Tabbing test (accessibility)', () => <div>
         <input/>
         <StatefulMultiSelect options={shortList} />
         <input type="checkbox" />
-    </div>);
+    </div>)
+    .add('Item Renderer Override',
+        () => <StatefulMultiSelect
+            options={studentsList}
+            ItemRenderer={StudentItemRenderer}
+        />
+    );

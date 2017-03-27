@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -98,14 +98,57 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component represents an individual item in the multi-select drop-down
+ */
 
-var SelectItem = function (_Component) {
-    _inherits(SelectItem, _Component);
+
+var DefaultItemRenderer = function (_Component) {
+    _inherits(DefaultItemRenderer, _Component);
+
+    function DefaultItemRenderer() {
+        _classCallCheck(this, DefaultItemRenderer);
+
+        return _possibleConstructorReturn(this, (DefaultItemRenderer.__proto__ || Object.getPrototypeOf(DefaultItemRenderer)).apply(this, arguments));
+    }
+
+    _createClass(DefaultItemRenderer, [{
+        key: "render",
+        value: function render() {
+            var _props = this.props,
+                checked = _props.checked,
+                option = _props.option,
+                onClick = _props.onClick;
+
+
+            return _react2.default.createElement(
+                "span",
+                null,
+                _react2.default.createElement("input", {
+                    type: "checkbox",
+                    onChange: onClick,
+                    checked: checked,
+                    tabIndex: "-1"
+                }),
+                _react2.default.createElement(
+                    "span",
+                    { style: styles.label },
+                    option.label
+                )
+            );
+        }
+    }]);
+
+    return DefaultItemRenderer;
+}(_react.Component);
+
+var SelectItem = function (_Component2) {
+    _inherits(SelectItem, _Component2);
 
     function SelectItem() {
         var _ref;
 
-        var _temp, _this, _ret;
+        var _temp, _this2, _ret;
 
         _classCallCheck(this, SelectItem);
 
@@ -113,38 +156,40 @@ var SelectItem = function (_Component) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectItem.__proto__ || Object.getPrototypeOf(SelectItem)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = SelectItem.__proto__ || Object.getPrototypeOf(SelectItem)).call.apply(_ref, [this].concat(args))), _this2), _this2.state = {
             hovered: false
-        }, _this.onChecked = function (e) {
-            var onSelectionChanged = _this.props.onSelectionChanged;
-
-
+        }, _this2.onChecked = function (e) {
+            var onSelectionChanged = _this2.props.onSelectionChanged;
             var checked = e.target.checked;
+
+
             onSelectionChanged(checked);
-        }, _this.toggleChecked = function () {
-            var _this$props = _this.props,
-                checked = _this$props.checked,
-                onSelectionChanged = _this$props.onSelectionChanged;
+        }, _this2.toggleChecked = function () {
+            var _this2$props = _this2.props,
+                checked = _this2$props.checked,
+                onSelectionChanged = _this2$props.onSelectionChanged;
 
             onSelectionChanged(!checked);
-        }, _this.handleClick = function (e) {
-            var onClick = _this.props.onClick;
+        }, _this2.handleClick = function (e) {
+            var onClick = _this2.props.onClick;
 
-            _this.toggleChecked();
+            _this2.toggleChecked();
             onClick(e);
-        }, _this.handleKeypress = function (e) {
+
+            e.preventDefault();
+        }, _this2.handleKeyDown = function (e) {
             switch (e.which) {
                 case 13: // Enter
                 case 32:
                     // Space
-                    _this.toggleChecked();
+                    _this2.toggleChecked();
                     break;
                 default:
                     return;
             }
 
             e.preventDefault();
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        }, _temp), _possibleConstructorReturn(_this2, _ret);
     }
 
     _createClass(SelectItem, [{
@@ -170,19 +215,22 @@ var SelectItem = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
-            var _props = this.props,
-                option = _props.option,
-                checked = _props.checked,
-                focused = _props.focused;
+            var _props2 = this.props,
+                itemRenderer = _props2.itemRenderer,
+                option = _props2.option,
+                checked = _props2.checked,
+                focused = _props2.focused;
             var hovered = this.state.hovered;
 
 
             var focusStyle = focused || hovered ? styles.itemContainerHover : undefined;
 
+            var ItemRenderer = itemRenderer || DefaultItemRenderer;
+
             return _react2.default.createElement(
-                "div",
+                "label",
                 {
                     role: "option",
                     "aria-selected": checked,
@@ -191,27 +239,21 @@ var SelectItem = function (_Component) {
                     style: _extends({}, styles.itemContainer, focusStyle),
                     onClick: this.handleClick,
                     ref: function ref(_ref2) {
-                        return _this2.itemRef = _ref2;
+                        return _this3.itemRef = _ref2;
                     },
-                    onKeyDown: this.handleKeypress,
+                    onKeyDown: this.handleKeyDown,
                     onMouseOver: function onMouseOver() {
-                        return _this2.setState({ hovered: true });
+                        return _this3.setState({ hovered: true });
                     },
                     onMouseOut: function onMouseOut() {
-                        return _this2.setState({ hovered: false });
+                        return _this3.setState({ hovered: false });
                     }
                 },
-                _react2.default.createElement("input", {
-                    type: "checkbox",
-                    onChange: this.onChecked,
+                _react2.default.createElement(ItemRenderer, {
+                    option: option,
                     checked: checked,
-                    tabIndex: "-1"
-                }),
-                _react2.default.createElement(
-                    "span",
-                    { style: styles.label },
-                    option.label
-                )
+                    onClick: this.handleClick
+                })
             );
         }
     }]);
@@ -229,7 +271,7 @@ var styles = {
         padding: '8px 10px'
     },
     itemContainerHover: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#ebf5ff',
         outline: 0
     },
     label: {
@@ -270,6 +312,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * A generic dropdown component.  It takes the children of the component
+ * and hosts it in the component.  When the component is selected, it
+ * drops-down the contentComponent and applies the contentProps.
+ */
+
 
 var Dropdown = function (_Component) {
     _inherits(Dropdown, _Component);
@@ -286,12 +334,13 @@ var Dropdown = function (_Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            expanded: false
+            expanded: false,
+            hasFocus: false
         }, _this.handleDocumentClick = function (event) {
             if (_this.wrapper && !_this.wrapper.contains(event.target)) {
                 _this.setState({ expanded: false });
             }
-        }, _this.handleKeypress = function (e) {
+        }, _this.handleKeyDown = function (e) {
             switch (e.which) {
                 case 27:
                     // Escape
@@ -310,6 +359,20 @@ var Dropdown = function (_Component) {
             }
 
             e.preventDefault();
+        }, _this.handleFocus = function (e) {
+            var hasFocus = _this.state.hasFocus;
+
+
+            if (e.target === _this.wrapper && !hasFocus) {
+                _this.setState({ hasFocus: true });
+            }
+        }, _this.handleBlur = function (e) {
+            var hasFocus = _this.state.hasFocus;
+
+
+            if (hasFocus) {
+                _this.setState({ hasFocus: false });
+            }
         }, _this.toggleExpanded = function (value) {
             var expanded = _this.state.expanded;
 
@@ -328,33 +391,46 @@ var Dropdown = function (_Component) {
         key: 'componentWillUpdate',
         value: function componentWillUpdate() {
             document.addEventListener('touchstart', this.handleDocumentClick);
-            document.addEventListener('click', this.handleDocumentClick);
+            document.addEventListener('mousedown', this.handleDocumentClick);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             document.removeEventListener('touchstart', this.handleDocumentClick);
-            document.removeEventListener('click', this.handleDocumentClick);
+            document.removeEventListener('mousedown', this.handleDocumentClick);
         }
     }, {
         key: 'renderPanel',
         value: function renderPanel() {
             var _props = this.props,
-                contentComponent = _props.contentComponent,
+                ContentComponent = _props.contentComponent,
                 contentProps = _props.contentProps;
 
-            return _react2.default.createElement(contentComponent, contentProps);
+
+            return _react2.default.createElement(
+                'div',
+                { style: styles.panelContainer },
+                _react2.default.createElement(ContentComponent, contentProps)
+            );
         }
     }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
-            var expanded = this.state.expanded;
+            var _state = this.state,
+                expanded = _state.expanded,
+                hasFocus = _state.hasFocus;
             var children = this.props.children;
 
 
             var expandedHeaderStyle = expanded ? styles.dropdownHeaderExpanded : undefined;
+
+            var focusedHeaderStyle = hasFocus ? styles.dropdownHeaderFocused : undefined;
+
+            var arrowStyle = expanded ? styles.dropdownArrowUp : styles.dropdownArrowDown;
+
+            var focusedArrowStyle = hasFocus ? styles.dropdownArrowDownFocused : undefined;
 
             return _react2.default.createElement(
                 'div',
@@ -367,36 +443,31 @@ var Dropdown = function (_Component) {
                     ref: function ref(_ref2) {
                         return _this2.wrapper = _ref2;
                     },
-                    onKeyDown: this.handleKeypress
+                    onKeyDown: this.handleKeyDown,
+                    onFocus: this.handleFocus,
+                    onBlur: this.handleBlur
                 },
                 _react2.default.createElement(
                     'div',
                     {
-                        style: _extends({}, styles.dropdownHeader, expandedHeaderStyle),
+                        style: _extends({}, styles.dropdownHeader, expandedHeaderStyle, focusedHeaderStyle),
                         onClick: function onClick() {
                             return _this2.toggleExpanded();
                         }
                     },
                     _react2.default.createElement(
                         'span',
-                        {
-                            style: styles.dropdownChildren
-                        },
+                        { style: styles.dropdownChildren },
                         children
                     ),
                     _react2.default.createElement(
                         'span',
                         { style: styles.dropdownArrow },
-                        expanded ? _react2.default.createElement('span', { style: styles.dropdownArrowUp }) : _react2.default.createElement('span', { style: styles.dropdownArrowDown })
+                        _react2.default.createElement('span', { style: _extends({}, arrowStyle, focusedArrowStyle)
+                        })
                     )
                 ),
-                expanded ? _react2.default.createElement(
-                    'div',
-                    {
-                        style: styles.panelContainer
-                    },
-                    this.renderPanel()
-                ) : ""
+                expanded && this.renderPanel()
             );
         }
     }]);
@@ -404,48 +475,9 @@ var Dropdown = function (_Component) {
     return Dropdown;
 }(_react.Component);
 
+var focusColor = '#78c008';
+
 var styles = {
-    dropdownContainer: {
-        position: 'relative',
-        boxSizing: 'border-box'
-    },
-    dropdownHeader: {
-        boxSizing: 'border-box',
-        backgroundColor: '#fff',
-        borderColor: '#d9d9d9 #ccc #b3b3b3',
-        borderRadius: 4,
-        border: '1px solid #ccc',
-        color: '#333',
-        cursor: 'default',
-        display: 'table',
-        borderSpacing: 0,
-        borderCollapse: 'separate',
-        height: 36,
-        outline: 'none',
-        overflow: 'hidden',
-        position: 'relative',
-        width: '100%'
-    },
-    dropdownHeaderExpanded: {
-        borderBottomRightRadius: '0px',
-        borderBottomLeftRadius: '0px'
-    },
-    dropdownChildren: {
-        boxSizing: 'border-box',
-        bottom: 0,
-        color: '#333',
-        left: 0,
-        lineHeight: '34px',
-        paddingLeft: 10,
-        paddingRight: 10,
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        maxWidth: '100%',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteWpace: 'nowrap'
-    },
     dropdownArrow: {
         boxSizing: 'border-box',
         cursor: 'pointer',
@@ -466,6 +498,9 @@ var styles = {
         width: 0,
         position: 'relative'
     },
+    dropdownArrowDownFocused: {
+        borderColor: focusColor + ' transparent transparent'
+    },
     dropdownArrowUp: {
         boxSizing: 'border-box',
         top: '-2px',
@@ -476,6 +511,54 @@ var styles = {
         height: 0,
         width: 0,
         position: 'relative'
+    },
+    dropdownChildren: {
+        boxSizing: 'border-box',
+        bottom: 0,
+        color: '#333',
+        left: 0,
+        lineHeight: '34px',
+        paddingLeft: 10,
+        paddingRight: 10,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        maxWidth: '100%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteWpace: 'nowrap'
+    },
+    dropdownContainer: {
+        position: 'relative',
+        boxSizing: 'border-box',
+        outline: 'none'
+    },
+    dropdownHeader: {
+        boxSizing: 'border-box',
+        backgroundColor: '#fff',
+        borderColor: '#d9d9d9 #ccc #b3b3b3',
+        borderRadius: 4,
+        borderBottomRightRadius: 4,
+        borderBottomLeftRadius: 4,
+        border: '1px solid #ccc',
+        color: '#333',
+        cursor: 'default',
+        display: 'table',
+        borderSpacing: 0,
+        borderCollapse: 'separate',
+        height: 36,
+        outline: 'none',
+        overflow: 'hidden',
+        position: 'relative',
+        width: '100%'
+    },
+    dropdownHeaderFocused: {
+        borderColor: focusColor,
+        boxShadow: 'none'
+    },
+    dropdownHeaderExpanded: {
+        borderBottomRightRadius: '0px',
+        borderBottomLeftRadius: '0px'
     },
     panelContainer: {
         borderBottomRightRadius: '4px',
@@ -522,7 +605,7 @@ var _selectItem = __webpack_require__(1);
 
 var _selectItem2 = _interopRequireDefault(_selectItem);
 
-var _selectList = __webpack_require__(5);
+var _selectList = __webpack_require__(6);
 
 var _selectList2 = _interopRequireDefault(_selectList);
 
@@ -533,6 +616,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component represents the entire panel which gets dropped down when the
+ * user selects the component.  It encapsulates the search filter, the
+ * Select-all item, and the list of options.
+ */
+
 
 var SelectPanel = function (_Component) {
     _inherits(SelectPanel, _Component);
@@ -549,6 +638,7 @@ var SelectPanel = function (_Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectPanel.__proto__ || Object.getPrototypeOf(SelectPanel)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            searchHasFocus: false,
             searchText: "",
             focusIndex: 0
         }, _this.selectAll = function () {
@@ -573,12 +663,15 @@ var SelectPanel = function (_Component) {
                 _this.selectNone();
             }
         }, _this.handleSearchChange = function (e) {
-            _this.setState({ searchText: e.target.value });
+            _this.setState({
+                searchText: e.target.value,
+                focusIndex: -1
+            });
         }, _this.handleItemClicked = function (index) {
             _this.setState({ focusIndex: index });
         }, _this.clearSearch = function () {
             _this.setState({ searchText: "" });
-        }, _this.handleKeypress = function (e) {
+        }, _this.handleKeyDown = function (e) {
             switch (e.which) {
                 case 38:
                     // Up Arrow
@@ -602,6 +695,11 @@ var SelectPanel = function (_Component) {
 
             e.stopPropagation();
             e.preventDefault();
+        }, _this.handleSearchFocus = function (searchHasFocus) {
+            _this.setState({
+                searchHasFocus: searchHasFocus,
+                focusIndex: -1
+            });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -631,8 +729,8 @@ var SelectPanel = function (_Component) {
 
 
             var newFocus = focusIndex + offset;
-            newFocus = newFocus < 0 ? 0 : newFocus;
-            newFocus = newFocus > options.length ? options.length : newFocus;
+            newFocus = Math.max(0, newFocus);
+            newFocus = Math.min(newFocus, options.length);
 
             this.setState({ focusIndex: newFocus });
         }
@@ -641,19 +739,27 @@ var SelectPanel = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var focusIndex = this.state.focusIndex;
+            var _state = this.state,
+                focusIndex = _state.focusIndex,
+                searchHasFocus = _state.searchHasFocus;
+            var _props2 = this.props,
+                itemRenderer = _props2.itemRenderer,
+                selectAllLabel = _props2.selectAllLabel;
 
 
             var selectAllOption = {
-                label: "Select All",
+                label: selectAllLabel || "Select All",
                 value: ""
             };
+
+            var focusedSearchStyle = searchHasFocus ? styles.searchFocused : undefined;
+
             return _react2.default.createElement(
                 'div',
                 {
                     style: styles.panel,
                     role: 'listbox',
-                    onKeyDown: this.handleKeypress
+                    onKeyDown: this.handleKeyDown
                 },
                 _react2.default.createElement(
                     'div',
@@ -662,7 +768,13 @@ var SelectPanel = function (_Component) {
                         placeholder: 'Search',
                         type: 'text',
                         onChange: this.handleSearchChange,
-                        style: styles.search
+                        style: _extends({}, styles.search, focusedSearchStyle),
+                        onFocus: function onFocus() {
+                            return _this2.handleSearchFocus(true);
+                        },
+                        onBlur: function onBlur() {
+                            return _this2.handleSearchFocus(false);
+                        }
                     })
                 ),
                 _react2.default.createElement(_selectItem2.default, {
@@ -672,14 +784,16 @@ var SelectPanel = function (_Component) {
                     onSelectionChanged: this.selectAllChanged,
                     onClick: function onClick() {
                         return _this2.handleItemClicked(0);
-                    }
+                    },
+                    itemRenderer: itemRenderer
                 }),
                 _react2.default.createElement(_selectList2.default, _extends({}, this.props, {
                     options: this.filteredOptions(),
                     focusIndex: focusIndex - 1,
                     onClick: function onClick(e, index) {
                         return _this2.handleItemClicked(index + 1);
-                    }
+                    },
+                    itemRenderer: itemRenderer
                 }))
             );
         }
@@ -692,11 +806,6 @@ var styles = {
     panel: {
         boxSizing: 'border-box'
     },
-    searchContainer: {
-        width: "100%",
-        boxSizing: 'border-box',
-        padding: "0.5em"
-    },
     search: {
         display: "block",
 
@@ -706,9 +815,19 @@ var styles = {
         boxSizing: 'border-box',
         height: '30px',
         lineHeight: '24px',
-        border: '1px solid #dee2e4',
+        border: '1px solid',
+        borderColor: '#dee2e4',
         padding: '10px',
-        width: "100%"
+        width: "100%",
+        outline: "none"
+    },
+    searchFocused: {
+        borderColor: "#78c008"
+    },
+    searchContainer: {
+        width: "100%",
+        boxSizing: 'border-box',
+        padding: "0.5em"
     }
 };
 
@@ -721,18 +840,11 @@ exports.default = SelectPanel;
 "use strict";
 
 
-/* TODO(csilvers): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable brace-style */
-/* To fix, remove an entry above, run "make linc", and fix errors. */
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-// A collection of string matching algorithms used for school and filter
-// matching in the LearnStorm signup process.
 
-// Filters react-select options and sorts by similarity to a search filter.
-// Handles partial matches, ex. searching for Waberg High will find Raoul
-// Wallenberg Traditional High School. Case insensitive. Ignores
-// nonalphanumeric characters, and treats unaccented and Irish accented
-// characters as matching (ex, Í and I).
 function filterOptions(options, filter) {
     // If the filter is blank, return the full list of options.
     if (!filter) {
@@ -777,13 +889,23 @@ function filterOptions(options, filter) {
 //
 // Meant for use in an instant search box where results are being fetched
 // as a user is typing.
+
+// A collection of string matching algorithms used for school and filter
+// matching in the LearnStorm signup process.
+
+// Filters react-select options and sorts by similarity to a search filter.
+// Handles partial matches, ex. searching for Waberg High will find Raoul
+// Wallenberg Traditional High School. Case insensitive. Ignores
+// nonalphanumeric characters, and treats unaccented and Irish accented
+// characters as matching (ex, Í and I).
+
 function typeaheadSimilarity(a, b) {
     var aLength = a.length;
     var bLength = b.length;
     var table = [];
 
     if (!aLength || !bLength) {
-        return;
+        return 0;
     }
 
     // Early exit if `a` startsWith `b`; these will be scored higher than any
@@ -792,10 +914,6 @@ function typeaheadSimilarity(a, b) {
     if (a.indexOf(b) === 0) {
         return bLength + 1 / aLength;
     }
-
-    // TODO(riley): It would be nice if subsequence *proximity* was factored
-    //              in. For example, a filter string of "AL" should match
-    //              "wALnut grove" before it matches "wAtsonviLle"
 
     // Initialize the table axes:
     //
@@ -818,54 +936,6 @@ function typeaheadSimilarity(a, b) {
     for (var _x = 1; _x <= aLength; ++_x) {
         for (var _y = 1; _y <= bLength; ++_y) {
             table[_x][_y] = a[_x - 1] === b[_y - 1] ? 1 + table[_x - 1][_y - 1] : Math.max(table[_x][_y - 1], table[_x - 1][_y]);
-        }
-    }
-
-    // TODO(riley): If we end up wanting to highlight matched characters in the
-    // results list, we can add a backtrack function here to return the full
-    // subsequence.
-    return table[aLength][bLength];
-}
-
-// Returns the Levenshtein distance between two strings.
-// NOTE(riley): The Jaro-Winkler distance also worked well and is slightly
-//              more performant. Levenshtein seems to match more
-//              reliably, which is the important metric here.
-function fullStringDistance(a, b) {
-    var aLength = a.length;
-    var bLength = b.length;
-    var table = [];
-
-    if (!aLength) {
-        return bLength;
-    }
-    if (!bLength) {
-        return aLength;
-    }
-
-    // Initialize the table axes:
-    //
-    //    0 1 2 3 4 ... bLength
-    //    1
-    //    2
-    //
-    //   ...
-    //
-    // aLength
-    //
-    for (var x = 0; x <= aLength; ++x) {
-        table[x] = [x];
-    }
-    for (var y = 0; y <= bLength; ++y) {
-        table[0][y] = y;
-    }
-
-    // Populate the rest of the table with a dynamic programming algorithm.
-    for (var _x2 = 1; _x2 <= aLength; ++_x2) {
-        for (var _y2 = 1; _y2 <= bLength; ++_y2) {
-            table[_x2][_y2] = a[_x2 - 1] === b[_y2 - 1] ? table[_x2 - 1][_y2 - 1] : 1 + Math.min(table[_x2 - 1][_y2], // Substitution,
-            table[_x2][_y2 - 1], // insertion,
-            table[_x2 - 1][_y2 - 1]); // and deletion.
         }
     }
 
@@ -894,7 +964,6 @@ function cleanUpText(name) {
 
 // A collection of strings with multiple spellings or variations that we expect
 // to match, for example accented characters or abbreviatable words.
-// TODO(riley): Open this up to the whole team.
 var stringSubstitutions = {
     'Á': 'A',
     'À': 'A',
@@ -920,12 +989,7 @@ var stringSubstitutions = {
     '\\\.': ''
 };
 
-module.exports = {
-    cleanUpText: cleanUpText,
-    filterOptions: filterOptions,
-    fullStringDistance: fullStringDistance,
-    typeaheadSimilarity: typeaheadSimilarity
-};
+exports.filterOptions = filterOptions;
 
 /***/ }),
 /* 5 */
@@ -937,124 +1001,7 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _selectItem = __webpack_require__(1);
-
-var _selectItem2 = _interopRequireDefault(_selectItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SelectList = function (_Component) {
-    _inherits(SelectList, _Component);
-
-    function SelectList() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
-        _classCallCheck(this, SelectList);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectList.__proto__ || Object.getPrototypeOf(SelectList)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectionChanged = function (option, checked) {
-            var _this$props = _this.props,
-                selected = _this$props.selected,
-                onSelectedChanged = _this$props.onSelectedChanged;
-
-
-            if (checked) {
-                onSelectedChanged([].concat(_toConsumableArray(selected), [option.value]));
-            } else {
-                var _index = selected.indexOf(option.value);
-                var removed = [].concat(_toConsumableArray(selected.slice(0, _index)), _toConsumableArray(selected.slice(_index + 1)));
-                onSelectedChanged(removed);
-            }
-        }, _temp), _possibleConstructorReturn(_this, _ret);
-    }
-
-    _createClass(SelectList, [{
-        key: 'renderItems',
-        value: function renderItems() {
-            var _this2 = this;
-
-            var _props = this.props,
-                options = _props.options,
-                selected = _props.selected,
-                focusIndex = _props.focusIndex,
-                onClick = _props.onClick;
-
-
-            var isSelected = function isSelected(value) {
-                return selected.includes(value);
-            };
-
-            return options.map(function (o, i) {
-                return _react2.default.createElement(_selectItem2.default, {
-                    focused: focusIndex === i,
-                    key: i,
-                    option: o,
-                    onSelectionChanged: function onSelectionChanged(c) {
-                        return _this2.handleSelectionChanged(o, c);
-                    },
-                    checked: isSelected(o.value),
-                    onClick: function (_onClick) {
-                        function onClick(_x) {
-                            return _onClick.apply(this, arguments);
-                        }
-
-                        onClick.toString = function () {
-                            return _onClick.toString();
-                        };
-
-                        return onClick;
-                    }(function (e) {
-                        return onClick(e, i);
-                    })
-                });
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                this.renderItems()
-            );
-        }
-    }]);
-
-    return SelectList;
-}(_react.Component);
-
-exports.default = SelectList;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+exports.Dropdown = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1077,6 +1024,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component is designed to be a multi-selct component which supports
+ * the selection of several items in a picklist.  It was meant to mimic the
+ * style of react-select but the multi-select behavior didn't work for our
+ * our needs.
+ *
+ * Arguments:
+ * - options: The {value, label}[] options to be displayed
+ * - values: The currently selected values []
+ * - onSelectedChanged: An event to notify the caller of new values
+ * - valueRenderer: A fn to support overriding the message in the component
+ */
+
 
 var MultiSelect = function (_Component) {
     _inherits(MultiSelect, _Component);
@@ -1119,7 +1079,7 @@ var MultiSelect = function (_Component) {
             var noneSelected = selected.length === 0;
             var allSelected = selected.length === options.length;
 
-            var customText = valueRenderer ? valueRenderer(selected, options) : undefined;
+            var customText = valueRenderer && valueRenderer(selected, options);
 
             if (noneSelected) {
                 return _react2.default.createElement(
@@ -1140,15 +1100,17 @@ var MultiSelect = function (_Component) {
             return _react2.default.createElement(
                 'span',
                 null,
-                allSelected ? "All items were selected" : this.getSelectedText()
+                allSelected ? "All items are selected" : this.getSelectedText()
             );
         }
     }, {
         key: 'render',
         value: function render() {
             var _props3 = this.props,
+                itemRenderer = _props3.itemRenderer,
                 options = _props3.options,
                 selected = _props3.selected,
+                selectAllLabel = _props3.selectAllLabel,
                 onSelectedChanged = _props3.onSelectedChanged;
 
 
@@ -1156,7 +1118,13 @@ var MultiSelect = function (_Component) {
                 _dropdown2.default,
                 {
                     contentComponent: _selectPanel2.default,
-                    contentProps: { options: options, selected: selected, onSelectedChanged: onSelectedChanged }
+                    contentProps: {
+                        itemRenderer: itemRenderer,
+                        options: options,
+                        selected: selected,
+                        selectAllLabel: selectAllLabel,
+                        onSelectedChanged: onSelectedChanged
+                    }
                 },
                 this.renderHeader()
             );
@@ -1173,6 +1141,140 @@ var styles = {
 };
 
 exports.default = MultiSelect;
+exports.Dropdown = _dropdown2.default;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _selectItem = __webpack_require__(1);
+
+var _selectItem2 = _interopRequireDefault(_selectItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component represents an unadorned list of SelectItem (s).
+ */
+
+
+var SelectList = function (_Component) {
+    _inherits(SelectList, _Component);
+
+    function SelectList() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, SelectList);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectList.__proto__ || Object.getPrototypeOf(SelectList)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectionChanged = function (option, checked) {
+            var _this$props = _this.props,
+                selected = _this$props.selected,
+                onSelectedChanged = _this$props.onSelectedChanged;
+
+
+            if (checked) {
+                onSelectedChanged([].concat(_toConsumableArray(selected), [option.value]));
+            } else {
+                var _index = selected.indexOf(option.value);
+                var removed = [].concat(_toConsumableArray(selected.slice(0, _index)), _toConsumableArray(selected.slice(_index + 1)));
+                onSelectedChanged(removed);
+            }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(SelectList, [{
+        key: 'renderItems',
+        value: function renderItems() {
+            var _this2 = this;
+
+            var _props = this.props,
+                itemRenderer = _props.itemRenderer,
+                options = _props.options,
+                selected = _props.selected,
+                focusIndex = _props.focusIndex,
+                onClick = _props.onClick;
+
+
+            return options.map(function (o, i) {
+                return _react2.default.createElement(
+                    'li',
+                    { style: styles.listItem, key: i },
+                    _react2.default.createElement(_selectItem2.default, {
+                        focused: focusIndex === i,
+                        option: o,
+                        onSelectionChanged: function onSelectionChanged(c) {
+                            return _this2.handleSelectionChanged(o, c);
+                        },
+                        checked: selected.includes(o.value),
+                        onClick: function (_onClick) {
+                            function onClick(_x) {
+                                return _onClick.apply(this, arguments);
+                            }
+
+                            onClick.toString = function () {
+                                return _onClick.toString();
+                            };
+
+                            return onClick;
+                        }(function (e) {
+                            return onClick(e, i);
+                        }),
+                        itemRenderer: itemRenderer
+                    })
+                );
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'ul',
+                { style: styles.list },
+                this.renderItems()
+            );
+        }
+    }]);
+
+    return SelectList;
+}(_react.Component);
+
+var styles = {
+    list: {
+        margin: 0,
+        paddingLeft: 0
+    },
+    listItem: {
+        listStyle: 'none'
+    }
+};
+
+exports.default = SelectList;
 
 /***/ })
 /******/ ])));

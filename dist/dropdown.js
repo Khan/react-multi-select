@@ -19,6 +19,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * A generic dropdown component.  It takes the children of the component
+ * and hosts it in the component.  When the component is selected, it
+ * drops-down the contentComponent and applies the contentProps.
+ */
+
 
 var Dropdown = function (_Component) {
     _inherits(Dropdown, _Component);
@@ -35,12 +41,13 @@ var Dropdown = function (_Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            expanded: false
+            expanded: false,
+            hasFocus: false
         }, _this.handleDocumentClick = function (event) {
             if (_this.wrapper && !_this.wrapper.contains(event.target)) {
                 _this.setState({ expanded: false });
             }
-        }, _this.handleKeypress = function (e) {
+        }, _this.handleKeyDown = function (e) {
             switch (e.which) {
                 case 27:
                     // Escape
@@ -59,6 +66,20 @@ var Dropdown = function (_Component) {
             }
 
             e.preventDefault();
+        }, _this.handleFocus = function (e) {
+            var hasFocus = _this.state.hasFocus;
+
+
+            if (e.target === _this.wrapper && !hasFocus) {
+                _this.setState({ hasFocus: true });
+            }
+        }, _this.handleBlur = function (e) {
+            var hasFocus = _this.state.hasFocus;
+
+
+            if (hasFocus) {
+                _this.setState({ hasFocus: false });
+            }
         }, _this.toggleExpanded = function (value) {
             var expanded = _this.state.expanded;
 
@@ -77,33 +98,46 @@ var Dropdown = function (_Component) {
         key: 'componentWillUpdate',
         value: function componentWillUpdate() {
             document.addEventListener('touchstart', this.handleDocumentClick);
-            document.addEventListener('click', this.handleDocumentClick);
+            document.addEventListener('mousedown', this.handleDocumentClick);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             document.removeEventListener('touchstart', this.handleDocumentClick);
-            document.removeEventListener('click', this.handleDocumentClick);
+            document.removeEventListener('mousedown', this.handleDocumentClick);
         }
     }, {
         key: 'renderPanel',
         value: function renderPanel() {
             var _props = this.props,
-                contentComponent = _props.contentComponent,
+                ContentComponent = _props.contentComponent,
                 contentProps = _props.contentProps;
 
-            return _react2.default.createElement(contentComponent, contentProps);
+
+            return _react2.default.createElement(
+                'div',
+                { style: styles.panelContainer },
+                _react2.default.createElement(ContentComponent, contentProps)
+            );
         }
     }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
-            var expanded = this.state.expanded;
+            var _state = this.state,
+                expanded = _state.expanded,
+                hasFocus = _state.hasFocus;
             var children = this.props.children;
 
 
             var expandedHeaderStyle = expanded ? styles.dropdownHeaderExpanded : undefined;
+
+            var focusedHeaderStyle = hasFocus ? styles.dropdownHeaderFocused : undefined;
+
+            var arrowStyle = expanded ? styles.dropdownArrowUp : styles.dropdownArrowDown;
+
+            var focusedArrowStyle = hasFocus ? styles.dropdownArrowDownFocused : undefined;
 
             return _react2.default.createElement(
                 'div',
@@ -116,36 +150,31 @@ var Dropdown = function (_Component) {
                     ref: function ref(_ref2) {
                         return _this2.wrapper = _ref2;
                     },
-                    onKeyDown: this.handleKeypress
+                    onKeyDown: this.handleKeyDown,
+                    onFocus: this.handleFocus,
+                    onBlur: this.handleBlur
                 },
                 _react2.default.createElement(
                     'div',
                     {
-                        style: _extends({}, styles.dropdownHeader, expandedHeaderStyle),
+                        style: _extends({}, styles.dropdownHeader, expandedHeaderStyle, focusedHeaderStyle),
                         onClick: function onClick() {
                             return _this2.toggleExpanded();
                         }
                     },
                     _react2.default.createElement(
                         'span',
-                        {
-                            style: styles.dropdownChildren
-                        },
+                        { style: styles.dropdownChildren },
                         children
                     ),
                     _react2.default.createElement(
                         'span',
                         { style: styles.dropdownArrow },
-                        expanded ? _react2.default.createElement('span', { style: styles.dropdownArrowUp }) : _react2.default.createElement('span', { style: styles.dropdownArrowDown })
+                        _react2.default.createElement('span', { style: _extends({}, arrowStyle, focusedArrowStyle)
+                        })
                     )
                 ),
-                expanded ? _react2.default.createElement(
-                    'div',
-                    {
-                        style: styles.panelContainer
-                    },
-                    this.renderPanel()
-                ) : ""
+                expanded && this.renderPanel()
             );
         }
     }]);
@@ -153,48 +182,9 @@ var Dropdown = function (_Component) {
     return Dropdown;
 }(_react.Component);
 
+var focusColor = '#78c008';
+
 var styles = {
-    dropdownContainer: {
-        position: 'relative',
-        boxSizing: 'border-box'
-    },
-    dropdownHeader: {
-        boxSizing: 'border-box',
-        backgroundColor: '#fff',
-        borderColor: '#d9d9d9 #ccc #b3b3b3',
-        borderRadius: 4,
-        border: '1px solid #ccc',
-        color: '#333',
-        cursor: 'default',
-        display: 'table',
-        borderSpacing: 0,
-        borderCollapse: 'separate',
-        height: 36,
-        outline: 'none',
-        overflow: 'hidden',
-        position: 'relative',
-        width: '100%'
-    },
-    dropdownHeaderExpanded: {
-        borderBottomRightRadius: '0px',
-        borderBottomLeftRadius: '0px'
-    },
-    dropdownChildren: {
-        boxSizing: 'border-box',
-        bottom: 0,
-        color: '#333',
-        left: 0,
-        lineHeight: '34px',
-        paddingLeft: 10,
-        paddingRight: 10,
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        maxWidth: '100%',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteWpace: 'nowrap'
-    },
     dropdownArrow: {
         boxSizing: 'border-box',
         cursor: 'pointer',
@@ -215,6 +205,9 @@ var styles = {
         width: 0,
         position: 'relative'
     },
+    dropdownArrowDownFocused: {
+        borderColor: focusColor + ' transparent transparent'
+    },
     dropdownArrowUp: {
         boxSizing: 'border-box',
         top: '-2px',
@@ -225,6 +218,54 @@ var styles = {
         height: 0,
         width: 0,
         position: 'relative'
+    },
+    dropdownChildren: {
+        boxSizing: 'border-box',
+        bottom: 0,
+        color: '#333',
+        left: 0,
+        lineHeight: '34px',
+        paddingLeft: 10,
+        paddingRight: 10,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        maxWidth: '100%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteWpace: 'nowrap'
+    },
+    dropdownContainer: {
+        position: 'relative',
+        boxSizing: 'border-box',
+        outline: 'none'
+    },
+    dropdownHeader: {
+        boxSizing: 'border-box',
+        backgroundColor: '#fff',
+        borderColor: '#d9d9d9 #ccc #b3b3b3',
+        borderRadius: 4,
+        borderBottomRightRadius: 4,
+        borderBottomLeftRadius: 4,
+        border: '1px solid #ccc',
+        color: '#333',
+        cursor: 'default',
+        display: 'table',
+        borderSpacing: 0,
+        borderCollapse: 'separate',
+        height: 36,
+        outline: 'none',
+        overflow: 'hidden',
+        position: 'relative',
+        width: '100%'
+    },
+    dropdownHeaderFocused: {
+        borderColor: focusColor,
+        boxShadow: 'none'
+    },
+    dropdownHeaderExpanded: {
+        borderBottomRightRadius: '0px',
+        borderBottomLeftRadius: '0px'
     },
     panelContainer: {
         borderBottomRightRadius: '4px',

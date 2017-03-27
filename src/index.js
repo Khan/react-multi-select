@@ -29,6 +29,8 @@ class MultiSelect extends Component {
             selected: Array<any>,
             options: Array<Option>
         ) => string,
+        ItemRenderer?: Function,
+        selectAllLabel: string,
     }
 
     getSelectedText() {
@@ -73,11 +75,23 @@ class MultiSelect extends Component {
     }
 
     render() {
-        const {options, selected, onSelectedChanged} = this.props;
+        const {
+            ItemRenderer,
+            options,
+            selected,
+            selectAllLabel,
+            onSelectedChanged,
+        } = this.props;
 
         return <Dropdown
             contentComponent={SelectPanel}
-            contentProps={{options, selected, onSelectedChanged}}
+            contentProps={{
+                ItemRenderer,
+                options,
+                selected,
+                selectAllLabel,
+                onSelectedChanged,
+            }}
         >
             {this.renderHeader()}
         </Dropdown>;
@@ -91,3 +105,4 @@ const styles = {
 };
 
 export default MultiSelect;
+export {Dropdown};

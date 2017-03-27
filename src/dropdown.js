@@ -10,6 +10,7 @@ class Dropdown extends Component {
 
     state = {
         expanded: false,
+        hasFocus: false,
     }
 
     componentWillUpdate() {
@@ -54,6 +55,22 @@ class Dropdown extends Component {
         e.preventDefault();
     }
 
+    handleFocus = (e: {target: any}) => {
+        const {hasFocus} = this.state;
+
+        if (e.target === this.wrapper && !hasFocus) {
+            this.setState({hasFocus: true});
+        }
+    }
+
+    handleBlur = (e: {target: any}) => {
+        const {hasFocus} = this.state;
+
+        if (hasFocus) {
+            this.setState({hasFocus: false});
+        }
+    }
+
     toggleExpanded = (value: ?boolean) => {
         const {expanded} = this.state;
 
@@ -75,11 +92,23 @@ class Dropdown extends Component {
     }
 
     render() {
-        const {expanded} = this.state;
+        const {expanded, hasFocus} = this.state;
         const {children} = this.props;
 
         const expandedHeaderStyle = expanded
             ? styles.dropdownHeaderExpanded
+            : undefined;
+
+        const focusedHeaderStyle = hasFocus
+            ? styles.dropdownHeaderFocused
+            : undefined;
+
+        const arrowStyle = expanded
+            ? styles.dropdownArrowUp
+            : styles.dropdownArrowDown;
+
+        const focusedArrowStyle = hasFocus
+            ? styles.dropdownArrowDownFocused
             : undefined;
 
         return <div
@@ -90,25 +119,34 @@ class Dropdown extends Component {
             style={styles.dropdownContainer}
             ref={ref => this.wrapper = ref}
             onKeyDown={this.handleKeyDown}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
         >
             <div
-                style={{...styles.dropdownHeader, ...expandedHeaderStyle}}
+                style={{
+                    ...styles.dropdownHeader,
+                    ...expandedHeaderStyle,
+                    ...focusedHeaderStyle,
+                }}
                 onClick={() => this.toggleExpanded()}
             >
                 <span style={styles.dropdownChildren}>
                     {children}
                 </span>
                 <span style={styles.dropdownArrow}>
-                    {expanded
-                        ? <span style={styles.dropdownArrowUp} />
-                        : <span style={styles.dropdownArrowDown} />
-                    }
+                    <span style={{
+                        ...arrowStyle,
+                        ...focusedArrowStyle,
+                    }}
+                    />
                 </span>
             </div>
             {expanded && this.renderPanel()}
         </div>;
     }
 }
+
+const focusColor = '#78c008';
 
 const styles = {
     dropdownArrow: {
@@ -130,6 +168,9 @@ const styles = {
         height: 0,
         width: 0,
         position: 'relative',
+    },
+    dropdownArrowDownFocused: {
+        borderColor: `${focusColor} transparent transparent`,
     },
     dropdownArrowUp: {
         boxSizing: 'border-box',
@@ -161,12 +202,15 @@ const styles = {
     dropdownContainer: {
         position: 'relative',
         boxSizing: 'border-box',
+        outline: 'none',
     },
     dropdownHeader: {
         boxSizing: 'border-box',
         backgroundColor: '#fff',
         borderColor: '#d9d9d9 #ccc #b3b3b3',
         borderRadius: 4,
+        borderBottomRightRadius: 4,
+        borderBottomLeftRadius: 4,
         border: '1px solid #ccc',
         color: '#333',
         cursor: 'default',
@@ -178,6 +222,10 @@ const styles = {
         overflow: 'hidden',
         position: 'relative',
         width: '100%',
+    },
+    dropdownHeaderFocused: {
+        borderColor: focusColor,
+        boxShadow: 'none',
     },
     dropdownHeaderExpanded: {
         borderBottomRightRadius: '0px',
