@@ -64,7 +64,7 @@ var SelectList = function (_Component) {
             var _this2 = this;
 
             var _props = this.props,
-                itemRenderer = _props.itemRenderer,
+                ItemRenderer = _props.ItemRenderer,
                 options = _props.options,
                 selected = _props.selected,
                 focusIndex = _props.focusIndex,
@@ -95,7 +95,7 @@ var SelectList = function (_Component) {
                         }(function (e) {
                             return onClick(e, i);
                         }),
-                        itemRenderer: itemRenderer
+                        ItemRenderer: ItemRenderer
                     })
                 );
             });

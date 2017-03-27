@@ -139,7 +139,7 @@ var SelectItem = function (_Component2) {
             var _this3 = this;
 
             var _props2 = this.props,
-                itemRenderer = _props2.itemRenderer,
+                ItemRenderer = _props2.ItemRenderer,
                 option = _props2.option,
                 checked = _props2.checked,
                 focused = _props2.focused;
@@ -147,8 +147,6 @@ var SelectItem = function (_Component2) {
 
 
             var focusStyle = focused || hovered ? styles.itemContainerHover : undefined;
-
-            var ItemRenderer = itemRenderer || DefaultItemRenderer;
 
             return _react2.default.createElement(
                 "label",
@@ -181,6 +179,11 @@ var SelectItem = function (_Component2) {
 
     return SelectItem;
 }(_react.Component);
+
+SelectItem.defaultProps = {
+    ItemRenderer: DefaultItemRenderer
+};
+
 
 var styles = {
     itemContainer: {

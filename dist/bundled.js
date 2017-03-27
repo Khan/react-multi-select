@@ -218,7 +218,7 @@ var SelectItem = function (_Component2) {
             var _this3 = this;
 
             var _props2 = this.props,
-                itemRenderer = _props2.itemRenderer,
+                ItemRenderer = _props2.ItemRenderer,
                 option = _props2.option,
                 checked = _props2.checked,
                 focused = _props2.focused;
@@ -226,8 +226,6 @@ var SelectItem = function (_Component2) {
 
 
             var focusStyle = focused || hovered ? styles.itemContainerHover : undefined;
-
-            var ItemRenderer = itemRenderer || DefaultItemRenderer;
 
             return _react2.default.createElement(
                 "label",
@@ -260,6 +258,11 @@ var SelectItem = function (_Component2) {
 
     return SelectItem;
 }(_react.Component);
+
+SelectItem.defaultProps = {
+    ItemRenderer: DefaultItemRenderer
+};
+
 
 var styles = {
     itemContainer: {
@@ -743,7 +746,7 @@ var SelectPanel = function (_Component) {
                 focusIndex = _state.focusIndex,
                 searchHasFocus = _state.searchHasFocus;
             var _props2 = this.props,
-                itemRenderer = _props2.itemRenderer,
+                ItemRenderer = _props2.ItemRenderer,
                 selectAllLabel = _props2.selectAllLabel;
 
 
@@ -785,7 +788,7 @@ var SelectPanel = function (_Component) {
                     onClick: function onClick() {
                         return _this2.handleItemClicked(0);
                     },
-                    itemRenderer: itemRenderer
+                    ItemRenderer: ItemRenderer
                 }),
                 _react2.default.createElement(_selectList2.default, _extends({}, this.props, {
                     options: this.filteredOptions(),
@@ -793,7 +796,7 @@ var SelectPanel = function (_Component) {
                     onClick: function onClick(e, index) {
                         return _this2.handleItemClicked(index + 1);
                     },
-                    itemRenderer: itemRenderer
+                    ItemRenderer: ItemRenderer
                 }))
             );
         }
@@ -1107,7 +1110,7 @@ var MultiSelect = function (_Component) {
         key: 'render',
         value: function render() {
             var _props3 = this.props,
-                itemRenderer = _props3.itemRenderer,
+                ItemRenderer = _props3.ItemRenderer,
                 options = _props3.options,
                 selected = _props3.selected,
                 selectAllLabel = _props3.selectAllLabel,
@@ -1119,7 +1122,7 @@ var MultiSelect = function (_Component) {
                 {
                     contentComponent: _selectPanel2.default,
                     contentProps: {
-                        itemRenderer: itemRenderer,
+                        ItemRenderer: ItemRenderer,
                         options: options,
                         selected: selected,
                         selectAllLabel: selectAllLabel,
@@ -1214,7 +1217,7 @@ var SelectList = function (_Component) {
             var _this2 = this;
 
             var _props = this.props,
-                itemRenderer = _props.itemRenderer,
+                ItemRenderer = _props.ItemRenderer,
                 options = _props.options,
                 selected = _props.selected,
                 focusIndex = _props.focusIndex,
@@ -1245,7 +1248,7 @@ var SelectList = function (_Component) {
                         }(function (e) {
                             return onClick(e, i);
                         }),
-                        itemRenderer: itemRenderer
+                        ItemRenderer: ItemRenderer
                     })
                 );
             });

@@ -156,7 +156,7 @@ var SelectPanel = function (_Component) {
                 focusIndex = _state.focusIndex,
                 searchHasFocus = _state.searchHasFocus;
             var _props2 = this.props,
-                itemRenderer = _props2.itemRenderer,
+                ItemRenderer = _props2.ItemRenderer,
                 selectAllLabel = _props2.selectAllLabel;
 
 
@@ -198,7 +198,7 @@ var SelectPanel = function (_Component) {
                     onClick: function onClick() {
                         return _this2.handleItemClicked(0);
                     },
-                    itemRenderer: itemRenderer
+                    ItemRenderer: ItemRenderer
                 }),
                 _react2.default.createElement(_selectList2.default, _extends({}, this.props, {
                     options: this.filteredOptions(),
@@ -206,7 +206,7 @@ var SelectPanel = function (_Component) {
                     onClick: function onClick(e, index) {
                         return _this2.handleItemClicked(index + 1);
                     },
-                    itemRenderer: itemRenderer
+                    ItemRenderer: ItemRenderer
                 }))
             );
         }

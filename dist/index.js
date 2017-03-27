@@ -109,7 +109,7 @@ var MultiSelect = function (_Component) {
         key: 'render',
         value: function render() {
             var _props3 = this.props,
-                itemRenderer = _props3.itemRenderer,
+                ItemRenderer = _props3.ItemRenderer,
                 options = _props3.options,
                 selected = _props3.selected,
                 selectAllLabel = _props3.selectAllLabel,
@@ -121,7 +121,7 @@ var MultiSelect = function (_Component) {
                 {
                     contentComponent: _selectPanel2.default,
                     contentProps: {
-                        itemRenderer: itemRenderer,
+                        ItemRenderer: ItemRenderer,
                         options: options,
                         selected: selected,
                         selectAllLabel: selectAllLabel,
