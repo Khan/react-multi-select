@@ -1,6 +1,6 @@
 {
-  "name": "react-multi-select",
-  "version": "0.0.0",
+  "name": "@khanacademy/react-multi-select",
+  "version": "0.1.0",
   "description": "React Multi Select Component",
   "repository": {
     "type": "git",
