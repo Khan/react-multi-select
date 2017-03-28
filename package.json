@@ -51,7 +51,9 @@
   "peerDependencies": {
     "react": "^0.14.7 || ^15.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "fuzzy-match-utils": "^1.2.0"
+  },
   "main": "dist/index.js",
   "engines": {
     "npm": "^3.0.0"

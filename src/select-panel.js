@@ -4,9 +4,9 @@
  * user selects the component.  It encapsulates the search filter, the
  * Select-all item, and the list of options.
  */
+import {filterOptions} from 'fuzzy-match-utils';
 import React, {Component} from 'react';
 
-import {filterOptions} from './fuzzy-string-matching.js';
 import SelectItem from './select-item.js';
 import SelectList from './select-list.js';
 

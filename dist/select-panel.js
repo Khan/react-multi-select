@@ -8,11 +8,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _fuzzyMatchUtils = require('fuzzy-match-utils');
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _fuzzyStringMatching = require('./fuzzy-string-matching.js');
 
 var _selectItem = require('./select-item.js');
 
@@ -132,7 +132,7 @@ var SelectPanel = function (_Component) {
             var options = this.props.options;
 
 
-            return (0, _fuzzyStringMatching.filterOptions)(options, searchText);
+            return (0, _fuzzyMatchUtils.filterOptions)(options, searchText);
         }
     }, {
         key: 'updateFocus',
