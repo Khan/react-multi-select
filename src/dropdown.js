@@ -6,6 +6,8 @@
  */
 import React, {Component} from 'react';
 
+import LoadingIndicator from './loading-indicator.js';
+
 class Dropdown extends Component {
 
     state = {
@@ -27,6 +29,7 @@ class Dropdown extends Component {
         children?: Object,
         contentComponent: Object,
         contentProps: Object,
+        isLoading?: boolean,
     }
 
     wrapper: Object
@@ -72,7 +75,12 @@ class Dropdown extends Component {
     }
 
     toggleExpanded = (value: ?boolean) => {
+        const {isLoading} = this.props;
         const {expanded} = this.state;
+
+        if (isLoading) {
+            return;
+        }
 
         const newExpanded = value === undefined ? !expanded : !!value;
 
@@ -93,7 +101,7 @@ class Dropdown extends Component {
 
     render() {
         const {expanded, hasFocus} = this.state;
-        const {children} = this.props;
+        const {children, isLoading} = this.props;
 
         const expandedHeaderStyle = expanded
             ? styles.dropdownHeaderExpanded
@@ -132,6 +140,9 @@ class Dropdown extends Component {
             >
                 <span style={styles.dropdownChildren}>
                     {children}
+                </span>
+                <span style={styles.loadingContainer}>
+                    {isLoading && <LoadingIndicator />}
                 </span>
                 <span style={styles.dropdownArrow}>
                     <span style={{
@@ -230,6 +241,12 @@ const styles = {
     dropdownHeaderExpanded: {
         borderBottomRightRadius: '0px',
         borderBottomLeftRadius: '0px',
+    },
+    loadingContainer: {
+        cursor: 'pointer',
+        display: 'table-cell',
+        verticalAlign: 'middle',
+        width: '16px',
     },
     panelContainer: {
         borderBottomRightRadius: '4px',

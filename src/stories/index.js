@@ -115,6 +115,7 @@ class StatefulMultiSelect extends Component {
         valueRenderer?: (values: Array<any>, options: Array<Option>) => string,
         ItemRenderer?: Function,
         selectAllLabel?: string,
+        isLoading?: boolean,
     }
 
     handleSelectedChanged(selected) {
@@ -127,6 +128,7 @@ class StatefulMultiSelect extends Component {
             options,
             selectAllLabel,
             valueRenderer,
+            isLoading,
         } = this.props;
         const {selected} = this.state;
 
@@ -138,6 +140,7 @@ class StatefulMultiSelect extends Component {
                 valueRenderer={valueRenderer}
                 ItemRenderer={ItemRenderer}
                 selectAllLabel={selectAllLabel}
+                isLoading={isLoading}
             />
 
         <h2>Selected:</h2>
@@ -188,21 +191,21 @@ storiesOf('MultiSelect', module)
     .add('default view', () => <StatefulMultiSelect options={shortList} />)
     .add('long list view', () => <StatefulMultiSelect options={longList} />)
     .add('United States', () => <StatefulMultiSelect options={statesList} />)
-    .add('Custom Heading Renderer',
-        () => <StatefulMultiSelect
-            options={studentsList}
-            valueRenderer={studentValueRenderer}
-            selectAllLabel="All students"
-        />
-    )
+    .add('Custom Heading Renderer', () => <StatefulMultiSelect
+        options={studentsList}
+        valueRenderer={studentValueRenderer}
+        selectAllLabel="All students"
+    />)
     .add('Tabbing test (accessibility)', () => <div>
         <input/>
         <StatefulMultiSelect options={shortList} />
         <input type="checkbox" />
     </div>)
-    .add('Item Renderer Override',
-        () => <StatefulMultiSelect
-            options={studentsList}
-            ItemRenderer={StudentItemRenderer}
-        />
-    );
+    .add('Item Renderer Override', () => <StatefulMultiSelect
+        options={studentsList}
+        ItemRenderer={StudentItemRenderer}
+    />)
+    .add('With loading indicator', () => <StatefulMultiSelect
+        options={[]}
+        isLoading={true}
+    />);

@@ -10,6 +10,7 @@ function loadStories() {
     require('../src/stories/select-item.js');
     require('../src/stories/select-panel.js');
     require('../src/stories/dropdown.js');
+    require('../src/stories/loading-indicator.js');
 }
 
 configure(loadStories, module);
