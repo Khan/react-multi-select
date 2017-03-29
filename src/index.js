@@ -10,6 +10,7 @@
  * - values: The currently selected values []
  * - onSelectedChanged: An event to notify the caller of new values
  * - valueRenderer: A fn to support overriding the message in the component
+ * - isLoading: Show a loading indicator
  */
 import React, {Component} from 'react';
 
@@ -31,6 +32,7 @@ class MultiSelect extends Component {
         ) => string,
         ItemRenderer?: Function,
         selectAllLabel: string,
+        isLoading?: boolean,
     }
 
     getSelectedText() {
@@ -81,9 +83,11 @@ class MultiSelect extends Component {
             selected,
             selectAllLabel,
             onSelectedChanged,
+            isLoading,
         } = this.props;
 
         return <Dropdown
+            isLoading={isLoading}
             contentComponent={SelectPanel}
             contentProps={{
                 ItemRenderer,
