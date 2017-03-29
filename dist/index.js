@@ -37,6 +37,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * - values: The currently selected values []
  * - onSelectedChanged: An event to notify the caller of new values
  * - valueRenderer: A fn to support overriding the message in the component
+ * - isLoading: Show a loading indicator
  */
 
 
@@ -113,12 +114,14 @@ var MultiSelect = function (_Component) {
                 options = _props3.options,
                 selected = _props3.selected,
                 selectAllLabel = _props3.selectAllLabel,
-                onSelectedChanged = _props3.onSelectedChanged;
+                onSelectedChanged = _props3.onSelectedChanged,
+                isLoading = _props3.isLoading;
 
 
             return _react2.default.createElement(
                 _dropdown2.default,
                 {
+                    isLoading: isLoading,
                     contentComponent: _selectPanel2.default,
                     contentProps: {
                         ItemRenderer: ItemRenderer,

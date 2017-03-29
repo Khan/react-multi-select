@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _loadingIndicator = require('./loading-indicator.js');
+
+var _loadingIndicator2 = _interopRequireDefault(_loadingIndicator);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -81,8 +85,13 @@ var Dropdown = function (_Component) {
                 _this.setState({ hasFocus: false });
             }
         }, _this.toggleExpanded = function (value) {
+            var isLoading = _this.props.isLoading;
             var expanded = _this.state.expanded;
 
+
+            if (isLoading) {
+                return;
+            }
 
             var newExpanded = value === undefined ? !expanded : !!value;
 
@@ -128,7 +137,9 @@ var Dropdown = function (_Component) {
             var _state = this.state,
                 expanded = _state.expanded,
                 hasFocus = _state.hasFocus;
-            var children = this.props.children;
+            var _props2 = this.props,
+                children = _props2.children,
+                isLoading = _props2.isLoading;
 
 
             var expandedHeaderStyle = expanded ? styles.dropdownHeaderExpanded : undefined;
@@ -166,6 +177,11 @@ var Dropdown = function (_Component) {
                         'span',
                         { style: styles.dropdownChildren },
                         children
+                    ),
+                    _react2.default.createElement(
+                        'span',
+                        { style: styles.loadingContainer },
+                        isLoading && _react2.default.createElement(_loadingIndicator2.default, null)
                     ),
                     _react2.default.createElement(
                         'span',
@@ -266,6 +282,12 @@ var styles = {
     dropdownHeaderExpanded: {
         borderBottomRightRadius: '0px',
         borderBottomLeftRadius: '0px'
+    },
+    loadingContainer: {
+        cursor: 'pointer',
+        display: 'table-cell',
+        verticalAlign: 'middle',
+        width: '16px'
     },
     panelContainer: {
         borderBottomRightRadius: '4px',
