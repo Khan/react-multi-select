@@ -769,7 +769,8 @@ var SelectPanel = function (_Component) {
                 searchHasFocus = _state.searchHasFocus;
             var _props2 = this.props,
                 ItemRenderer = _props2.ItemRenderer,
-                selectAllLabel = _props2.selectAllLabel;
+                selectAllLabel = _props2.selectAllLabel,
+                disableSearch = _props2.disableSearch;
 
 
             var selectAllOption = {
@@ -786,7 +787,7 @@ var SelectPanel = function (_Component) {
                     role: 'listbox',
                     onKeyDown: this.handleKeyDown
                 },
-                _react2.default.createElement(
+                !disableSearch && _react2.default.createElement(
                     'div',
                     { style: styles.searchContainer },
                     _react2.default.createElement('input', {
@@ -980,7 +981,8 @@ var MultiSelect = function (_Component) {
                 selected = _props3.selected,
                 selectAllLabel = _props3.selectAllLabel,
                 onSelectedChanged = _props3.onSelectedChanged,
-                isLoading = _props3.isLoading;
+                isLoading = _props3.isLoading,
+                disableSearch = _props3.disableSearch;
 
 
             return _react2.default.createElement(
@@ -993,7 +995,8 @@ var MultiSelect = function (_Component) {
                         options: options,
                         selected: selected,
                         selectAllLabel: selectAllLabel,
-                        onSelectedChanged: onSelectedChanged
+                        onSelectedChanged: onSelectedChanged,
+                        disableSearch: disableSearch
                     }
                 },
                 this.renderHeader()

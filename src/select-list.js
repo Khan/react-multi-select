@@ -18,10 +18,15 @@ class SelectList extends Component {
         selected: Array<Object>,
         onSelectedChanged: (selected: any) => void,
         onClick: (event: MouseEvent, index: number) => void,
+        disabled?: boolean,
     }
 
     handleSelectionChanged = (option: Option, checked: boolean) => {
-        const {selected, onSelectedChanged} = this.props;
+        const {selected, onSelectedChanged, disabled} = this.props;
+
+        if (disabled) {
+            true;
+        }
 
         if (checked) {
             onSelectedChanged([...selected, option.value]);
@@ -42,6 +47,7 @@ class SelectList extends Component {
             selected,
             focusIndex,
             onClick,
+            disabled,
         } = this.props;
 
         return options.map((o, i) =>
@@ -53,6 +59,7 @@ class SelectList extends Component {
                     checked={selected.includes(o.value)}
                     onClick={e => onClick(e, i)}
                     ItemRenderer={ItemRenderer}
+                    disabled={disabled}
                 />
             </li>
         );

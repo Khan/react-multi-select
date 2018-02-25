@@ -30,6 +30,7 @@ class Dropdown extends Component {
         contentComponent: Object,
         contentProps: Object,
         isLoading?: boolean,
+        disabled?: boolean,
     }
 
     wrapper: Object
@@ -101,7 +102,7 @@ class Dropdown extends Component {
 
     render() {
         const {expanded, hasFocus} = this.state;
-        const {children, isLoading} = this.props;
+        const {children, isLoading, disabled} = this.props;
 
         const expandedHeaderStyle = expanded
             ? styles.dropdownHeaderExpanded
@@ -119,11 +120,17 @@ class Dropdown extends Component {
             ? styles.dropdownArrowDownFocused
             : undefined;
 
+        const headingStyle = {
+            ...styles.dropdownChildren,
+            ...(disabled ? styles.disabledDropdownChildren : {}),
+        };
+
         return <div
             tabIndex="0"
             role="combobox"
             aria-expanded={expanded}
             aria-readonly="true"
+            aria-disabled={disabled}
             style={styles.dropdownContainer}
             ref={ref => this.wrapper = ref}
             onKeyDown={this.handleKeyDown}
@@ -138,7 +145,7 @@ class Dropdown extends Component {
                 }}
                 onClick={() => this.toggleExpanded()}
             >
-                <span style={styles.dropdownChildren}>
+                <span style={headingStyle}>
                     {children}
                 </span>
                 <span style={styles.loadingContainer}>
@@ -209,6 +216,9 @@ const styles = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteWpace: 'nowrap',
+    },
+    disabledDropdownChildren: {
+        opacity: 0.5,
     },
     dropdownContainer: {
         position: 'relative',

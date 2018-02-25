@@ -157,7 +157,8 @@ var SelectPanel = function (_Component) {
                 searchHasFocus = _state.searchHasFocus;
             var _props2 = this.props,
                 ItemRenderer = _props2.ItemRenderer,
-                selectAllLabel = _props2.selectAllLabel;
+                selectAllLabel = _props2.selectAllLabel,
+                disableSearch = _props2.disableSearch;
 
 
             var selectAllOption = {
@@ -174,7 +175,7 @@ var SelectPanel = function (_Component) {
                     role: 'listbox',
                     onKeyDown: this.handleKeyDown
                 },
-                _react2.default.createElement(
+                !disableSearch && _react2.default.createElement(
                     'div',
                     { style: styles.searchContainer },
                     _react2.default.createElement('input', {

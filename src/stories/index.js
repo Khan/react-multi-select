@@ -116,6 +116,7 @@ class StatefulMultiSelect extends Component {
         ItemRenderer?: Function,
         selectAllLabel?: string,
         isLoading?: boolean,
+        disabled?: boolean,
         disableSearch?: boolean,
     }
 
@@ -130,6 +131,7 @@ class StatefulMultiSelect extends Component {
             selectAllLabel,
             valueRenderer,
             isLoading,
+            disabled,
             disableSearch,
         } = this.props;
         const {selected} = this.state;
@@ -143,6 +145,7 @@ class StatefulMultiSelect extends Component {
                 ItemRenderer={ItemRenderer}
                 selectAllLabel={selectAllLabel}
                 isLoading={isLoading}
+                disabled={disabled}
                 disableSearch={disableSearch}
             />
 
@@ -216,4 +219,10 @@ storiesOf('MultiSelect', module)
     <StatefulMultiSelect
         options={studentsList}
         disableSearch={true}
+    />)
+    .add('Disabled', () =>
+    <MultiSelect
+        options={studentsList}
+        selected={[students[1], students[2]]}
+        disabled={true}
     />);

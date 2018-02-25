@@ -27,6 +27,7 @@ class SelectPanel extends Component {
         selected: Array<any>,
         selectAllLabel?: string,
         onSelectedChanged: (selected: Array<any>) => void,
+        disabled?: boolean,
         disableSearch?: boolean,
     }
 
@@ -122,7 +123,12 @@ class SelectPanel extends Component {
 
     render() {
         const {focusIndex, searchHasFocus} = this.state;
-        const {ItemRenderer, selectAllLabel, disableSearch} = this.props;
+        const {
+            ItemRenderer,
+            selectAllLabel,
+            disabled,
+            disableSearch,
+        } = this.props;
 
         const selectAllOption = {
             label: selectAllLabel || "Select All",
@@ -156,6 +162,7 @@ class SelectPanel extends Component {
                 onSelectionChanged={this.selectAllChanged}
                 onClick={() => this.handleItemClicked(0)}
                 ItemRenderer={ItemRenderer}
+                disabled={disabled}
             />
 
             <SelectList
@@ -164,6 +171,7 @@ class SelectPanel extends Component {
                 focusIndex={focusIndex - 1}
                 onClick={(e, index) => this.handleItemClicked(index + 1)}
                 ItemRenderer={ItemRenderer}
+                disabled={disabled}
             />
         </div>;
     }

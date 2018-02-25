@@ -13,12 +13,18 @@ class DefaultItemRenderer extends Component {
     props: {
         checked: boolean,
         option: Option,
+        disabled?: boolean,
 
         onClick: (event: MouseEvent) => void,
     }
 
     render() {
-        const {checked, option, onClick} = this.props;
+        const {checked, option, onClick, disabled} = this.props;
+
+        const style = {
+            ...styles.label,
+            ...(disabled ? styles.labelDisabled : undefined),
+        };
 
         return <span>
             <input
@@ -26,8 +32,9 @@ class DefaultItemRenderer extends Component {
                 onChange={onClick}
                 checked={checked}
                 tabIndex="-1"
+                disabled={disabled}
             />
-            <span style={styles.label}>
+            <span style={style}>
                 {option.label}
             </span>
         </span>;
@@ -58,6 +65,7 @@ class SelectItem extends Component {
         option: Option,
         checked: boolean,
         focused?: boolean,
+        disabled?: boolean,
         onSelectionChanged: (checked: boolean) => void,
         onClick: (event: MouseEvent) => void,
     }
@@ -104,7 +112,7 @@ class SelectItem extends Component {
     }
 
     render() {
-        const {ItemRenderer, option, checked, focused} = this.props;
+        const {ItemRenderer, option, checked, focused, disabled} = this.props;
         const {hovered} = this.state;
 
         const focusStyle = (focused || hovered)
@@ -127,6 +135,7 @@ class SelectItem extends Component {
                 option={option}
                 checked={checked}
                 onClick={this.handleClick}
+                disabled={disabled}
             />
         </label>;
     }
@@ -153,6 +162,9 @@ const styles = {
         borderTopRightRadius: '2px',
         cursor: 'default',
         padding: '2px 5px',
+    },
+    labelDisabled: {
+        opacity: 0.5,
     },
 };
 

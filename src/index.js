@@ -33,6 +33,7 @@ class MultiSelect extends Component {
         ItemRenderer?: Function,
         selectAllLabel: string,
         isLoading?: boolean,
+        disabled?: boolean,
         disableSearch?: boolean,
     }
 
@@ -77,14 +78,24 @@ class MultiSelect extends Component {
         </span>;
     }
 
+    handleSelectedChanged = (selected: Array<any>) => {
+        const {onSelectedChanged, disabled} = this.props;
+
+        if (disabled) {
+            return;
+        }
+
+        onSelectedChanged(selected);
+    }
+
     render() {
         const {
             ItemRenderer,
             options,
             selected,
             selectAllLabel,
-            onSelectedChanged,
             isLoading,
+            disabled,
             disableSearch,
         } = this.props;
 
@@ -96,9 +107,11 @@ class MultiSelect extends Component {
                 options,
                 selected,
                 selectAllLabel,
-                onSelectedChanged,
+                onSelectedChanged: this.handleSelectedChanged,
+                disabled,
                 disableSearch,
             }}
+            disabled={disabled}
         >
             {this.renderHeader()}
         </Dropdown>;

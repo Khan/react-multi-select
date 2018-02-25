@@ -115,7 +115,8 @@ var MultiSelect = function (_Component) {
                 selected = _props3.selected,
                 selectAllLabel = _props3.selectAllLabel,
                 onSelectedChanged = _props3.onSelectedChanged,
-                isLoading = _props3.isLoading;
+                isLoading = _props3.isLoading,
+                disableSearch = _props3.disableSearch;
 
 
             return _react2.default.createElement(
@@ -128,7 +129,8 @@ var MultiSelect = function (_Component) {
                         options: options,
                         selected: selected,
                         selectAllLabel: selectAllLabel,
-                        onSelectedChanged: onSelectedChanged
+                        onSelectedChanged: onSelectedChanged,
+                        disableSearch: disableSearch
                     }
                 },
                 this.renderHeader()
