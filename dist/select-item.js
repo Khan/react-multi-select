@@ -39,8 +39,11 @@ var DefaultItemRenderer = function (_Component) {
             var _props = this.props,
                 checked = _props.checked,
                 option = _props.option,
-                onClick = _props.onClick;
+                onClick = _props.onClick,
+                disabled = _props.disabled;
 
+
+            var style = _extends({}, styles.label, disabled ? styles.labelDisabled : undefined);
 
             return _react2.default.createElement(
                 "span",
@@ -49,11 +52,12 @@ var DefaultItemRenderer = function (_Component) {
                     type: "checkbox",
                     onChange: onClick,
                     checked: checked,
-                    tabIndex: "-1"
+                    tabIndex: "-1",
+                    disabled: disabled
                 }),
                 _react2.default.createElement(
                     "span",
-                    { style: styles.label },
+                    { style: style },
                     option.label
                 )
             );
@@ -142,7 +146,8 @@ var SelectItem = function (_Component2) {
                 ItemRenderer = _props2.ItemRenderer,
                 option = _props2.option,
                 checked = _props2.checked,
-                focused = _props2.focused;
+                focused = _props2.focused,
+                disabled = _props2.disabled;
             var hovered = this.state.hovered;
 
 
@@ -171,7 +176,8 @@ var SelectItem = function (_Component2) {
                 _react2.default.createElement(ItemRenderer, {
                     option: option,
                     checked: checked,
-                    onClick: this.handleClick
+                    onClick: this.handleClick,
+                    disabled: disabled
                 })
             );
         }
@@ -205,6 +211,9 @@ var styles = {
         borderTopRightRadius: '2px',
         cursor: 'default',
         padding: '2px 5px'
+    },
+    labelDisabled: {
+        opacity: 0.5
     }
 };
 

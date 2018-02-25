@@ -45,9 +45,28 @@ var MultiSelect = function (_Component) {
     _inherits(MultiSelect, _Component);
 
     function MultiSelect() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, MultiSelect);
 
-        return _possibleConstructorReturn(this, (MultiSelect.__proto__ || Object.getPrototypeOf(MultiSelect)).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MultiSelect.__proto__ || Object.getPrototypeOf(MultiSelect)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectedChanged = function (selected) {
+            var _this$props = _this.props,
+                onSelectedChanged = _this$props.onSelectedChanged,
+                disabled = _this$props.disabled;
+
+
+            if (disabled) {
+                return;
+            }
+
+            onSelectedChanged(selected);
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(MultiSelect, [{
@@ -114,8 +133,8 @@ var MultiSelect = function (_Component) {
                 options = _props3.options,
                 selected = _props3.selected,
                 selectAllLabel = _props3.selectAllLabel,
-                onSelectedChanged = _props3.onSelectedChanged,
                 isLoading = _props3.isLoading,
+                disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch;
 
 
@@ -129,9 +148,11 @@ var MultiSelect = function (_Component) {
                         options: options,
                         selected: selected,
                         selectAllLabel: selectAllLabel,
-                        onSelectedChanged: onSelectedChanged,
+                        onSelectedChanged: this.handleSelectedChanged,
+                        disabled: disabled,
                         disableSearch: disableSearch
-                    }
+                    },
+                    disabled: disabled
                 },
                 this.renderHeader()
             );

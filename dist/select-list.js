@@ -45,8 +45,13 @@ var SelectList = function (_Component) {
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectList.__proto__ || Object.getPrototypeOf(SelectList)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectionChanged = function (option, checked) {
             var _this$props = _this.props,
                 selected = _this$props.selected,
-                onSelectedChanged = _this$props.onSelectedChanged;
+                onSelectedChanged = _this$props.onSelectedChanged,
+                disabled = _this$props.disabled;
 
+
+            if (disabled) {
+                true;
+            }
 
             if (checked) {
                 onSelectedChanged([].concat(_toConsumableArray(selected), [option.value]));
@@ -68,7 +73,8 @@ var SelectList = function (_Component) {
                 options = _props.options,
                 selected = _props.selected,
                 focusIndex = _props.focusIndex,
-                onClick = _props.onClick;
+                onClick = _props.onClick,
+                disabled = _props.disabled;
 
 
             return options.map(function (o, i) {
@@ -95,7 +101,8 @@ var SelectList = function (_Component) {
                         }(function (e) {
                             return onClick(e, i);
                         }),
-                        ItemRenderer: ItemRenderer
+                        ItemRenderer: ItemRenderer,
+                        disabled: disabled
                     })
                 );
             });

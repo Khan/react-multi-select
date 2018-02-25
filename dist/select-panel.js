@@ -158,6 +158,7 @@ var SelectPanel = function (_Component) {
             var _props2 = this.props,
                 ItemRenderer = _props2.ItemRenderer,
                 selectAllLabel = _props2.selectAllLabel,
+                disabled = _props2.disabled,
                 disableSearch = _props2.disableSearch;
 
 
@@ -199,7 +200,8 @@ var SelectPanel = function (_Component) {
                     onClick: function onClick() {
                         return _this2.handleItemClicked(0);
                     },
-                    ItemRenderer: ItemRenderer
+                    ItemRenderer: ItemRenderer,
+                    disabled: disabled
                 }),
                 _react2.default.createElement(_selectList2.default, _extends({}, this.props, {
                     options: this.filteredOptions(),
@@ -207,7 +209,8 @@ var SelectPanel = function (_Component) {
                     onClick: function onClick(e, index) {
                         return _this2.handleItemClicked(index + 1);
                     },
-                    ItemRenderer: ItemRenderer
+                    ItemRenderer: ItemRenderer,
+                    disabled: disabled
                 }))
             );
         }

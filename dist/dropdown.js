@@ -139,7 +139,8 @@ var Dropdown = function (_Component) {
                 hasFocus = _state.hasFocus;
             var _props2 = this.props,
                 children = _props2.children,
-                isLoading = _props2.isLoading;
+                isLoading = _props2.isLoading,
+                disabled = _props2.disabled;
 
 
             var expandedHeaderStyle = expanded ? styles.dropdownHeaderExpanded : undefined;
@@ -150,6 +151,8 @@ var Dropdown = function (_Component) {
 
             var focusedArrowStyle = hasFocus ? styles.dropdownArrowDownFocused : undefined;
 
+            var headingStyle = _extends({}, styles.dropdownChildren, disabled ? styles.disabledDropdownChildren : {});
+
             return _react2.default.createElement(
                 'div',
                 {
@@ -157,6 +160,7 @@ var Dropdown = function (_Component) {
                     role: 'combobox',
                     'aria-expanded': expanded,
                     'aria-readonly': 'true',
+                    'aria-disabled': disabled,
                     style: styles.dropdownContainer,
                     ref: function ref(_ref2) {
                         return _this2.wrapper = _ref2;
@@ -175,7 +179,7 @@ var Dropdown = function (_Component) {
                     },
                     _react2.default.createElement(
                         'span',
-                        { style: styles.dropdownChildren },
+                        { style: headingStyle },
                         children
                     ),
                     _react2.default.createElement(
@@ -250,6 +254,9 @@ var styles = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteWpace: 'nowrap'
+    },
+    disabledDropdownChildren: {
+        opacity: 0.5
     },
     dropdownContainer: {
         position: 'relative',

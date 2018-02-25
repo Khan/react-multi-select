@@ -118,8 +118,11 @@ var DefaultItemRenderer = function (_Component) {
             var _props = this.props,
                 checked = _props.checked,
                 option = _props.option,
-                onClick = _props.onClick;
+                onClick = _props.onClick,
+                disabled = _props.disabled;
 
+
+            var style = _extends({}, styles.label, disabled ? styles.labelDisabled : undefined);
 
             return _react2.default.createElement(
                 "span",
@@ -128,11 +131,12 @@ var DefaultItemRenderer = function (_Component) {
                     type: "checkbox",
                     onChange: onClick,
                     checked: checked,
-                    tabIndex: "-1"
+                    tabIndex: "-1",
+                    disabled: disabled
                 }),
                 _react2.default.createElement(
                     "span",
-                    { style: styles.label },
+                    { style: style },
                     option.label
                 )
             );
@@ -221,7 +225,8 @@ var SelectItem = function (_Component2) {
                 ItemRenderer = _props2.ItemRenderer,
                 option = _props2.option,
                 checked = _props2.checked,
-                focused = _props2.focused;
+                focused = _props2.focused,
+                disabled = _props2.disabled;
             var hovered = this.state.hovered;
 
 
@@ -250,7 +255,8 @@ var SelectItem = function (_Component2) {
                 _react2.default.createElement(ItemRenderer, {
                     option: option,
                     checked: checked,
-                    onClick: this.handleClick
+                    onClick: this.handleClick,
+                    disabled: disabled
                 })
             );
         }
@@ -284,6 +290,9 @@ var styles = {
         borderTopRightRadius: '2px',
         cursor: 'default',
         padding: '2px 5px'
+    },
+    labelDisabled: {
+        opacity: 0.5
     }
 };
 
@@ -435,7 +444,8 @@ var Dropdown = function (_Component) {
                 hasFocus = _state.hasFocus;
             var _props2 = this.props,
                 children = _props2.children,
-                isLoading = _props2.isLoading;
+                isLoading = _props2.isLoading,
+                disabled = _props2.disabled;
 
 
             var expandedHeaderStyle = expanded ? styles.dropdownHeaderExpanded : undefined;
@@ -446,6 +456,8 @@ var Dropdown = function (_Component) {
 
             var focusedArrowStyle = hasFocus ? styles.dropdownArrowDownFocused : undefined;
 
+            var headingStyle = _extends({}, styles.dropdownChildren, disabled ? styles.disabledDropdownChildren : {});
+
             return _react2.default.createElement(
                 'div',
                 {
@@ -453,6 +465,7 @@ var Dropdown = function (_Component) {
                     role: 'combobox',
                     'aria-expanded': expanded,
                     'aria-readonly': 'true',
+                    'aria-disabled': disabled,
                     style: styles.dropdownContainer,
                     ref: function ref(_ref2) {
                         return _this2.wrapper = _ref2;
@@ -471,7 +484,7 @@ var Dropdown = function (_Component) {
                     },
                     _react2.default.createElement(
                         'span',
-                        { style: styles.dropdownChildren },
+                        { style: headingStyle },
                         children
                     ),
                     _react2.default.createElement(
@@ -546,6 +559,9 @@ var styles = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteWpace: 'nowrap'
+    },
+    disabledDropdownChildren: {
+        opacity: 0.5
     },
     dropdownContainer: {
         position: 'relative',
@@ -770,6 +786,7 @@ var SelectPanel = function (_Component) {
             var _props2 = this.props,
                 ItemRenderer = _props2.ItemRenderer,
                 selectAllLabel = _props2.selectAllLabel,
+                disabled = _props2.disabled,
                 disableSearch = _props2.disableSearch;
 
 
@@ -811,7 +828,8 @@ var SelectPanel = function (_Component) {
                     onClick: function onClick() {
                         return _this2.handleItemClicked(0);
                     },
-                    ItemRenderer: ItemRenderer
+                    ItemRenderer: ItemRenderer,
+                    disabled: disabled
                 }),
                 _react2.default.createElement(_selectList2.default, _extends({}, this.props, {
                     options: this.filteredOptions(),
@@ -819,7 +837,8 @@ var SelectPanel = function (_Component) {
                     onClick: function onClick(e, index) {
                         return _this2.handleItemClicked(index + 1);
                     },
-                    ItemRenderer: ItemRenderer
+                    ItemRenderer: ItemRenderer,
+                    disabled: disabled
                 }))
             );
         }
@@ -911,9 +930,28 @@ var MultiSelect = function (_Component) {
     _inherits(MultiSelect, _Component);
 
     function MultiSelect() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, MultiSelect);
 
-        return _possibleConstructorReturn(this, (MultiSelect.__proto__ || Object.getPrototypeOf(MultiSelect)).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MultiSelect.__proto__ || Object.getPrototypeOf(MultiSelect)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectedChanged = function (selected) {
+            var _this$props = _this.props,
+                onSelectedChanged = _this$props.onSelectedChanged,
+                disabled = _this$props.disabled;
+
+
+            if (disabled) {
+                return;
+            }
+
+            onSelectedChanged(selected);
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(MultiSelect, [{
@@ -980,8 +1018,8 @@ var MultiSelect = function (_Component) {
                 options = _props3.options,
                 selected = _props3.selected,
                 selectAllLabel = _props3.selectAllLabel,
-                onSelectedChanged = _props3.onSelectedChanged,
                 isLoading = _props3.isLoading,
+                disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch;
 
 
@@ -995,9 +1033,11 @@ var MultiSelect = function (_Component) {
                         options: options,
                         selected: selected,
                         selectAllLabel: selectAllLabel,
-                        onSelectedChanged: onSelectedChanged,
+                        onSelectedChanged: this.handleSelectedChanged,
+                        disabled: disabled,
                         disableSearch: disableSearch
-                    }
+                    },
+                    disabled: disabled
                 },
                 this.renderHeader()
             );
@@ -1177,8 +1217,13 @@ var SelectList = function (_Component) {
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectList.__proto__ || Object.getPrototypeOf(SelectList)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectionChanged = function (option, checked) {
             var _this$props = _this.props,
                 selected = _this$props.selected,
-                onSelectedChanged = _this$props.onSelectedChanged;
+                onSelectedChanged = _this$props.onSelectedChanged,
+                disabled = _this$props.disabled;
 
+
+            if (disabled) {
+                true;
+            }
 
             if (checked) {
                 onSelectedChanged([].concat(_toConsumableArray(selected), [option.value]));
@@ -1200,7 +1245,8 @@ var SelectList = function (_Component) {
                 options = _props.options,
                 selected = _props.selected,
                 focusIndex = _props.focusIndex,
-                onClick = _props.onClick;
+                onClick = _props.onClick,
+                disabled = _props.disabled;
 
 
             return options.map(function (o, i) {
@@ -1227,7 +1273,8 @@ var SelectList = function (_Component) {
                         }(function (e) {
                             return onClick(e, i);
                         }),
-                        ItemRenderer: ItemRenderer
+                        ItemRenderer: ItemRenderer,
+                        disabled: disabled
                     })
                 );
             });
