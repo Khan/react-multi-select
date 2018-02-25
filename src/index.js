@@ -33,6 +33,7 @@ class MultiSelect extends Component {
         ItemRenderer?: Function,
         selectAllLabel: string,
         isLoading?: boolean,
+        disableSearch?: boolean,
     }
 
     getSelectedText() {
@@ -84,6 +85,7 @@ class MultiSelect extends Component {
             selectAllLabel,
             onSelectedChanged,
             isLoading,
+            disableSearch,
         } = this.props;
 
         return <Dropdown
@@ -95,6 +97,7 @@ class MultiSelect extends Component {
                 selected,
                 selectAllLabel,
                 onSelectedChanged,
+                disableSearch,
             }}
         >
             {this.renderHeader()}

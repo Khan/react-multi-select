@@ -27,6 +27,7 @@ class SelectPanel extends Component {
         selected: Array<any>,
         selectAllLabel?: string,
         onSelectedChanged: (selected: Array<any>) => void,
+        disableSearch?: boolean,
     }
 
     selectAll = () => {
@@ -121,7 +122,7 @@ class SelectPanel extends Component {
 
     render() {
         const {focusIndex, searchHasFocus} = this.state;
-        const {ItemRenderer, selectAllLabel} = this.props;
+        const {ItemRenderer, selectAllLabel, disableSearch} = this.props;
 
         const selectAllOption = {
             label: selectAllLabel || "Select All",
@@ -137,7 +138,7 @@ class SelectPanel extends Component {
             role="listbox"
             onKeyDown={this.handleKeyDown}
         >
-            <div style={styles.searchContainer}>
+            {!disableSearch && <div style={styles.searchContainer}>
                 <input
                     placeholder="Search"
                     type="text"
@@ -146,7 +147,7 @@ class SelectPanel extends Component {
                     onFocus={() => this.handleSearchFocus(true)}
                     onBlur={() => this.handleSearchFocus(false)}
                 />
-            </div>
+            </div>}
 
             <SelectItem
                 focused={focusIndex === 0}

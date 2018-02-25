@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -308,7 +308,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _loadingIndicator = __webpack_require__(4);
+var _loadingIndicator = __webpack_require__(5);
 
 var _loadingIndicator2 = _interopRequireDefault(_loadingIndicator);
 
@@ -620,7 +620,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _fuzzyMatchUtils = __webpack_require__(6);
+var _fuzzyMatchUtils = __webpack_require__(7);
 
 var _react = __webpack_require__(0);
 
@@ -630,7 +630,7 @@ var _selectItem = __webpack_require__(1);
 
 var _selectItem2 = _interopRequireDefault(_selectItem);
 
-var _selectList = __webpack_require__(5);
+var _selectList = __webpack_require__(6);
 
 var _selectList2 = _interopRequireDefault(_selectList);
 
@@ -868,254 +868,6 @@ exports.default = SelectPanel;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-/**
- * A simple loading indicator, modeled after react-select.  Since react styles
- * don't support animations, hack it so we inject the keyframe animation
- * into the document.
- */
-
-
-var STYLESHEET_NAME = "__react-multi-select_style_inject__";
-
-function findStylesheet() {
-    var styleSheet = Array.from(document.styleSheets).find(function (stylesheet) {
-        return stylesheet.title === STYLESHEET_NAME;
-    });
-
-    // upcast as CSSStyleSheet
-    var cssStylesheet = styleSheet;
-
-    return cssStylesheet;
-}
-
-function registerStylesheet(css) {
-    try {
-        if (findStylesheet()) {
-            return;
-        }
-
-        var style = document.createElement("style");
-        style.setAttribute("title", STYLESHEET_NAME);
-        document.head && document.head.appendChild(style);
-
-        var stylesheet = findStylesheet();
-        if (!stylesheet) {
-            // Someting bad happened.  Abort!
-            return;
-        }
-
-        stylesheet.insertRule(css, 0);
-    } catch (e) {}
-}
-
-var LoadingIndicator = function (_Component) {
-    _inherits(LoadingIndicator, _Component);
-
-    function LoadingIndicator() {
-        _classCallCheck(this, LoadingIndicator);
-
-        return _possibleConstructorReturn(this, (LoadingIndicator.__proto__ || Object.getPrototypeOf(LoadingIndicator)).apply(this, arguments));
-    }
-
-    _createClass(LoadingIndicator, [{
-        key: "componentWillMount",
-        value: function componentWillMount() {
-            // React styles don't support adding keyframe rules.  Create a
-            // stylesheet and inject the keyframe animarion into it.
-            registerStylesheet(keyFrames);
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            return _react2.default.createElement("span", { style: styles.loading });
-        }
-    }]);
-
-    return LoadingIndicator;
-}(_react.Component);
-
-var keyFrames = "\n@keyframes react-multi-select_loading-spin {\n    to {\n        transform: rotate(1turn);\n    }\n}\n";
-
-var styles = {
-    loading: {
-        "animation": "react-multi-select_loading-spin 400ms infinite linear",
-        "width": "16px",
-        "height": "16px",
-        boxSizing: "border-box",
-        borderRadius: "50%",
-        border: "2px solid #ccc",
-        borderRightColor: "#333",
-        display: "inline-block",
-        position: "relative",
-        verticalAlign: "middle"
-    }
-};
-
-exports.default = LoadingIndicator;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _selectItem = __webpack_require__(1);
-
-var _selectItem2 = _interopRequireDefault(_selectItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-/**
- * This component represents an unadorned list of SelectItem (s).
- */
-
-
-var SelectList = function (_Component) {
-    _inherits(SelectList, _Component);
-
-    function SelectList() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
-        _classCallCheck(this, SelectList);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectList.__proto__ || Object.getPrototypeOf(SelectList)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectionChanged = function (option, checked) {
-            var _this$props = _this.props,
-                selected = _this$props.selected,
-                onSelectedChanged = _this$props.onSelectedChanged;
-
-
-            if (checked) {
-                onSelectedChanged([].concat(_toConsumableArray(selected), [option.value]));
-            } else {
-                var _index = selected.indexOf(option.value);
-                var removed = [].concat(_toConsumableArray(selected.slice(0, _index)), _toConsumableArray(selected.slice(_index + 1)));
-                onSelectedChanged(removed);
-            }
-        }, _temp), _possibleConstructorReturn(_this, _ret);
-    }
-
-    _createClass(SelectList, [{
-        key: 'renderItems',
-        value: function renderItems() {
-            var _this2 = this;
-
-            var _props = this.props,
-                ItemRenderer = _props.ItemRenderer,
-                options = _props.options,
-                selected = _props.selected,
-                focusIndex = _props.focusIndex,
-                onClick = _props.onClick;
-
-
-            return options.map(function (o, i) {
-                return _react2.default.createElement(
-                    'li',
-                    { style: styles.listItem, key: i },
-                    _react2.default.createElement(_selectItem2.default, {
-                        focused: focusIndex === i,
-                        option: o,
-                        onSelectionChanged: function onSelectionChanged(c) {
-                            return _this2.handleSelectionChanged(o, c);
-                        },
-                        checked: selected.includes(o.value),
-                        onClick: function (_onClick) {
-                            function onClick(_x) {
-                                return _onClick.apply(this, arguments);
-                            }
-
-                            onClick.toString = function () {
-                                return _onClick.toString();
-                            };
-
-                            return onClick;
-                        }(function (e) {
-                            return onClick(e, i);
-                        }),
-                        ItemRenderer: ItemRenderer
-                    })
-                );
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'ul',
-                { style: styles.list },
-                this.renderItems()
-            );
-        }
-    }]);
-
-    return SelectList;
-}(_react.Component);
-
-var styles = {
-    list: {
-        margin: 0,
-        paddingLeft: 0
-    },
-    listItem: {
-        listStyle: 'none'
-    }
-};
-
-exports.default = SelectList;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-module.exports = require("fuzzy-match-utils");
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 exports.Dropdown = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1260,6 +1012,254 @@ var styles = {
 
 exports.default = MultiSelect;
 exports.Dropdown = _dropdown2.default;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * A simple loading indicator, modeled after react-select.  Since react styles
+ * don't support animations, hack it so we inject the keyframe animation
+ * into the document.
+ */
+
+
+var STYLESHEET_NAME = "__react-multi-select_style_inject__";
+
+function findStylesheet() {
+    var styleSheet = Array.from(document.styleSheets).find(function (stylesheet) {
+        return stylesheet.title === STYLESHEET_NAME;
+    });
+
+    // upcast as CSSStyleSheet
+    var cssStylesheet = styleSheet;
+
+    return cssStylesheet;
+}
+
+function registerStylesheet(css) {
+    try {
+        if (findStylesheet()) {
+            return;
+        }
+
+        var style = document.createElement("style");
+        style.setAttribute("title", STYLESHEET_NAME);
+        document.head && document.head.appendChild(style);
+
+        var stylesheet = findStylesheet();
+        if (!stylesheet) {
+            // Someting bad happened.  Abort!
+            return;
+        }
+
+        stylesheet.insertRule(css, 0);
+    } catch (e) {}
+}
+
+var LoadingIndicator = function (_Component) {
+    _inherits(LoadingIndicator, _Component);
+
+    function LoadingIndicator() {
+        _classCallCheck(this, LoadingIndicator);
+
+        return _possibleConstructorReturn(this, (LoadingIndicator.__proto__ || Object.getPrototypeOf(LoadingIndicator)).apply(this, arguments));
+    }
+
+    _createClass(LoadingIndicator, [{
+        key: "componentWillMount",
+        value: function componentWillMount() {
+            // React styles don't support adding keyframe rules.  Create a
+            // stylesheet and inject the keyframe animarion into it.
+            registerStylesheet(keyFrames);
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement("span", { style: styles.loading });
+        }
+    }]);
+
+    return LoadingIndicator;
+}(_react.Component);
+
+var keyFrames = "\n@keyframes react-multi-select_loading-spin {\n    to {\n        transform: rotate(1turn);\n    }\n}\n";
+
+var styles = {
+    loading: {
+        "animation": "react-multi-select_loading-spin 400ms infinite linear",
+        "width": "16px",
+        "height": "16px",
+        boxSizing: "border-box",
+        borderRadius: "50%",
+        border: "2px solid #ccc",
+        borderRightColor: "#333",
+        display: "inline-block",
+        position: "relative",
+        verticalAlign: "middle"
+    }
+};
+
+exports.default = LoadingIndicator;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _selectItem = __webpack_require__(1);
+
+var _selectItem2 = _interopRequireDefault(_selectItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * This component represents an unadorned list of SelectItem (s).
+ */
+
+
+var SelectList = function (_Component) {
+    _inherits(SelectList, _Component);
+
+    function SelectList() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, SelectList);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SelectList.__proto__ || Object.getPrototypeOf(SelectList)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectionChanged = function (option, checked) {
+            var _this$props = _this.props,
+                selected = _this$props.selected,
+                onSelectedChanged = _this$props.onSelectedChanged;
+
+
+            if (checked) {
+                onSelectedChanged([].concat(_toConsumableArray(selected), [option.value]));
+            } else {
+                var _index = selected.indexOf(option.value);
+                var removed = [].concat(_toConsumableArray(selected.slice(0, _index)), _toConsumableArray(selected.slice(_index + 1)));
+                onSelectedChanged(removed);
+            }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(SelectList, [{
+        key: 'renderItems',
+        value: function renderItems() {
+            var _this2 = this;
+
+            var _props = this.props,
+                ItemRenderer = _props.ItemRenderer,
+                options = _props.options,
+                selected = _props.selected,
+                focusIndex = _props.focusIndex,
+                onClick = _props.onClick;
+
+
+            return options.map(function (o, i) {
+                return _react2.default.createElement(
+                    'li',
+                    { style: styles.listItem, key: i },
+                    _react2.default.createElement(_selectItem2.default, {
+                        focused: focusIndex === i,
+                        option: o,
+                        onSelectionChanged: function onSelectionChanged(c) {
+                            return _this2.handleSelectionChanged(o, c);
+                        },
+                        checked: selected.includes(o.value),
+                        onClick: function (_onClick) {
+                            function onClick(_x) {
+                                return _onClick.apply(this, arguments);
+                            }
+
+                            onClick.toString = function () {
+                                return _onClick.toString();
+                            };
+
+                            return onClick;
+                        }(function (e) {
+                            return onClick(e, i);
+                        }),
+                        ItemRenderer: ItemRenderer
+                    })
+                );
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'ul',
+                { style: styles.list },
+                this.renderItems()
+            );
+        }
+    }]);
+
+    return SelectList;
+}(_react.Component);
+
+var styles = {
+    list: {
+        margin: 0,
+        paddingLeft: 0
+    },
+    listItem: {
+        listStyle: 'none'
+    }
+};
+
+exports.default = SelectList;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = require("fuzzy-match-utils");
 
 /***/ })
 /******/ ])));

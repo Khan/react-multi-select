@@ -116,6 +116,7 @@ class StatefulMultiSelect extends Component {
         ItemRenderer?: Function,
         selectAllLabel?: string,
         isLoading?: boolean,
+        disableSearch?: boolean,
     }
 
     handleSelectedChanged(selected) {
@@ -129,6 +130,7 @@ class StatefulMultiSelect extends Component {
             selectAllLabel,
             valueRenderer,
             isLoading,
+            disableSearch,
         } = this.props;
         const {selected} = this.state;
 
@@ -141,6 +143,7 @@ class StatefulMultiSelect extends Component {
                 ItemRenderer={ItemRenderer}
                 selectAllLabel={selectAllLabel}
                 isLoading={isLoading}
+                disableSearch={disableSearch}
             />
 
         <h2>Selected:</h2>
@@ -208,4 +211,9 @@ storiesOf('MultiSelect', module)
     .add('With loading indicator', () => <StatefulMultiSelect
         options={[]}
         isLoading={true}
+    />)
+    .add('Disable Search', () =>
+    <StatefulMultiSelect
+        options={studentsList}
+        disableSearch={true}
     />);
