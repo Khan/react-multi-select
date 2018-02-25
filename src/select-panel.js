@@ -14,21 +14,26 @@ import type {
     Option,
 } from './select-item.js';
 
-class SelectPanel extends Component {
+type Props = {
+    ItemRenderer?: Function,
+    options: Array<Option>,
+    selected: Array<any>,
+    selectAllLabel?: string,
+    onSelectedChanged: (selected: Array<any>) => void,
+    disabled?: boolean,
+    disableSearch?: boolean,
+};
+type State = {
+    searchHasFocus: boolean,
+    searchText: string,
+    focusIndex: number,
+};
+
+class SelectPanel extends Component<Props, State> {
     state = {
         searchHasFocus: false,
         searchText: "",
         focusIndex: 0,
-    }
-
-    props: {
-        ItemRenderer?: Function,
-        options: Array<Option>,
-        selected: Array<any>,
-        selectAllLabel?: string,
-        onSelectedChanged: (selected: Array<any>) => void,
-        disabled?: boolean,
-        disableSearch?: boolean,
     }
 
     selectAll = () => {

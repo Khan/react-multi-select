@@ -9,7 +9,13 @@ const options = [
     {label: "Jane Doe", value: 3},
 ];
 
-class StatefulSelectPanel extends Component {
+import type {Option} from "../select-item.js";
+type Props = {};
+type State = {
+    selected: Array<Option>,
+};
+
+class StatefulSelectPanel extends Component<Props, State> {
     constructor() {
         super();
         this.state = {

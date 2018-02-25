@@ -40,7 +40,7 @@ function registerStylesheet(css) {
     }
 }
 
-class LoadingIndicator extends Component {
+class LoadingIndicator extends Component<{}> {
     componentWillMount() {
         // React styles don't support adding keyframe rules.  Create a
         // stylesheet and inject the keyframe animarion into it.

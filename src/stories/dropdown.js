@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import {storiesOf} from '@kadira/storybook';
 import Dropdown from '../dropdown.js';
 
-class ContentPanel extends Component {
+
+class ContentPanel extends Component<{}> {
     render() {
         return <div>
             <p>

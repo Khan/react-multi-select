@@ -12,7 +12,13 @@ const option: Option = {
     value: 1,
 };
 
-class StatefulSelectItem extends Component {
+type Props = {};
+type State = {
+    option: Option,
+    checked: boolean,
+};
+
+class StatefulSelectItem extends Component<Props, State> {
     constructor() {
         super();
         this.state = {

@@ -10,17 +10,17 @@ import type {
     Option,
 } from './select-item.js';
 
-class SelectList extends Component {
-    props: {
-        focusIndex: number,
-        ItemRenderer?: Function,
-        options: Array<Option>,
-        selected: Array<Object>,
-        onSelectedChanged: (selected: any) => void,
-        onClick: (event: MouseEvent, index: number) => void,
-        disabled?: boolean,
-    }
+type Props = {
+    focusIndex: number,
+    ItemRenderer?: Function,
+    options: Array<Option>,
+    selected: Array<Object>,
+    onSelectedChanged: (selected: any) => void,
+    onClick: (event: MouseEvent, index: number) => void,
+    disabled?: boolean,
+};
 
+class SelectList extends Component<Props> {
     handleSelectionChanged = (option: Option, checked: boolean) => {
         const {selected, onSelectedChanged, disabled} = this.props;
 

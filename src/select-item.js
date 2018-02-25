@@ -9,15 +9,15 @@ export type Option = {
     label: string,
 };
 
-class DefaultItemRenderer extends Component {
-    props: {
-        checked: boolean,
-        option: Option,
-        disabled?: boolean,
+type DefaultItemRendererProps = {
+    checked: boolean,
+    option: Option,
+    disabled?: boolean,
 
-        onClick: (event: MouseEvent) => void,
-    }
+    onClick: (event: MouseEvent) => void,
+};
 
+class DefaultItemRenderer extends Component<DefaultItemRendererProps> {
     render() {
         const {checked, option, onClick, disabled} = this.props;
 
@@ -41,7 +41,20 @@ class DefaultItemRenderer extends Component {
     }
 }
 
-class SelectItem extends Component {
+type SelectItemProps = {
+    ItemRenderer: Function,
+    option: Option,
+    checked: boolean,
+    focused?: boolean,
+    disabled?: boolean,
+    onSelectionChanged: (checked: boolean) => void,
+    onClick: (event: MouseEvent) => void,
+};
+type SelectItemState = {
+    hovered: boolean,
+};
+
+class SelectItem extends Component<SelectItemProps, SelectItemState> {
     static defaultProps = {
         ItemRenderer: DefaultItemRenderer,
     }
@@ -58,17 +71,7 @@ class SelectItem extends Component {
         this.updateFocus();
     }
 
-    itemRef: HTMLElement
-
-    props: {
-        ItemRenderer: Function,
-        option: Option,
-        checked: boolean,
-        focused?: boolean,
-        disabled?: boolean,
-        onSelectionChanged: (checked: boolean) => void,
-        onClick: (event: MouseEvent) => void,
-    }
+    itemRef: ?HTMLElement
 
     onChecked = (e: {target: {checked: boolean}}) => {
         const {onSelectionChanged} = this.props;

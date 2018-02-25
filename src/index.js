@@ -21,22 +21,22 @@ import type {
     Option,
 } from './select-item.js';
 
-class MultiSelect extends Component {
-    props: {
-        options: Array<Option>,
+type Props = {
+    options: Array<Option>,
+    selected: Array<any>,
+    onSelectedChanged?: (selected: Array<any>) => void,
+    valueRenderer?: (
         selected: Array<any>,
-        onSelectedChanged: (selected: Array<any>) => void,
-        valueRenderer?: (
-            selected: Array<any>,
-            options: Array<Option>
-        ) => string,
-        ItemRenderer?: Function,
-        selectAllLabel: string,
-        isLoading?: boolean,
-        disabled?: boolean,
-        disableSearch?: boolean,
-    }
+        options: Array<Option>
+    ) => string,
+    ItemRenderer?: Function,
+    selectAllLabel?: string,
+    isLoading?: boolean,
+    disabled?: boolean,
+    disableSearch?: boolean,
+};
 
+class MultiSelect extends Component<Props> {
     getSelectedText() {
         const {options, selected} = this.props;
 
@@ -85,7 +85,9 @@ class MultiSelect extends Component {
             return;
         }
 
-        onSelectedChanged(selected);
+        if (onSelectedChanged) {
+            onSelectedChanged(selected);
+        }
     }
 
     render() {

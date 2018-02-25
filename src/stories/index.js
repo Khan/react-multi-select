@@ -102,22 +102,25 @@ const studentsList = students.map(s => ({
     label: s.name,
 }));
 
-class StatefulMultiSelect extends Component {
+type SMSProps = {
+    options: Option[],
+    valueRenderer?: (values: Array<any>, options: Array<Option>) => string,
+    ItemRenderer?: Function,
+    selectAllLabel?: string,
+    isLoading?: boolean,
+    disabled?: boolean,
+    disableSearch?: boolean,
+};
+type SMSState = {
+    selected: Array<Option>,
+};
+
+class StatefulMultiSelect extends Component<SMSProps, SMSState> {
     constructor() {
         super();
         this.state = {
             selected: [],
         };
-    }
-
-    props: {
-        options: Option[],
-        valueRenderer?: (values: Array<any>, options: Array<Option>) => string,
-        ItemRenderer?: Function,
-        selectAllLabel?: string,
-        isLoading?: boolean,
-        disabled?: boolean,
-        disableSearch?: boolean,
     }
 
     handleSelectedChanged(selected) {
@@ -167,14 +170,14 @@ function studentValueRenderer(selected, options) {
     return `Selected ${selected.length} Students`;
 }
 
-class StudentItemRenderer extends Component {
-    props: {
-        checked: boolean,
-        option: Option,
+type SIRProps = {
+    checked: boolean,
+    option: Option,
 
-        onClick: (event: MouseEvent) => void,
-    }
+    onClick: (event: MouseEvent) => void,
+};
 
+class StudentItemRenderer extends Component<SIRProps> {
     render() {
         const {checked, option, onClick} = this.props;
 

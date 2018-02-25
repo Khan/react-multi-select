@@ -8,7 +8,20 @@ import React, {Component} from 'react';
 
 import LoadingIndicator from './loading-indicator.js';
 
-class Dropdown extends Component {
+type Props = {
+    children?: Object,
+    contentComponent: Object,
+    contentProps: Object,
+    isLoading?: boolean,
+    disabled?: boolean,
+};
+
+type State = {
+    expanded: boolean,
+    hasFocus: boolean,
+};
+
+class Dropdown extends Component<Props, State> {
 
     state = {
         expanded: false,
@@ -25,15 +38,7 @@ class Dropdown extends Component {
         document.removeEventListener('mousedown', this.handleDocumentClick);
     }
 
-    props: {
-        children?: Object,
-        contentComponent: Object,
-        contentProps: Object,
-        isLoading?: boolean,
-        disabled?: boolean,
-    }
-
-    wrapper: Object
+    wrapper: ?Object
 
     handleDocumentClick = (event: Event) => {
         if (this.wrapper && !this.wrapper.contains(event.target)) {
