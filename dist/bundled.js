@@ -126,7 +126,9 @@ var DefaultItemRenderer = function (_Component) {
 
             return _react2.default.createElement(
                 "span",
-                null,
+                {
+                    className: "item-renderer"
+                },
                 _react2.default.createElement("input", {
                     type: "checkbox",
                     onChange: onClick,
@@ -235,6 +237,7 @@ var SelectItem = function (_Component2) {
             return _react2.default.createElement(
                 "label",
                 {
+                    className: "select-item",
                     role: "option",
                     "aria-selected": checked,
                     selected: checked,
@@ -430,7 +433,9 @@ var Dropdown = function (_Component) {
 
             return _react2.default.createElement(
                 'div',
-                { style: styles.panelContainer },
+                {
+                    className: 'dropdown-content',
+                    style: styles.panelContainer },
                 _react2.default.createElement(ContentComponent, contentProps)
             );
         }
@@ -461,6 +466,7 @@ var Dropdown = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 {
+                    className: 'dropdown',
                     tabIndex: '0',
                     role: 'combobox',
                     'aria-expanded': expanded,
@@ -477,6 +483,7 @@ var Dropdown = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     {
+                        className: 'dropdown-heading',
                         style: _extends({}, styles.dropdownHeader, expandedHeaderStyle, focusedHeaderStyle),
                         onClick: function onClick() {
                             return _this2.toggleExpanded();
@@ -484,17 +491,26 @@ var Dropdown = function (_Component) {
                     },
                     _react2.default.createElement(
                         'span',
-                        { style: headingStyle },
+                        {
+                            className: 'dropdown-heading-value',
+                            style: headingStyle
+                        },
                         children
                     ),
                     _react2.default.createElement(
                         'span',
-                        { style: styles.loadingContainer },
+                        {
+                            className: 'dropdown-heading-loading-container',
+                            style: styles.loadingContainer
+                        },
                         isLoading && _react2.default.createElement(_loadingIndicator2.default, null)
                     ),
                     _react2.default.createElement(
                         'span',
-                        { style: styles.dropdownArrow },
+                        {
+                            className: 'dropdown-heading-dropdown-arrow',
+                            style: styles.dropdownArrow
+                        },
                         _react2.default.createElement('span', { style: _extends({}, arrowStyle, focusedArrowStyle)
                         })
                     )
@@ -800,6 +816,7 @@ var SelectPanel = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 {
+                    className: 'select-panel',
                     style: styles.panel,
                     role: 'listbox',
                     onKeyDown: this.handleKeyDown
@@ -1026,22 +1043,26 @@ var MultiSelect = function (_Component) {
 
 
             return _react2.default.createElement(
-                _dropdown2.default,
-                {
-                    isLoading: isLoading,
-                    contentComponent: _selectPanel2.default,
-                    contentProps: {
-                        ItemRenderer: ItemRenderer,
-                        options: options,
-                        selected: selected,
-                        selectAllLabel: selectAllLabel,
-                        onSelectedChanged: this.handleSelectedChanged,
-                        disabled: disabled,
-                        disableSearch: disableSearch
+                'div',
+                { className: 'multi-select' },
+                _react2.default.createElement(
+                    _dropdown2.default,
+                    {
+                        isLoading: isLoading,
+                        contentComponent: _selectPanel2.default,
+                        contentProps: {
+                            ItemRenderer: ItemRenderer,
+                            options: options,
+                            selected: selected,
+                            selectAllLabel: selectAllLabel,
+                            onSelectedChanged: this.handleSelectedChanged,
+                            disabled: disabled,
+                            disableSearch: disableSearch
+                        },
+                        disabled: disabled
                     },
-                    disabled: disabled
-                },
-                this.renderHeader()
+                    this.renderHeader()
+                )
             );
         }
     }]);
@@ -1141,7 +1162,10 @@ var LoadingIndicator = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            return _react2.default.createElement("span", { style: styles.loading });
+            return _react2.default.createElement("span", {
+                className: "loading-indicator",
+                style: styles.loading
+            });
         }
     }]);
 
@@ -1289,7 +1313,10 @@ var SelectList = function (_Component) {
         value: function render() {
             return _react2.default.createElement(
                 'ul',
-                { style: styles.list },
+                {
+                    className: 'select-list',
+                    style: styles.list
+                },
                 this.renderItems()
             );
         }

@@ -100,7 +100,9 @@ class Dropdown extends Component<Props, State> {
     renderPanel() {
         const {contentComponent: ContentComponent, contentProps} = this.props;
 
-        return <div style={styles.panelContainer}>
+        return <div
+            className="dropdown-content"
+            style={styles.panelContainer}>
             <ContentComponent {...contentProps} />
         </div>;
     }
@@ -131,6 +133,7 @@ class Dropdown extends Component<Props, State> {
         };
 
         return <div
+            className="dropdown"
             tabIndex="0"
             role="combobox"
             aria-expanded={expanded}
@@ -143,6 +146,7 @@ class Dropdown extends Component<Props, State> {
             onBlur={this.handleBlur}
         >
             <div
+                className="dropdown-heading"
                 style={{
                     ...styles.dropdownHeader,
                     ...expandedHeaderStyle,
@@ -150,13 +154,22 @@ class Dropdown extends Component<Props, State> {
                 }}
                 onClick={() => this.toggleExpanded()}
             >
-                <span style={headingStyle}>
+                <span
+                    className="dropdown-heading-value"
+                    style={headingStyle}
+                >
                     {children}
                 </span>
-                <span style={styles.loadingContainer}>
+                <span
+                    className="dropdown-heading-loading-container"
+                    style={styles.loadingContainer}
+                >
                     {isLoading && <LoadingIndicator />}
                 </span>
-                <span style={styles.dropdownArrow}>
+                <span
+                    className="dropdown-heading-dropdown-arrow"
+                    style={styles.dropdownArrow}
+                >
                     <span style={{
                         ...arrowStyle,
                         ...focusedArrowStyle,

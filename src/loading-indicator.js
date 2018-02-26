@@ -48,7 +48,10 @@ class LoadingIndicator extends Component<{}> {
     }
 
     render() {
-        return <span style={styles.loading} />;
+        return <span
+            className="loading-indicator"
+            style={styles.loading}
+        />;
     }
 }
 

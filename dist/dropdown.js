@@ -125,7 +125,9 @@ var Dropdown = function (_Component) {
 
             return _react2.default.createElement(
                 'div',
-                { style: styles.panelContainer },
+                {
+                    className: 'dropdown-content',
+                    style: styles.panelContainer },
                 _react2.default.createElement(ContentComponent, contentProps)
             );
         }
@@ -156,6 +158,7 @@ var Dropdown = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 {
+                    className: 'dropdown',
                     tabIndex: '0',
                     role: 'combobox',
                     'aria-expanded': expanded,
@@ -172,6 +175,7 @@ var Dropdown = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     {
+                        className: 'dropdown-heading',
                         style: _extends({}, styles.dropdownHeader, expandedHeaderStyle, focusedHeaderStyle),
                         onClick: function onClick() {
                             return _this2.toggleExpanded();
@@ -179,17 +183,26 @@ var Dropdown = function (_Component) {
                     },
                     _react2.default.createElement(
                         'span',
-                        { style: headingStyle },
+                        {
+                            className: 'dropdown-heading-value',
+                            style: headingStyle
+                        },
                         children
                     ),
                     _react2.default.createElement(
                         'span',
-                        { style: styles.loadingContainer },
+                        {
+                            className: 'dropdown-heading-loading-container',
+                            style: styles.loadingContainer
+                        },
                         isLoading && _react2.default.createElement(_loadingIndicator2.default, null)
                     ),
                     _react2.default.createElement(
                         'span',
-                        { style: styles.dropdownArrow },
+                        {
+                            className: 'dropdown-heading-dropdown-arrow',
+                            style: styles.dropdownArrow
+                        },
                         _react2.default.createElement('span', { style: _extends({}, arrowStyle, focusedArrowStyle)
                         })
                     )

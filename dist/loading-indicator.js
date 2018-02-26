@@ -76,7 +76,10 @@ var LoadingIndicator = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            return _react2.default.createElement("span", { style: styles.loading });
+            return _react2.default.createElement("span", {
+                className: "loading-indicator",
+                style: styles.loading
+            });
         }
     }]);
 

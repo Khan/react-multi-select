@@ -47,7 +47,9 @@ var DefaultItemRenderer = function (_Component) {
 
             return _react2.default.createElement(
                 "span",
-                null,
+                {
+                    className: "item-renderer"
+                },
                 _react2.default.createElement("input", {
                     type: "checkbox",
                     onChange: onClick,
@@ -156,6 +158,7 @@ var SelectItem = function (_Component2) {
             return _react2.default.createElement(
                 "label",
                 {
+                    className: "select-item",
                     role: "option",
                     "aria-selected": checked,
                     selected: checked,

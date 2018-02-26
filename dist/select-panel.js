@@ -172,6 +172,7 @@ var SelectPanel = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 {
+                    className: 'select-panel',
                     style: styles.panel,
                     role: 'listbox',
                     onKeyDown: this.handleKeyDown

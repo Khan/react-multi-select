@@ -141,22 +141,26 @@ var MultiSelect = function (_Component) {
 
 
             return _react2.default.createElement(
-                _dropdown2.default,
-                {
-                    isLoading: isLoading,
-                    contentComponent: _selectPanel2.default,
-                    contentProps: {
-                        ItemRenderer: ItemRenderer,
-                        options: options,
-                        selected: selected,
-                        selectAllLabel: selectAllLabel,
-                        onSelectedChanged: this.handleSelectedChanged,
-                        disabled: disabled,
-                        disableSearch: disableSearch
+                'div',
+                { className: 'multi-select' },
+                _react2.default.createElement(
+                    _dropdown2.default,
+                    {
+                        isLoading: isLoading,
+                        contentComponent: _selectPanel2.default,
+                        contentProps: {
+                            ItemRenderer: ItemRenderer,
+                            options: options,
+                            selected: selected,
+                            selectAllLabel: selectAllLabel,
+                            onSelectedChanged: this.handleSelectedChanged,
+                            disabled: disabled,
+                            disableSearch: disableSearch
+                        },
+                        disabled: disabled
                     },
-                    disabled: disabled
-                },
-                this.renderHeader()
+                    this.renderHeader()
+                )
             );
         }
     }]);

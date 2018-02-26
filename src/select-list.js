@@ -66,7 +66,10 @@ class SelectList extends Component<Props> {
     }
 
     render() {
-        return <ul style={styles.list}>
+        return <ul
+            className="select-list"
+            style={styles.list}
+        >
             {this.renderItems()}
         </ul>;
     }

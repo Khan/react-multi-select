@@ -101,22 +101,24 @@ class MultiSelect extends Component<Props> {
             disableSearch,
         } = this.props;
 
-        return <Dropdown
-            isLoading={isLoading}
-            contentComponent={SelectPanel}
-            contentProps={{
-                ItemRenderer,
-                options,
-                selected,
-                selectAllLabel,
-                onSelectedChanged: this.handleSelectedChanged,
-                disabled,
-                disableSearch,
-            }}
-            disabled={disabled}
-        >
-            {this.renderHeader()}
-        </Dropdown>;
+        return <div className="multi-select">
+            <Dropdown
+                isLoading={isLoading}
+                contentComponent={SelectPanel}
+                contentProps={{
+                    ItemRenderer,
+                    options,
+                    selected,
+                    selectAllLabel,
+                    onSelectedChanged: this.handleSelectedChanged,
+                    disabled,
+                    disableSearch,
+                }}
+                disabled={disabled}
+            >
+                {this.renderHeader()}
+            </Dropdown>
+        </div>;
     }
 }
 

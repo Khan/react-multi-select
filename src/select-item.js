@@ -26,7 +26,9 @@ class DefaultItemRenderer extends Component<DefaultItemRendererProps> {
             ...(disabled ? styles.labelDisabled : undefined),
         };
 
-        return <span>
+        return <span
+            className="item-renderer"
+        >
             <input
                 type="checkbox"
                 onChange={onClick}
@@ -123,6 +125,7 @@ class SelectItem extends Component<SelectItemProps, SelectItemState> {
             : undefined;
 
         return <label
+            className="select-item"
             role="option"
             aria-selected={checked}
             selected={checked}

@@ -144,6 +144,7 @@ class SelectPanel extends Component<Props, State> {
             : undefined;
 
         return <div
+            className="select-panel"
             style={styles.panel}
             role="listbox"
             onKeyDown={this.handleKeyDown}

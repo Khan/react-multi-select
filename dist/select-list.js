@@ -112,7 +112,10 @@ var SelectList = function (_Component) {
         value: function render() {
             return _react2.default.createElement(
                 'ul',
-                { style: styles.list },
+                {
+                    className: 'select-list',
+                    style: styles.list
+                },
                 this.renderItems()
             );
         }
