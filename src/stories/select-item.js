@@ -15,7 +15,7 @@ const option: Option = {
 type Props = {};
 type State = {
     option: Option,
-    checked: boolean,
+    checked: boolean
 };
 
 class StatefulSelectItem extends Component<Props, State> {

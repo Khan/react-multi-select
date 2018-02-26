@@ -109,10 +109,10 @@ type SMSProps = {
     selectAllLabel?: string,
     isLoading?: boolean,
     disabled?: boolean,
-    disableSearch?: boolean,
+    disableSearch?: boolean
 };
 type SMSState = {
-    selected: Array<Option>,
+    selected: Array<Option>
 };
 
 class StatefulMultiSelect extends Component<SMSProps, SMSState> {
@@ -152,8 +152,8 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
                 disableSearch={disableSearch}
             />
 
-        <h2>Selected:</h2>
-        {selected.join(', ')}
+            <h2>Selected:</h2>
+            {selected.join(', ')}
         </div>;
     }
 }
@@ -174,7 +174,7 @@ type SIRProps = {
     checked: boolean,
     option: Option,
 
-    onClick: (event: MouseEvent) => void,
+    onClick: (event: MouseEvent) => void
 };
 
 class StudentItemRenderer extends Component<SIRProps> {
@@ -218,13 +218,11 @@ storiesOf('MultiSelect', module)
         options={[]}
         isLoading={true}
     />)
-    .add('Disable Search', () =>
-    <StatefulMultiSelect
+    .add('Disable Search', () => <StatefulMultiSelect
         options={studentsList}
         disableSearch={true}
     />)
-    .add('Disabled', () =>
-    <MultiSelect
+    .add('Disabled', () => <MultiSelect
         options={studentsList}
         selected={[students[1], students[2]]}
         disabled={true}

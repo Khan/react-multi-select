@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 
 export type Option = {
     value: any,
-    label: string,
+    label: string
 };
 
 type DefaultItemRendererProps = {
@@ -14,7 +14,7 @@ type DefaultItemRendererProps = {
     option: Option,
     disabled?: boolean,
 
-    onClick: (event: MouseEvent) => void,
+    onClick: (event: MouseEvent) => void
 };
 
 class DefaultItemRenderer extends Component<DefaultItemRendererProps> {
@@ -48,10 +48,10 @@ type SelectItemProps = {
     focused?: boolean,
     disabled?: boolean,
     onSelectionChanged: (checked: boolean) => void,
-    onClick: (event: MouseEvent) => void,
+    onClick: (event: MouseEvent) => void
 };
 type SelectItemState = {
-    hovered: boolean,
+    hovered: boolean
 };
 
 class SelectItem extends Component<SelectItemProps, SelectItemState> {

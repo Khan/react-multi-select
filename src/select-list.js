@@ -17,7 +17,7 @@ type Props = {
     selected: Array<Object>,
     onSelectedChanged: (selected: any) => void,
     onClick: (event: MouseEvent, index: number) => void,
-    disabled?: boolean,
+    disabled?: boolean
 };
 
 class SelectList extends Component<Props> {

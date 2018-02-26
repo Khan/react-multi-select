@@ -10,9 +10,7 @@ import React, {Component} from 'react';
 import SelectItem from './select-item.js';
 import SelectList from './select-list.js';
 
-import type {
-    Option,
-} from './select-item.js';
+import type {Option} from './select-item.js';
 
 type Props = {
     ItemRenderer?: Function,
@@ -21,12 +19,13 @@ type Props = {
     selectAllLabel?: string,
     onSelectedChanged: (selected: Array<any>) => void,
     disabled?: boolean,
-    disableSearch?: boolean,
+    disableSearch?: boolean
 };
+
 type State = {
     searchHasFocus: boolean,
     searchText: string,
-    focusIndex: number,
+    focusIndex: number
 };
 
 class SelectPanel extends Component<Props, State> {

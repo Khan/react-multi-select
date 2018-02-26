@@ -33,7 +33,7 @@ type Props = {
     selectAllLabel?: string,
     isLoading?: boolean,
     disabled?: boolean,
-    disableSearch?: boolean,
+    disableSearch?: boolean
 };
 
 class MultiSelect extends Component<Props> {

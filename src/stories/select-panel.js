@@ -10,12 +10,12 @@ const options = [
 ];
 
 import type {Option} from "../select-item.js";
-type Props = {};
+
 type State = {
-    selected: Array<Option>,
+    selected: Array<Option>
 };
 
-class StatefulSelectPanel extends Component<Props, State> {
+class StatefulSelectPanel extends Component<{}, State> {
     constructor() {
         super();
         this.state = {

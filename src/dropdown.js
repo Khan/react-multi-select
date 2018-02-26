@@ -13,12 +13,12 @@ type Props = {
     contentComponent: Object,
     contentProps: Object,
     isLoading?: boolean,
-    disabled?: boolean,
+    disabled?: boolean
 };
 
 type State = {
     expanded: boolean,
-    hasFocus: boolean,
+    hasFocus: boolean
 };
 
 class Dropdown extends Component<Props, State> {

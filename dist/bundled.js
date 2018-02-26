@@ -950,7 +950,9 @@ var MultiSelect = function (_Component) {
                 return;
             }
 
-            onSelectedChanged(selected);
+            if (onSelectedChanged) {
+                onSelectedChanged(selected);
+            }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -1145,6 +1147,9 @@ var LoadingIndicator = function (_Component) {
 
     return LoadingIndicator;
 }(_react.Component);
+
+LoadingIndicator.propTypes = {};
+
 
 var keyFrames = "\n@keyframes react-multi-select_loading-spin {\n    to {\n        transform: rotate(1turn);\n    }\n}\n";
 

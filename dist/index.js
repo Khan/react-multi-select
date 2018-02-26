@@ -65,7 +65,9 @@ var MultiSelect = function (_Component) {
                 return;
             }
 
-            onSelectedChanged(selected);
+            if (onSelectedChanged) {
+                onSelectedChanged(selected);
+            }
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 

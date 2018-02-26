@@ -83,6 +83,9 @@ var LoadingIndicator = function (_Component) {
     return LoadingIndicator;
 }(_react.Component);
 
+LoadingIndicator.propTypes = {};
+
+
 var keyFrames = "\n@keyframes react-multi-select_loading-spin {\n    to {\n        transform: rotate(1turn);\n    }\n}\n";
 
 var styles = {
