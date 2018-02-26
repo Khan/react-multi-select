@@ -127,7 +127,8 @@ var Dropdown = function (_Component) {
                 'div',
                 {
                     className: 'dropdown-content',
-                    style: styles.panelContainer },
+                    style: styles.panelContainer
+                },
                 _react2.default.createElement(ContentComponent, contentProps)
             );
         }

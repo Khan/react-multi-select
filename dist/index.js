@@ -137,7 +137,8 @@ var MultiSelect = function (_Component) {
                 selectAllLabel = _props3.selectAllLabel,
                 isLoading = _props3.isLoading,
                 disabled = _props3.disabled,
-                disableSearch = _props3.disableSearch;
+                disableSearch = _props3.disableSearch,
+                filterOptions = _props3.filterOptions;
 
 
             return _react2.default.createElement(
@@ -155,7 +156,8 @@ var MultiSelect = function (_Component) {
                             selectAllLabel: selectAllLabel,
                             onSelectedChanged: this.handleSelectedChanged,
                             disabled: disabled,
-                            disableSearch: disableSearch
+                            disableSearch: disableSearch,
+                            filterOptions: filterOptions
                         },
                         disabled: disabled
                     },

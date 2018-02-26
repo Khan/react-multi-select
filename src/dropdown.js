@@ -102,7 +102,8 @@ class Dropdown extends Component<Props, State> {
 
         return <div
             className="dropdown-content"
-            style={styles.panelContainer}>
+            style={styles.panelContainer}
+        >
             <ContentComponent {...contentProps} />
         </div>;
     }

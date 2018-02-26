@@ -129,10 +129,12 @@ var SelectPanel = function (_Component) {
         key: 'filteredOptions',
         value: function filteredOptions() {
             var searchText = this.state.searchText;
-            var options = this.props.options;
+            var _props2 = this.props,
+                options = _props2.options,
+                customFilterOptions = _props2.filterOptions;
 
 
-            return (0, _fuzzyMatchUtils.filterOptions)(options, searchText);
+            return customFilterOptions ? customFilterOptions(options, searchText) : (0, _fuzzyMatchUtils.filterOptions)(options, searchText);
         }
     }, {
         key: 'updateFocus',
@@ -155,11 +157,11 @@ var SelectPanel = function (_Component) {
             var _state = this.state,
                 focusIndex = _state.focusIndex,
                 searchHasFocus = _state.searchHasFocus;
-            var _props2 = this.props,
-                ItemRenderer = _props2.ItemRenderer,
-                selectAllLabel = _props2.selectAllLabel,
-                disabled = _props2.disabled,
-                disableSearch = _props2.disableSearch;
+            var _props3 = this.props,
+                ItemRenderer = _props3.ItemRenderer,
+                selectAllLabel = _props3.selectAllLabel,
+                disabled = _props3.disabled,
+                disableSearch = _props3.disableSearch;
 
 
             var selectAllOption = {

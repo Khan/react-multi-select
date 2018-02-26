@@ -109,7 +109,8 @@ type SMSProps = {
     selectAllLabel?: string,
     isLoading?: boolean,
     disabled?: boolean,
-    disableSearch?: boolean
+    disableSearch?: boolean,
+    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 type SMSState = {
     selected: Array<Option>
@@ -136,6 +137,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
             isLoading,
             disabled,
             disableSearch,
+            filterOptions,
         } = this.props;
         const {selected} = this.state;
 
@@ -150,6 +152,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
                 isLoading={isLoading}
                 disabled={disabled}
                 disableSearch={disableSearch}
+                filterOptions={filterOptions}
             />
 
             <h2>Selected:</h2>
@@ -196,6 +199,15 @@ class StudentItemRenderer extends Component<SIRProps> {
     }
 }
 
+const customFilter = (options: Array<Option>, filter: string) => {
+    const optionIncludesText = (option: Option) => {
+        const label = option.label || "";
+        return label.toLowerCase().includes(filter);
+    };
+
+    return options.filter(optionIncludesText);
+};
+
 storiesOf('MultiSelect', module)
     .add('default view', () => <StatefulMultiSelect options={shortList} />)
     .add('long list view', () => <StatefulMultiSelect options={longList} />)
@@ -226,4 +238,8 @@ storiesOf('MultiSelect', module)
         options={studentsList}
         selected={[students[1], students[2]]}
         disabled={true}
+    />)
+    .add('Custom Filter', () => <StatefulMultiSelect
+        options={studentsList}
+        filterOptions={customFilter}
     />);

@@ -435,7 +435,8 @@ var Dropdown = function (_Component) {
                 'div',
                 {
                     className: 'dropdown-content',
-                    style: styles.panelContainer },
+                    style: styles.panelContainer
+                },
                 _react2.default.createElement(ContentComponent, contentProps)
             );
         }
@@ -773,10 +774,12 @@ var SelectPanel = function (_Component) {
         key: 'filteredOptions',
         value: function filteredOptions() {
             var searchText = this.state.searchText;
-            var options = this.props.options;
+            var _props2 = this.props,
+                options = _props2.options,
+                customFilterOptions = _props2.filterOptions;
 
 
-            return (0, _fuzzyMatchUtils.filterOptions)(options, searchText);
+            return customFilterOptions ? customFilterOptions(options, searchText) : (0, _fuzzyMatchUtils.filterOptions)(options, searchText);
         }
     }, {
         key: 'updateFocus',
@@ -799,11 +802,11 @@ var SelectPanel = function (_Component) {
             var _state = this.state,
                 focusIndex = _state.focusIndex,
                 searchHasFocus = _state.searchHasFocus;
-            var _props2 = this.props,
-                ItemRenderer = _props2.ItemRenderer,
-                selectAllLabel = _props2.selectAllLabel,
-                disabled = _props2.disabled,
-                disableSearch = _props2.disableSearch;
+            var _props3 = this.props,
+                ItemRenderer = _props3.ItemRenderer,
+                selectAllLabel = _props3.selectAllLabel,
+                disabled = _props3.disabled,
+                disableSearch = _props3.disableSearch;
 
 
             var selectAllOption = {
@@ -1039,7 +1042,8 @@ var MultiSelect = function (_Component) {
                 selectAllLabel = _props3.selectAllLabel,
                 isLoading = _props3.isLoading,
                 disabled = _props3.disabled,
-                disableSearch = _props3.disableSearch;
+                disableSearch = _props3.disableSearch,
+                filterOptions = _props3.filterOptions;
 
 
             return _react2.default.createElement(
@@ -1057,7 +1061,8 @@ var MultiSelect = function (_Component) {
                             selectAllLabel: selectAllLabel,
                             onSelectedChanged: this.handleSelectedChanged,
                             disabled: disabled,
-                            disableSearch: disableSearch
+                            disableSearch: disableSearch,
+                            filterOptions: filterOptions
                         },
                         disabled: disabled
                     },

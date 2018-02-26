@@ -33,7 +33,8 @@ type Props = {
     selectAllLabel?: string,
     isLoading?: boolean,
     disabled?: boolean,
-    disableSearch?: boolean
+    disableSearch?: boolean,
+    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 
 class MultiSelect extends Component<Props> {
@@ -99,6 +100,7 @@ class MultiSelect extends Component<Props> {
             isLoading,
             disabled,
             disableSearch,
+            filterOptions,
         } = this.props;
 
         return <div className="multi-select">
@@ -113,6 +115,7 @@ class MultiSelect extends Component<Props> {
                     onSelectedChanged: this.handleSelectedChanged,
                     disabled,
                     disableSearch,
+                    filterOptions,
                 }}
                 disabled={disabled}
             >

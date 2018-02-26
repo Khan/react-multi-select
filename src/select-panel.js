@@ -19,7 +19,8 @@ type Props = {
     selectAllLabel?: string,
     onSelectedChanged: (selected: Array<any>) => void,
     disabled?: boolean,
-    disableSearch?: boolean
+    disableSearch?: boolean,
+    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 
 type State = {
@@ -109,9 +110,11 @@ class SelectPanel extends Component<Props, State> {
 
     filteredOptions() {
         const {searchText} = this.state;
-        const {options} = this.props;
+        const {options, filterOptions: customFilterOptions} = this.props;
 
-        return filterOptions(options, searchText);
+        return customFilterOptions ?
+            customFilterOptions(options, searchText) :
+            filterOptions(options, searchText);
     }
 
     updateFocus(offset: number) {
