@@ -102,8 +102,6 @@ var SelectItem = function (_Component2) {
 
             _this2.toggleChecked();
             onClick(e);
-
-            e.preventDefault();
         }, _this2.handleKeyDown = function (e) {
             switch (e.which) {
                 case 13: // Enter
@@ -164,7 +162,6 @@ var SelectItem = function (_Component2) {
                     selected: checked,
                     tabIndex: "-1",
                     style: _extends({}, styles.itemContainer, focusStyle),
-                    onClick: this.handleClick,
                     ref: function ref(_ref2) {
                         return _this3.itemRef = _ref2;
                     },

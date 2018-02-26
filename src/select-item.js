@@ -91,8 +91,6 @@ class SelectItem extends Component<SelectItemProps, SelectItemState> {
         const {onClick} = this.props;
         this.toggleChecked();
         onClick(e);
-
-        e.preventDefault();
     }
 
     updateFocus() {
@@ -131,7 +129,6 @@ class SelectItem extends Component<SelectItemProps, SelectItemState> {
             selected={checked}
             tabIndex="-1"
             style={{...styles.itemContainer, ...focusStyle}}
-            onClick={this.handleClick}
             ref={ref => this.itemRef = ref}
             onKeyDown={this.handleKeyDown}
             onMouseOver={() => this.setState({hovered: true})}
