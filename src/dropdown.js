@@ -13,7 +13,8 @@ type Props = {
     contentComponent: Object,
     contentProps: Object,
     isLoading?: boolean,
-    disabled?: boolean
+    disabled?: boolean,
+    shouldToggleOnHover?: boolean
 };
 
 type State = {
@@ -77,6 +78,22 @@ class Dropdown extends Component<Props, State> {
 
         if (hasFocus) {
             this.setState({hasFocus: false});
+        }
+    }
+
+    handleMouseEnter = (e: {target: any}) => {
+        this.handleHover(true);
+    }
+
+    handleMouseLeave = (e: {target: any}) => {
+        this.handleHover(false);
+    }
+
+    handleHover = (toggleExpanded: boolean) => {
+        const {shouldToggleOnHover} = this.props;
+
+        if (shouldToggleOnHover) {
+            this.toggleExpanded(toggleExpanded);
         }
     }
 
@@ -145,6 +162,8 @@ class Dropdown extends Component<Props, State> {
             onKeyDown={this.handleKeyDown}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
         >
             <div
                 className="dropdown-heading"
@@ -153,7 +172,7 @@ class Dropdown extends Component<Props, State> {
                     ...expandedHeaderStyle,
                     ...focusedHeaderStyle,
                 }}
-                onClick={() => this.toggleExpanded()}
+                onClick={this.toggleExpanded}
             >
                 <span
                     className="dropdown-heading-value"
