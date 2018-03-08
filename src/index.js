@@ -40,51 +40,51 @@ type Props = {
 };
 
 class MultiSelect extends Component<Props> {
-  static defaultProps = {
-      hasSelectAll: true,
-      shouldToggleOnHover: false,
-  }
+    static defaultProps = {
+        hasSelectAll: true,
+        shouldToggleOnHover: false,
+    }
 
-  getSelectedText() {
-      const {options, selected} = this.props;
+    getSelectedText() {
+        const {options, selected} = this.props;
 
-      const selectedOptions = selected
-          .map(s => options.find(o => o.value === s));
+        const selectedOptions = selected
+            .map(s => options.find(o => o.value === s));
 
-      const selectedLabels = selectedOptions.map(s => s ? s.label : "");
+        const selectedLabels = selectedOptions.map(s => s ? s.label : "");
 
-      return selectedLabels.join(", ");
-  }
+        return selectedLabels.join(", ");
+    }
 
-  renderHeader() {
-      const {
-          options,
-          selected,
-          valueRenderer,
-      } = this.props;
+    renderHeader() {
+        const {
+            options,
+            selected,
+            valueRenderer,
+        } = this.props;
 
-      const noneSelected = selected.length === 0;
-      const allSelected = selected.length === options.length;
+        const noneSelected = selected.length === 0;
+        const allSelected = selected.length === options.length;
 
-      const customText = valueRenderer && valueRenderer(selected, options);
+        const customText = valueRenderer && valueRenderer(selected, options);
 
-      if (noneSelected) {
-          return <span style={styles.noneSelected}>
-              {customText || "Select some items..."}
-          </span>;
-      }
+        if (noneSelected) {
+            return <span style={styles.noneSelected}>
+                {customText || "Select some items..."}
+            </span>;
+        }
 
-      if (customText) {
-          return <span>{customText}</span>;
-      }
+        if (customText) {
+            return <span>{customText}</span>;
+        }
 
-      return <span>
-          {allSelected
-              ? "All items are selected"
-              : this.getSelectedText()
-          }
-      </span>;
-  }
+        return <span>
+            {allSelected
+                ? "All items are selected"
+                : this.getSelectedText()
+            }
+        </span>;
+    }
 
     handleSelectedChanged = (selected: Array<any>) => {
         const {onSelectedChanged, disabled} = this.props;
