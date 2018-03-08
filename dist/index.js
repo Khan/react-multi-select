@@ -138,7 +138,8 @@ var MultiSelect = function (_Component) {
                 isLoading = _props3.isLoading,
                 disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch,
-                filterOptions = _props3.filterOptions;
+                filterOptions = _props3.filterOptions,
+                shouldToggleOnHover = _props3.shouldToggleOnHover;
 
 
             return _react2.default.createElement(
@@ -149,6 +150,7 @@ var MultiSelect = function (_Component) {
                     {
                         isLoading: isLoading,
                         contentComponent: _selectPanel2.default,
+                        shouldToggleOnHover: shouldToggleOnHover,
                         contentProps: {
                             ItemRenderer: ItemRenderer,
                             options: options,

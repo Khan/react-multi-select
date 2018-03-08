@@ -389,6 +389,17 @@ var Dropdown = function (_Component) {
             if (hasFocus) {
                 _this.setState({ hasFocus: false });
             }
+        }, _this.handleMouseEnter = function (e) {
+            _this.handleHover(true);
+        }, _this.handleMouseLeave = function (e) {
+            _this.handleHover(false);
+        }, _this.handleHover = function (toggleExpanded) {
+            var shouldToggleOnHover = _this.props.shouldToggleOnHover;
+
+
+            if (shouldToggleOnHover) {
+                _this.toggleExpanded(toggleExpanded);
+            }
         }, _this.toggleExpanded = function (value) {
             var isLoading = _this.props.isLoading;
             var expanded = _this.state.expanded;
@@ -476,16 +487,16 @@ var Dropdown = function (_Component) {
                     },
                     onKeyDown: this.handleKeyDown,
                     onFocus: this.handleFocus,
-                    onBlur: this.handleBlur
+                    onBlur: this.handleBlur,
+                    onMouseEnter: this.handleMouseEnter,
+                    onMouseLeave: this.handleMouseLeave
                 },
                 _react2.default.createElement(
                     'div',
                     {
                         className: 'dropdown-heading',
                         style: _extends({}, styles.dropdownHeader, expandedHeaderStyle, focusedHeaderStyle),
-                        onClick: function onClick() {
-                            return _this2.toggleExpanded();
-                        }
+                        onClick: this.toggleExpanded
                     },
                     _react2.default.createElement(
                         'span',
@@ -1040,7 +1051,8 @@ var MultiSelect = function (_Component) {
                 isLoading = _props3.isLoading,
                 disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch,
-                filterOptions = _props3.filterOptions;
+                filterOptions = _props3.filterOptions,
+                shouldToggleOnHover = _props3.shouldToggleOnHover;
 
 
             return _react2.default.createElement(
@@ -1051,6 +1063,7 @@ var MultiSelect = function (_Component) {
                     {
                         isLoading: isLoading,
                         contentComponent: _selectPanel2.default,
+                        shouldToggleOnHover: shouldToggleOnHover,
                         contentProps: {
                             ItemRenderer: ItemRenderer,
                             options: options,

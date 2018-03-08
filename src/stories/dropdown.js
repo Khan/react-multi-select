@@ -79,4 +79,7 @@ const DropdownExample = () => <Dropdown
 
 
 storiesOf('Dropdown', module)
-    .add('default view', () => <DropdownExample />);
+    .add('default view', () => <DropdownExample />)
+    .add('when toggles on hover', () =>
+        <DropdownExample shouldToggleOnHover/>
+    );
