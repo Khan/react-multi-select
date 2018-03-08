@@ -34,51 +34,57 @@ type Props = {
     isLoading?: boolean,
     disabled?: boolean,
     disableSearch?: boolean,
-    shouldToggleOnHover?: boolean,
+    shouldToggleOnHover: boolean,
+    hasSelectAll: boolean,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 
 class MultiSelect extends Component<Props> {
-    getSelectedText() {
-        const {options, selected} = this.props;
+  static defaultProps = {
+      hasSelectAll: true,
+      shouldToggleOnHover: false,
+  }
 
-        const selectedOptions = selected
-            .map(s => options.find(o => o.value === s));
+  getSelectedText() {
+      const {options, selected} = this.props;
 
-        const selectedLabels = selectedOptions.map(s => s ? s.label : "");
+      const selectedOptions = selected
+          .map(s => options.find(o => o.value === s));
 
-        return selectedLabels.join(", ");
-    }
+      const selectedLabels = selectedOptions.map(s => s ? s.label : "");
 
-    renderHeader() {
-        const {
-            options,
-            selected,
-            valueRenderer,
-        } = this.props;
+      return selectedLabels.join(", ");
+  }
 
-        const noneSelected = selected.length === 0;
-        const allSelected = selected.length === options.length;
+  renderHeader() {
+      const {
+          options,
+          selected,
+          valueRenderer,
+      } = this.props;
 
-        const customText = valueRenderer && valueRenderer(selected, options);
+      const noneSelected = selected.length === 0;
+      const allSelected = selected.length === options.length;
 
-        if (noneSelected) {
-            return <span style={styles.noneSelected}>
-                {customText || "Select some items..."}
-            </span>;
-        }
+      const customText = valueRenderer && valueRenderer(selected, options);
 
-        if (customText) {
-            return <span>{customText}</span>;
-        }
+      if (noneSelected) {
+          return <span style={styles.noneSelected}>
+              {customText || "Select some items..."}
+          </span>;
+      }
 
-        return <span>
-            {allSelected
-                ? "All items are selected"
-                : this.getSelectedText()
-            }
-        </span>;
-    }
+      if (customText) {
+          return <span>{customText}</span>;
+      }
+
+      return <span>
+          {allSelected
+              ? "All items are selected"
+              : this.getSelectedText()
+          }
+      </span>;
+  }
 
     handleSelectedChanged = (selected: Array<any>) => {
         const {onSelectedChanged, disabled} = this.props;
@@ -103,6 +109,7 @@ class MultiSelect extends Component<Props> {
             disableSearch,
             filterOptions,
             shouldToggleOnHover,
+            hasSelectAll,
         } = this.props;
 
         return <div className="multi-select">
@@ -114,6 +121,7 @@ class MultiSelect extends Component<Props> {
                     ItemRenderer,
                     options,
                     selected,
+                    hasSelectAll,
                     selectAllLabel,
                     onSelectedChanged: this.handleSelectedChanged,
                     disabled,

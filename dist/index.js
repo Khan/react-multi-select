@@ -139,7 +139,8 @@ var MultiSelect = function (_Component) {
                 disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch,
                 filterOptions = _props3.filterOptions,
-                shouldToggleOnHover = _props3.shouldToggleOnHover;
+                shouldToggleOnHover = _props3.shouldToggleOnHover,
+                hasSelectAll = _props3.hasSelectAll;
 
 
             return _react2.default.createElement(
@@ -155,6 +156,7 @@ var MultiSelect = function (_Component) {
                             ItemRenderer: ItemRenderer,
                             options: options,
                             selected: selected,
+                            hasSelectAll: hasSelectAll,
                             selectAllLabel: selectAllLabel,
                             onSelectedChanged: this.handleSelectedChanged,
                             disabled: disabled,
@@ -171,6 +173,12 @@ var MultiSelect = function (_Component) {
 
     return MultiSelect;
 }(_react.Component);
+
+MultiSelect.defaultProps = {
+    hasSelectAll: true,
+    shouldToggleOnHover: false
+};
+
 
 var styles = {
     noneSelected: {

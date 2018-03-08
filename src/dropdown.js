@@ -23,7 +23,6 @@ type State = {
 };
 
 class Dropdown extends Component<Props, State> {
-
     state = {
         expanded: false,
         hasFocus: false,

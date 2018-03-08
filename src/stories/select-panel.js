@@ -34,6 +34,7 @@ class StatefulSelectPanel extends Component<{}, State> {
             <SelectPanel
                 options={options}
                 onSelectedChanged={this.handleSelectedChanged.bind(this)}
+                hasSelectAll
                 selected={selected}
             />
 

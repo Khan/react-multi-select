@@ -814,7 +814,8 @@ var SelectPanel = function (_Component) {
                 ItemRenderer = _props3.ItemRenderer,
                 selectAllLabel = _props3.selectAllLabel,
                 disabled = _props3.disabled,
-                disableSearch = _props3.disableSearch;
+                disableSearch = _props3.disableSearch,
+                hasSelectAll = _props3.hasSelectAll;
 
 
             var selectAllOption = {
@@ -848,7 +849,7 @@ var SelectPanel = function (_Component) {
                         }
                     })
                 ),
-                _react2.default.createElement(_selectItem2.default, {
+                hasSelectAll && _react2.default.createElement(_selectItem2.default, {
                     focused: focusIndex === 0,
                     checked: this.allAreSelected(),
                     option: selectAllOption,
@@ -1052,7 +1053,8 @@ var MultiSelect = function (_Component) {
                 disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch,
                 filterOptions = _props3.filterOptions,
-                shouldToggleOnHover = _props3.shouldToggleOnHover;
+                shouldToggleOnHover = _props3.shouldToggleOnHover,
+                hasSelectAll = _props3.hasSelectAll;
 
 
             return _react2.default.createElement(
@@ -1068,6 +1070,7 @@ var MultiSelect = function (_Component) {
                             ItemRenderer: ItemRenderer,
                             options: options,
                             selected: selected,
+                            hasSelectAll: hasSelectAll,
                             selectAllLabel: selectAllLabel,
                             onSelectedChanged: this.handleSelectedChanged,
                             disabled: disabled,
@@ -1084,6 +1087,12 @@ var MultiSelect = function (_Component) {
 
     return MultiSelect;
 }(_react.Component);
+
+MultiSelect.defaultProps = {
+    hasSelectAll: true,
+    shouldToggleOnHover: false
+};
+
 
 var styles = {
     noneSelected: {

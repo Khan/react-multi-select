@@ -161,7 +161,8 @@ var SelectPanel = function (_Component) {
                 ItemRenderer = _props3.ItemRenderer,
                 selectAllLabel = _props3.selectAllLabel,
                 disabled = _props3.disabled,
-                disableSearch = _props3.disableSearch;
+                disableSearch = _props3.disableSearch,
+                hasSelectAll = _props3.hasSelectAll;
 
 
             var selectAllOption = {
@@ -195,7 +196,7 @@ var SelectPanel = function (_Component) {
                         }
                     })
                 ),
-                _react2.default.createElement(_selectItem2.default, {
+                hasSelectAll && _react2.default.createElement(_selectItem2.default, {
                     focused: focusIndex === 0,
                     checked: this.allAreSelected(),
                     option: selectAllOption,
