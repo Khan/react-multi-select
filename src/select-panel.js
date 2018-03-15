@@ -20,6 +20,7 @@ type Props = {
     onSelectedChanged: (selected: Array<any>) => void,
     disabled?: boolean,
     disableSearch?: boolean,
+    hasSelectAll: boolean,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 
@@ -135,6 +136,7 @@ class SelectPanel extends Component<Props, State> {
             selectAllLabel,
             disabled,
             disableSearch,
+            hasSelectAll,
         } = this.props;
 
         const selectAllOption = {
@@ -163,15 +165,17 @@ class SelectPanel extends Component<Props, State> {
                 />
             </div>}
 
-            <SelectItem
-                focused={focusIndex === 0}
-                checked={this.allAreSelected()}
-                option={selectAllOption}
-                onSelectionChanged={this.selectAllChanged}
-                onClick={() => this.handleItemClicked(0)}
-                ItemRenderer={ItemRenderer}
-                disabled={disabled}
-            />
+            {hasSelectAll &&
+              <SelectItem
+                  focused={focusIndex === 0}
+                  checked={this.allAreSelected()}
+                  option={selectAllOption}
+                  onSelectionChanged={this.selectAllChanged}
+                  onClick={() => this.handleItemClicked(0)}
+                  ItemRenderer={ItemRenderer}
+                  disabled={disabled}
+              />
+            }
 
             <SelectList
                 {...this.props}

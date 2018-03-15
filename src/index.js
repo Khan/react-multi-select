@@ -34,10 +34,17 @@ type Props = {
     isLoading?: boolean,
     disabled?: boolean,
     disableSearch?: boolean,
+    shouldToggleOnHover: boolean,
+    hasSelectAll: boolean,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 
 class MultiSelect extends Component<Props> {
+    static defaultProps = {
+        hasSelectAll: true,
+        shouldToggleOnHover: false,
+    }
+
     getSelectedText() {
         const {options, selected} = this.props;
 
@@ -101,16 +108,20 @@ class MultiSelect extends Component<Props> {
             disabled,
             disableSearch,
             filterOptions,
+            shouldToggleOnHover,
+            hasSelectAll,
         } = this.props;
 
         return <div className="multi-select">
             <Dropdown
                 isLoading={isLoading}
                 contentComponent={SelectPanel}
+                shouldToggleOnHover={shouldToggleOnHover}
                 contentProps={{
                     ItemRenderer,
                     options,
                     selected,
+                    hasSelectAll,
                     selectAllLabel,
                     onSelectedChanged: this.handleSelectedChanged,
                     disabled,
