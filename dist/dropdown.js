@@ -191,7 +191,9 @@ var Dropdown = function (_Component) {
                     {
                         className: 'dropdown-heading',
                         style: _extends({}, styles.dropdownHeader, expandedHeaderStyle, focusedHeaderStyle),
-                        onClick: this.toggleExpanded
+                        onClick: function onClick() {
+                            return _this2.toggleExpanded();
+                        }
                     },
                     _react2.default.createElement(
                         'span',
