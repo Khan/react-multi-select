@@ -171,7 +171,7 @@ class Dropdown extends Component<Props, State> {
                     ...expandedHeaderStyle,
                     ...focusedHeaderStyle,
                 }}
-                onClick={this.toggleExpanded}
+                onClick={() => this.toggleExpanded()}
             >
                 <span
                     className="dropdown-heading-value"
