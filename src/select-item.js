@@ -6,7 +6,8 @@ import React, {Component} from 'react';
 
 export type Option = {
     value: any,
-    label: string
+    label: string,
+    key?: string
 };
 
 type DefaultItemRendererProps = {
