@@ -70,9 +70,10 @@ class ContentPanel extends Component<{}> {
     }
 }
 
-const DropdownExample = () => <Dropdown
+const DropdownExample = (props) => <Dropdown
     contentComponent={ContentPanel}
     contentProps={{}}
+    {...props}
 >
     <span>This is the header</span>
 </Dropdown>;
