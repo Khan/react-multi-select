@@ -51,7 +51,7 @@ class SelectList extends Component<Props> {
         } = this.props;
 
         return options.map((o, i) =>
-            <li style={styles.listItem} key={i}>
+            <li style={styles.listItem} key={o.hasOwnProperty("key") ? o.key : i}>
                 <SelectItem
                     focused={focusIndex === i}
                     option={o}
