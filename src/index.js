@@ -36,6 +36,7 @@ type Props = {
     disableSearch?: boolean,
     shouldToggleOnHover: boolean,
     hasSelectAll: boolean,
+    onInputChange?: (inputValue: string) => void,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 
@@ -108,6 +109,7 @@ class MultiSelect extends Component<Props> {
             disabled,
             disableSearch,
             filterOptions,
+            onInputChange,
             shouldToggleOnHover,
             hasSelectAll,
         } = this.props;
@@ -127,6 +129,7 @@ class MultiSelect extends Component<Props> {
                     disabled,
                     disableSearch,
                     filterOptions,
+                    onInputChange,
                 }}
                 disabled={disabled}
             >

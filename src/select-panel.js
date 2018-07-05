@@ -21,6 +21,7 @@ type Props = {
     disabled?: boolean,
     disableSearch?: boolean,
     hasSelectAll: boolean,
+    onInputChange?: (inputValue: string) => void,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 
@@ -59,8 +60,11 @@ class SelectPanel extends Component<Props, State> {
     }
 
     handleSearchChange = (e: {target: {value: any}}) => {
+        const {onInputChange} = this.props;
+        const {value} = e.target;
+        onInputChange && onInputChange(value);
         this.setState({
-            searchText: e.target.value,
+            searchText: value,
             focusIndex: -1,
         });
     }
