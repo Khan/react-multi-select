@@ -76,20 +76,19 @@ var MultiSelect = function (_Component) {
         value: function getSelectedText() {
             var _props = this.props,
                 options = _props.options,
-                selected = _props.selected;
+                selected = _props.selected,
+                smallSummaryLabel = _props.smallSummaryLabel;
 
-
-            var selectedOptions = selected.map(function (s) {
+            var selectedLabels = selected.map(function (s) {
                 return options.find(function (o) {
                     return o.value === s;
                 });
             });
-
-            var selectedLabels = selectedOptions.map(function (s) {
-                return s ? s.label : "";
-            });
-
-            return selectedLabels.join(", ");
+            if (smallSummaryLabel) {
+                return selectedLabels.length + ' selected';
+            } else {
+                return selectedLabels.join(", ");
+            }
         }
     }, {
         key: 'renderHeader',

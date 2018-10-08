@@ -110,6 +110,7 @@ type SMSProps = {
     isLoading?: boolean,
     disabled?: boolean,
     disableSearch?: boolean,
+    smallSummaryLabel?: boolean,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 type SMSState = {
@@ -138,6 +139,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
             disabled,
             disableSearch,
             filterOptions,
+            smallSummaryLabel,
         } = this.props;
         const {selected} = this.state;
 
@@ -153,6 +155,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
                 disabled={disabled}
                 disableSearch={disableSearch}
                 filterOptions={filterOptions}
+                smallSummaryLabel={smallSummaryLabel}
             />
 
             <h2>Selected:</h2>
@@ -163,7 +166,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
 
 function studentValueRenderer(selected, options) {
     if (selected.length === 0) {
-        return "Slect some students...";
+        return "Select some students...";
     }
 
     if (selected.length === options.length) {
@@ -242,4 +245,8 @@ storiesOf('MultiSelect', module)
     .add('Custom Filter', () => <StatefulMultiSelect
         options={studentsList}
         filterOptions={customFilter}
+    />)
+    .add('Display number instead of labels', () => <StatefulMultiSelect
+        options={shortList}
+        smallSummaryLabel
     />);
