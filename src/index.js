@@ -16,6 +16,7 @@ import React, {Component} from 'react';
 
 import Dropdown from './dropdown.js';
 import SelectPanel from './select-panel.js';
+import getString from './get-string.js';
 
 import type {
     Option,
@@ -36,7 +37,8 @@ type Props = {
     disableSearch?: boolean,
     shouldToggleOnHover: boolean,
     hasSelectAll: boolean,
-    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
+    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>,
+    overrideStrings?: {[string]: string}
 };
 
 class MultiSelect extends Component<Props> {
@@ -61,6 +63,7 @@ class MultiSelect extends Component<Props> {
             options,
             selected,
             valueRenderer,
+            overrideStrings,
         } = this.props;
 
         const noneSelected = selected.length === 0;
@@ -70,7 +73,7 @@ class MultiSelect extends Component<Props> {
 
         if (noneSelected) {
             return <span style={styles.noneSelected}>
-                {customText || "Select some items..."}
+                {customText || getString("selectSomeItems", overrideStrings)}
             </span>;
         }
 
@@ -80,7 +83,7 @@ class MultiSelect extends Component<Props> {
 
         return <span>
             {allSelected
-                ? "All items are selected"
+                ? getString("allItemsAreSelected", overrideStrings)
                 : this.getSelectedText()
             }
         </span>;
@@ -110,6 +113,7 @@ class MultiSelect extends Component<Props> {
             filterOptions,
             shouldToggleOnHover,
             hasSelectAll,
+            overrideStrings,
         } = this.props;
 
         return <div className="multi-select">
@@ -127,6 +131,7 @@ class MultiSelect extends Component<Props> {
                     disabled,
                     disableSearch,
                     filterOptions,
+                    overrideStrings,
                 }}
                 disabled={disabled}
             >

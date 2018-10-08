@@ -110,7 +110,8 @@ type SMSProps = {
     isLoading?: boolean,
     disabled?: boolean,
     disableSearch?: boolean,
-    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
+    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>,
+    overrideStrings?: {[string]: string}
 };
 type SMSState = {
     selected: Array<Option>
@@ -138,6 +139,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
             disabled,
             disableSearch,
             filterOptions,
+            overrideStrings,
         } = this.props;
         const {selected} = this.state;
 
@@ -153,6 +155,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
                 disabled={disabled}
                 disableSearch={disableSearch}
                 filterOptions={filterOptions}
+                overrideStrings={overrideStrings}
             />
 
             <h2>Selected:</h2>
@@ -242,4 +245,13 @@ storiesOf('MultiSelect', module)
     .add('Custom Filter', () => <StatefulMultiSelect
         options={studentsList}
         filterOptions={customFilter}
+    />)
+    .add('Custom Strings', () => <StatefulMultiSelect
+        options={studentsList}
+        overrideStrings={{
+            selectSomeItems: "SeLeCt SoMe iTeMs...",
+            allItemsAreSelected: "ALl ItEmS aRe SeLeCtEd",
+            selectAll: "SeLeCt AlL",
+            search: "SeArCh",
+        }}
     />);

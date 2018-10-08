@@ -9,6 +9,7 @@ import React, {Component} from 'react';
 
 import SelectItem from './select-item.js';
 import SelectList from './select-list.js';
+import getString from "./get-string.js";
 
 import type {Option} from './select-item.js';
 
@@ -21,7 +22,8 @@ type Props = {
     disabled?: boolean,
     disableSearch?: boolean,
     hasSelectAll: boolean,
-    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
+    filterOptions?: (options: Array<Option>, filter: string) => Array<Option>,
+    overrideStrings?: {[string]: string}
 };
 
 type State = {
@@ -137,10 +139,11 @@ class SelectPanel extends Component<Props, State> {
             disabled,
             disableSearch,
             hasSelectAll,
+            overrideStrings,
         } = this.props;
 
         const selectAllOption = {
-            label: selectAllLabel || "Select All",
+            label: selectAllLabel || getString("selectAll", overrideStrings),
             value: "",
         };
 
@@ -156,7 +159,7 @@ class SelectPanel extends Component<Props, State> {
         >
             {!disableSearch && <div style={styles.searchContainer}>
                 <input
-                    placeholder="Search"
+                    placeholder={getString("search", overrideStrings)}
                     type="text"
                     onChange={this.handleSearchChange}
                     style={{...styles.search, ...focusedSearchStyle}}

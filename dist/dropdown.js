@@ -61,6 +61,8 @@ var Dropdown = function (_Component) {
                     // Up Arrow
                     _this.toggleExpanded(false);
                     break;
+                case 13: // Enter Key
+                case 32: // Space
                 case 40:
                     // Down Arrow
                     _this.toggleExpanded(true);
@@ -280,7 +282,7 @@ var styles = {
         maxWidth: '100%',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteWpace: 'nowrap'
+        whiteSpace: 'nowrap'
     },
     disabledDropdownChildren: {
         opacity: 0.5
