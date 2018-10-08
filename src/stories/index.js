@@ -110,7 +110,7 @@ type SMSProps = {
     isLoading?: boolean,
     disabled?: boolean,
     disableSearch?: boolean,
-    displayLabelsLength?: boolean,
+    smallSummaryLabel?: boolean,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>
 };
 type SMSState = {
@@ -139,7 +139,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
             disabled,
             disableSearch,
             filterOptions,
-            displayLabelsLength,
+            smallSummaryLabel,
         } = this.props;
         const {selected} = this.state;
 
@@ -155,7 +155,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
                 disabled={disabled}
                 disableSearch={disableSearch}
                 filterOptions={filterOptions}
-                displayLabelsLength={displayLabelsLength}
+                smallSummaryLabel={smallSummaryLabel}
             />
 
             <h2>Selected:</h2>
@@ -248,5 +248,5 @@ storiesOf('MultiSelect', module)
     />)
     .add('Display number instead of labels', () => <StatefulMultiSelect
         options={shortList}
-        displayLabelsLength
+        smallSummaryLabel
     />);

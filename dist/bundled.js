@@ -1001,7 +1001,7 @@ var MultiSelect = function (_Component) {
                         return o.value === s;
                     });
                 });
-                return selectedOptions.length + ' items selected';
+                return selectedOptions.length + ' selected';
             } else {
                 var _selectedOptions = selected.map(function (s) {
                     return options.find(function (o) {

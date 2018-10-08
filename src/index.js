@@ -30,7 +30,7 @@ type Props = {
         options: Array<Option>
     ) => string,
     ItemRenderer?: Function,
-    displayLabelsLength?: boolean,
+    smallSummaryLabel?: boolean,
     selectAllLabel?: string,
     isLoading?: boolean,
     disabled?: boolean,
@@ -47,17 +47,12 @@ class MultiSelect extends Component<Props> {
     }
 
     getSelectedText() {
-        const {options, selected, displayLabelsLength} = this.props;
-        if (displayLabelsLength) {
-            const selectedOptions = selected
-                .map(s => options.find(o => o.value === s));
-            return `${selectedOptions.length} selected`;
+        const {options, selected, smallSummaryLabel} = this.props;
+        const selectedLabels = selected
+            .map(s => options.find(o => o.value === s));
+        if (smallSummaryLabel) {
+            return `${selectedLabels.length} selected`;
         } else {
-            const selectedOptions = selected
-                .map(s => options.find(o => o.value === s));
-
-            const selectedLabels = selectedOptions.map(s => s ? s.label : "");
-
             return selectedLabels.join(", ");
         }
     }
