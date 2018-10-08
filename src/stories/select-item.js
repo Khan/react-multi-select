@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import SelectItem from '../select-item.js';
 
 import type {

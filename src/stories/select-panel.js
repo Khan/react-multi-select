@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from 'react';
-import {storiesOf} from '@kadira/storybook';
+import {storiesOf} from '@storybook/react';
 import SelectPanel from '../select-panel.js';
 
 const options = [
