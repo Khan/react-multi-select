@@ -51,7 +51,7 @@ class MultiSelect extends Component<Props> {
         if (displayLabelsLength) {
             const selectedOptions = selected
                 .map(s => options.find(o => o.value === s));
-            return `${selectedOptions.length} items selected`;
+            return `${selectedOptions.length} selected`;
         } else {
             const selectedOptions = selected
                 .map(s => options.find(o => o.value === s));
