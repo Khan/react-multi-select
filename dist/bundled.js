@@ -993,26 +993,16 @@ var MultiSelect = function (_Component) {
             var _props = this.props,
                 options = _props.options,
                 selected = _props.selected,
-                displayLabelsLength = _props.displayLabelsLength;
+                smallSummaryLabel = _props.smallSummaryLabel;
 
-            if (displayLabelsLength) {
-                var selectedOptions = selected.map(function (s) {
-                    return options.find(function (o) {
-                        return o.value === s;
-                    });
+            var selectedLabels = selected.map(function (s) {
+                return options.find(function (o) {
+                    return o.value === s;
                 });
-                return selectedOptions.length + ' selected';
+            });
+            if (smallSummaryLabel) {
+                return selectedLabels.length + ' selected';
             } else {
-                var _selectedOptions = selected.map(function (s) {
-                    return options.find(function (o) {
-                        return o.value === s;
-                    });
-                });
-
-                var selectedLabels = _selectedOptions.map(function (s) {
-                    return s ? s.label : "";
-                });
-
                 return selectedLabels.join(", ");
             }
         }
