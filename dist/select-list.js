@@ -80,7 +80,7 @@ var SelectList = function (_Component) {
             return options.map(function (o, i) {
                 return _react2.default.createElement(
                     'li',
-                    { style: styles.listItem, key: i },
+                    { style: styles.listItem, key: o.hasOwnProperty("key") ? o.key : i },
                     _react2.default.createElement(_selectItem2.default, {
                         focused: focusIndex === i,
                         option: o,
