@@ -54,6 +54,8 @@ class Dropdown extends Component<Props, State> {
             case 38: // Up Arrow
                 this.toggleExpanded(false);
                 break;
+            case 13: // Enter Key
+            case 32: // Space
             case 40: // Down Arrow
                 this.toggleExpanded(true);
                 break;
@@ -252,7 +254,7 @@ const styles = {
         maxWidth: '100%',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteWpace: 'nowrap',
+        whiteSpace: 'nowrap',
     },
     disabledDropdownChildren: {
         opacity: 0.5,
