@@ -992,20 +992,29 @@ var MultiSelect = function (_Component) {
         value: function getSelectedText() {
             var _props = this.props,
                 options = _props.options,
-                selected = _props.selected;
+                selected = _props.selected,
+                displayLabelsLength = _props.displayLabelsLength;
 
-
-            var selectedOptions = selected.map(function (s) {
-                return options.find(function (o) {
-                    return o.value === s;
+            if (displayLabelsLength) {
+                var selectedOptions = selected.map(function (s) {
+                    return options.find(function (o) {
+                        return o.value === s;
+                    });
                 });
-            });
+                return selectedOptions.length + ' items selected';
+            } else {
+                var _selectedOptions = selected.map(function (s) {
+                    return options.find(function (o) {
+                        return o.value === s;
+                    });
+                });
 
-            var selectedLabels = selectedOptions.map(function (s) {
-                return s ? s.label : "";
-            });
+                var selectedLabels = _selectedOptions.map(function (s) {
+                    return s ? s.label : "";
+                });
 
-            return selectedLabels.join(", ");
+                return selectedLabels.join(", ");
+            }
         }
     }, {
         key: 'renderHeader',
@@ -1307,7 +1316,7 @@ var SelectList = function (_Component) {
             return options.map(function (o, i) {
                 return _react2.default.createElement(
                     'li',
-                    { style: styles.listItem, key: i },
+                    { style: styles.listItem, key: o.hasOwnProperty("key") ? o.key : i },
                     _react2.default.createElement(_selectItem2.default, {
                         focused: focusIndex === i,
                         option: o,
