@@ -19,6 +19,10 @@ var _selectPanel = require('./select-panel.js');
 
 var _selectPanel2 = _interopRequireDefault(_selectPanel);
 
+var _getString = require('./get-string.js');
+
+var _getString2 = _interopRequireDefault(_getString);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -97,7 +101,8 @@ var MultiSelect = function (_Component) {
             var _props2 = this.props,
                 options = _props2.options,
                 selected = _props2.selected,
-                valueRenderer = _props2.valueRenderer;
+                valueRenderer = _props2.valueRenderer,
+                overrideStrings = _props2.overrideStrings;
 
 
             var noneSelected = selected.length === 0;
@@ -109,7 +114,7 @@ var MultiSelect = function (_Component) {
                 return _react2.default.createElement(
                     'span',
                     { style: styles.noneSelected },
-                    customText || "Select some items..."
+                    customText || (0, _getString2.default)("selectSomeItems", overrideStrings)
                 );
             }
 
@@ -124,7 +129,7 @@ var MultiSelect = function (_Component) {
             return _react2.default.createElement(
                 'span',
                 null,
-                allSelected ? "All items are selected" : this.getSelectedText()
+                allSelected ? (0, _getString2.default)("allItemsAreSelected", overrideStrings) : this.getSelectedText()
             );
         }
     }, {
@@ -140,7 +145,8 @@ var MultiSelect = function (_Component) {
                 disableSearch = _props3.disableSearch,
                 filterOptions = _props3.filterOptions,
                 shouldToggleOnHover = _props3.shouldToggleOnHover,
-                hasSelectAll = _props3.hasSelectAll;
+                hasSelectAll = _props3.hasSelectAll,
+                overrideStrings = _props3.overrideStrings;
 
 
             return _react2.default.createElement(
@@ -161,7 +167,8 @@ var MultiSelect = function (_Component) {
                             onSelectedChanged: this.handleSelectedChanged,
                             disabled: disabled,
                             disableSearch: disableSearch,
-                            filterOptions: filterOptions
+                            filterOptions: filterOptions,
+                            overrideStrings: overrideStrings
                         },
                         disabled: disabled
                     },

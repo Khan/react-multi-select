@@ -47,7 +47,6 @@ class SelectList extends Component<Props> {
             selected,
             focusIndex,
             onClick,
-            disabled,
         } = this.props;
 
         return options.map((o, i) =>
@@ -62,7 +61,7 @@ class SelectList extends Component<Props> {
                     checked={selected.includes(o.value)}
                     onClick={e => onClick(e, i)}
                     ItemRenderer={ItemRenderer}
-                    disabled={disabled}
+                    disabled={o.disabled}
                 />
             </li>
         );
