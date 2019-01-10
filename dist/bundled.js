@@ -1341,7 +1341,8 @@ var SelectList = function (_Component) {
                 options = _props.options,
                 selected = _props.selected,
                 focusIndex = _props.focusIndex,
-                onClick = _props.onClick;
+                onClick = _props.onClick,
+                disabled = _props.disabled;
 
 
             return options.map(function (o, i) {
@@ -1372,7 +1373,7 @@ var SelectList = function (_Component) {
                             return onClick(e, i);
                         }),
                         ItemRenderer: ItemRenderer,
-                        disabled: o.disabled
+                        disabled: o.disabled || disabled
                     })
                 );
             });
