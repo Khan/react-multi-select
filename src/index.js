@@ -12,19 +12,24 @@
  * - valueRenderer: A fn to support overriding the message in the component
  * - isLoading: Show a loading indicator
  */
-import React, { Component } from "react";
+import React, {Component} from 'react';
 
-import Dropdown from "./dropdown.js";
-import SelectPanel from "./select-panel.js";
-import getString from "./get-string.js";
+import Dropdown from './dropdown.js';
+import SelectPanel from './select-panel.js';
+import getString from './get-string.js';
 
-import type { Option } from "./select-item.js";
+import type {
+    Option,
+} from './select-item.js';
 
 type Props = {
     options: Array<Option>,
     selected: Array<any>,
     onSelectedChanged?: (selected: Array<any>) => void,
-    valueRenderer?: (selected: Array<any>, options: Array<Option>) => string,
+    valueRenderer?: (
+        selected: Array<any>,
+        options: Array<Option>
+    ) => string,
     ItemRenderer?: Function,
     selectAllLabel?: string,
     isLoading?: boolean,
@@ -33,24 +38,23 @@ type Props = {
     shouldToggleOnHover: boolean,
     hasSelectAll: boolean,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>,
-    overrideStrings?: { [string]: string },
+    overrideStrings?: {[string]: string},
     labelledBy: string
 };
 
 class MultiSelect extends Component<Props> {
     static defaultProps = {
         hasSelectAll: true,
-        shouldToggleOnHover: false
-    };
+        shouldToggleOnHover: false,
+    }
 
     getSelectedText() {
-        const { options, selected } = this.props;
+        const {options, selected} = this.props;
 
-        const selectedOptions = selected.map(s =>
-            options.find(o => o.value === s)
-        );
+        const selectedOptions = selected
+            .map(s => options.find(o => o.value === s));
 
-        const selectedLabels = selectedOptions.map(s => (s ? s.label : ""));
+        const selectedLabels = selectedOptions.map(s => s ? s.label : "");
 
         return selectedLabels.join(", ");
     }
@@ -60,7 +64,7 @@ class MultiSelect extends Component<Props> {
             options,
             selected,
             valueRenderer,
-            overrideStrings
+            overrideStrings,
         } = this.props;
 
         const noneSelected = selected.length === 0;
@@ -69,29 +73,25 @@ class MultiSelect extends Component<Props> {
         const customText = valueRenderer && valueRenderer(selected, options);
 
         if (noneSelected) {
-            return (
-                <span style={styles.noneSelected}>
-                    {customText ||
-                        getString("selectSomeItems", overrideStrings)}
-                </span>
-            );
+            return <span style={styles.noneSelected}>
+                {customText || getString("selectSomeItems", overrideStrings)}
+            </span>;
         }
 
         if (customText) {
             return <span>{customText}</span>;
         }
 
-        return (
-            <span>
-                {allSelected
-                    ? getString("allItemsAreSelected", overrideStrings)
-                    : this.getSelectedText()}
-            </span>
-        );
+        return <span>
+            {allSelected
+                ? getString("allItemsAreSelected", overrideStrings)
+                : this.getSelectedText()
+            }
+        </span>;
     }
 
     handleSelectedChanged = (selected: Array<any>) => {
-        const { onSelectedChanged, disabled } = this.props;
+        const {onSelectedChanged, disabled} = this.props;
 
         if (disabled) {
             return;
@@ -100,7 +100,7 @@ class MultiSelect extends Component<Props> {
         if (onSelectedChanged) {
             onSelectedChanged(selected);
         }
-    };
+    }
 
     render() {
         const {
@@ -115,42 +115,40 @@ class MultiSelect extends Component<Props> {
             shouldToggleOnHover,
             hasSelectAll,
             overrideStrings,
-            labelledBy
+            labelledBy,
         } = this.props;
 
-        return (
-            <div className="multi-select">
-                <Dropdown
-                    isLoading={isLoading}
-                    contentComponent={SelectPanel}
-                    shouldToggleOnHover={shouldToggleOnHover}
-                    contentProps={{
-                        ItemRenderer,
-                        options,
-                        selected,
-                        hasSelectAll,
-                        selectAllLabel,
-                        onSelectedChanged: this.handleSelectedChanged,
-                        disabled,
-                        disableSearch,
-                        filterOptions,
-                        overrideStrings
-                    }}
-                    disabled={disabled}
-                    labelledBy={labelledBy}
-                >
-                    {this.renderHeader()}
-                </Dropdown>
-            </div>
-        );
+        return <div className="multi-select">
+            <Dropdown
+                isLoading={isLoading}
+                contentComponent={SelectPanel}
+                shouldToggleOnHover={shouldToggleOnHover}
+                contentProps={{
+                    ItemRenderer,
+                    options,
+                    selected,
+                    hasSelectAll,
+                    selectAllLabel,
+                    onSelectedChanged: this.handleSelectedChanged,
+                    disabled,
+                    disableSearch,
+                    filterOptions,
+                    overrideStrings,
+                }}
+                disabled={disabled}
+                labelledBy={labelledBy}
+            >
+                {this.renderHeader()}
+            </Dropdown>
+        </div>;
     }
 }
 
 const styles = {
     noneSelected: {
-        color: "#aaa"
-    }
+        color: "#aaa",
+    },
 };
 
 export default MultiSelect;
-export { Dropdown };
+export {Dropdown};
