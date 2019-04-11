@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SelectPanel = exports.Dropdown = undefined;
+exports.SelectItem = exports.SelectPanel = exports.Dropdown = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -22,6 +22,10 @@ var _selectPanel2 = _interopRequireDefault(_selectPanel);
 var _getString = require('./get-string.js');
 
 var _getString2 = _interopRequireDefault(_getString);
+
+var _selectItem = require('./select-item.js');
+
+var _selectItem2 = _interopRequireDefault(_selectItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -196,3 +200,4 @@ var styles = {
 exports.default = MultiSelect;
 exports.Dropdown = _dropdown2.default;
 exports.SelectPanel = _selectPanel2.default;
+exports.SelectItem = _selectItem2.default;
