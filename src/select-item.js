@@ -7,7 +7,8 @@ import React, {Component} from 'react';
 export type Option = {
     value: any,
     label: string,
-    key?: string
+    key?: string,
+    disabled?: boolean
 };
 
 type DefaultItemRendererProps = {

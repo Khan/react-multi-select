@@ -23,10 +23,6 @@ var _getString = require('./get-string.js');
 
 var _getString2 = _interopRequireDefault(_getString);
 
-var _selectItem = require('./select-item.js');
-
-var _selectItem2 = _interopRequireDefault(_selectItem);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

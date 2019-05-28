@@ -105,7 +105,7 @@ var SelectList = function (_Component) {
                             return onClick(e, i);
                         }),
                         ItemRenderer: ItemRenderer,
-                        disabled: disabled
+                        disabled: o.disabled || disabled
                     })
                 );
             });

@@ -62,7 +62,7 @@ class SelectList extends Component<Props> {
                     checked={selected.includes(o.value)}
                     onClick={e => onClick(e, i)}
                     ItemRenderer={ItemRenderer}
-                    disabled={disabled}
+                    disabled={o.disabled || disabled}
                 />
             </li>
         );
