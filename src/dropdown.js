@@ -15,6 +15,7 @@ type Props = {
     isLoading?: boolean,
     disabled?: boolean,
     shouldToggleOnHover?: boolean
+    labelledBy?: string,
 };
 
 type State = {
@@ -128,7 +129,7 @@ class Dropdown extends Component<Props, State> {
 
     render() {
         const {expanded, hasFocus} = this.state;
-        const {children, isLoading, disabled} = this.props;
+        const {children, isLoading, disabled, labelledBy} = this.props;
 
         const expandedHeaderStyle = expanded
             ? styles.dropdownHeaderExpanded
@@ -155,6 +156,7 @@ class Dropdown extends Component<Props, State> {
             className="dropdown"
             tabIndex="0"
             role="combobox"
+            aria-labelledby={labelledBy}
             aria-expanded={expanded}
             aria-readonly="true"
             aria-disabled={disabled}

@@ -39,7 +39,8 @@ type Props = {
     shouldToggleOnHover: boolean,
     hasSelectAll: boolean,
     filterOptions?: (options: Array<Option>, filter: string) => Array<Option>,
-    overrideStrings?: {[string]: string}
+    overrideStrings?: {[string]: string},
+    labelledBy: string
 };
 
 class MultiSelect extends Component<Props> {
@@ -115,6 +116,7 @@ class MultiSelect extends Component<Props> {
             shouldToggleOnHover,
             hasSelectAll,
             overrideStrings,
+            labelledBy,
         } = this.props;
 
         return <div className="multi-select">
@@ -135,6 +137,7 @@ class MultiSelect extends Component<Props> {
                     overrideStrings,
                 }}
                 disabled={disabled}
+                labelledBy={labelledBy}
             >
                 {this.renderHeader()}
             </Dropdown>
