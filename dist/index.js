@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Dropdown = undefined;
+exports.SelectItem = exports.SelectPanel = exports.Dropdown = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -195,3 +195,5 @@ var styles = {
 
 exports.default = MultiSelect;
 exports.Dropdown = _dropdown2.default;
+exports.SelectPanel = _selectPanel2.default;
+exports.SelectItem = _selectItem2.default;

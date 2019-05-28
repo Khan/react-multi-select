@@ -335,6 +335,33 @@ exports.default = SelectItem;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var strings = {
+    selectSomeItems: "Select some items...",
+    allItemsAreSelected: "All items are selected",
+    selectAll: "Select All",
+    search: "Search"
+};
+
+function getString(key, overrideStrings) {
+    if (overrideStrings && overrideStrings[key]) {
+        return overrideStrings[key];
+    }
+
+    return strings[key];
+}
+
+exports.default = getString;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -706,7 +733,7 @@ var _selectList = __webpack_require__(7);
 
 var _selectList2 = _interopRequireDefault(_selectList);
 
-var _getString = __webpack_require__(1);
+var _getString = __webpack_require__(2);
 
 var _getString2 = _interopRequireDefault(_getString);
 
@@ -953,7 +980,7 @@ exports.default = SelectPanel;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Dropdown = undefined;
+exports.SelectItem = exports.SelectPanel = exports.Dropdown = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1145,6 +1172,8 @@ var styles = {
 
 exports.default = MultiSelect;
 exports.Dropdown = _dropdown2.default;
+exports.SelectPanel = _selectPanel2.default;
+exports.SelectItem = _selectItem2.default;
 
 /***/ }),
 /* 6 */
