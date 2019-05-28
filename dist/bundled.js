@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -308,6 +308,33 @@ exports.default = SelectItem;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var strings = {
+    selectSomeItems: "Select some items...",
+    allItemsAreSelected: "All items are selected",
+    selectAll: "Select All",
+    search: "Search"
+};
+
+function getString(key, overrideStrings) {
+    if (overrideStrings && overrideStrings[key]) {
+        return overrideStrings[key];
+    }
+
+    return strings[key];
+}
+
+exports.default = getString;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -317,7 +344,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _loadingIndicator = __webpack_require__(5);
+var _loadingIndicator = __webpack_require__(6);
 
 var _loadingIndicator2 = _interopRequireDefault(_loadingIndicator);
 
@@ -651,7 +678,7 @@ var styles = {
 exports.default = Dropdown;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -665,7 +692,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _fuzzyMatchUtils = __webpack_require__(7);
+var _fuzzyMatchUtils = __webpack_require__(8);
 
 var _react = __webpack_require__(0);
 
@@ -675,9 +702,13 @@ var _selectItem = __webpack_require__(1);
 
 var _selectItem2 = _interopRequireDefault(_selectItem);
 
-var _selectList = __webpack_require__(6);
+var _selectList = __webpack_require__(7);
 
 var _selectList2 = _interopRequireDefault(_selectList);
+
+var _getString = __webpack_require__(2);
+
+var _getString2 = _interopRequireDefault(_getString);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -819,11 +850,12 @@ var SelectPanel = function (_Component) {
                 selectAllLabel = _props3.selectAllLabel,
                 disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch,
-                hasSelectAll = _props3.hasSelectAll;
+                hasSelectAll = _props3.hasSelectAll,
+                overrideStrings = _props3.overrideStrings;
 
 
             var selectAllOption = {
-                label: selectAllLabel || "Select All",
+                label: selectAllLabel || (0, _getString2.default)("selectAll", overrideStrings),
                 value: ""
             };
 
@@ -841,7 +873,7 @@ var SelectPanel = function (_Component) {
                     'div',
                     { style: styles.searchContainer },
                     _react2.default.createElement('input', {
-                        placeholder: 'Search',
+                        placeholder: (0, _getString2.default)("search", overrideStrings),
                         type: 'text',
                         onChange: this.handleSearchChange,
                         style: _extends({}, styles.search, focusedSearchStyle),
@@ -912,7 +944,7 @@ var styles = {
 exports.default = SelectPanel;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -921,7 +953,7 @@ exports.default = SelectPanel;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Dropdown = undefined;
+exports.SelectItem = exports.SelectPanel = exports.Dropdown = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -929,13 +961,21 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _dropdown = __webpack_require__(2);
+var _dropdown = __webpack_require__(3);
 
 var _dropdown2 = _interopRequireDefault(_dropdown);
 
-var _selectPanel = __webpack_require__(3);
+var _selectPanel = __webpack_require__(4);
 
 var _selectPanel2 = _interopRequireDefault(_selectPanel);
+
+var _getString = __webpack_require__(2);
+
+var _getString2 = _interopRequireDefault(_getString);
+
+var _selectItem = __webpack_require__(1);
+
+var _selectItem2 = _interopRequireDefault(_selectItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1015,7 +1055,8 @@ var MultiSelect = function (_Component) {
             var _props2 = this.props,
                 options = _props2.options,
                 selected = _props2.selected,
-                valueRenderer = _props2.valueRenderer;
+                valueRenderer = _props2.valueRenderer,
+                overrideStrings = _props2.overrideStrings;
 
 
             var noneSelected = selected.length === 0;
@@ -1027,7 +1068,7 @@ var MultiSelect = function (_Component) {
                 return _react2.default.createElement(
                     'span',
                     { style: styles.noneSelected },
-                    customText || "Select some items..."
+                    customText || (0, _getString2.default)("selectSomeItems", overrideStrings)
                 );
             }
 
@@ -1042,7 +1083,7 @@ var MultiSelect = function (_Component) {
             return _react2.default.createElement(
                 'span',
                 null,
-                allSelected ? "All items are selected" : this.getSelectedText()
+                allSelected ? (0, _getString2.default)("allItemsAreSelected", overrideStrings) : this.getSelectedText()
             );
         }
     }, {
@@ -1058,7 +1099,8 @@ var MultiSelect = function (_Component) {
                 disableSearch = _props3.disableSearch,
                 filterOptions = _props3.filterOptions,
                 shouldToggleOnHover = _props3.shouldToggleOnHover,
-                hasSelectAll = _props3.hasSelectAll;
+                hasSelectAll = _props3.hasSelectAll,
+                overrideStrings = _props3.overrideStrings;
 
 
             return _react2.default.createElement(
@@ -1079,7 +1121,8 @@ var MultiSelect = function (_Component) {
                             onSelectedChanged: this.handleSelectedChanged,
                             disabled: disabled,
                             disableSearch: disableSearch,
-                            filterOptions: filterOptions
+                            filterOptions: filterOptions,
+                            overrideStrings: overrideStrings
                         },
                         disabled: disabled
                     },
@@ -1106,9 +1149,11 @@ var styles = {
 
 exports.default = MultiSelect;
 exports.Dropdown = _dropdown2.default;
+exports.SelectPanel = _selectPanel2.default;
+exports.SelectItem = _selectItem2.default;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1223,7 +1268,7 @@ var styles = {
 exports.default = LoadingIndicator;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1369,7 +1414,7 @@ var styles = {
 exports.default = SelectList;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("fuzzy-match-utils");

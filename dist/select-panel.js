@@ -22,6 +22,10 @@ var _selectList = require('./select-list.js');
 
 var _selectList2 = _interopRequireDefault(_selectList);
 
+var _getString = require('./get-string.js');
+
+var _getString2 = _interopRequireDefault(_getString);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -162,11 +166,12 @@ var SelectPanel = function (_Component) {
                 selectAllLabel = _props3.selectAllLabel,
                 disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch,
-                hasSelectAll = _props3.hasSelectAll;
+                hasSelectAll = _props3.hasSelectAll,
+                overrideStrings = _props3.overrideStrings;
 
 
             var selectAllOption = {
-                label: selectAllLabel || "Select All",
+                label: selectAllLabel || (0, _getString2.default)("selectAll", overrideStrings),
                 value: ""
             };
 
@@ -184,7 +189,7 @@ var SelectPanel = function (_Component) {
                     'div',
                     { style: styles.searchContainer },
                     _react2.default.createElement('input', {
-                        placeholder: 'Search',
+                        placeholder: (0, _getString2.default)("search", overrideStrings),
                         type: 'text',
                         onChange: this.handleSearchChange,
                         style: _extends({}, styles.search, focusedSearchStyle),

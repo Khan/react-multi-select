@@ -17,6 +17,7 @@ import React, {Component} from 'react';
 import Dropdown from './dropdown.js';
 import SelectPanel from './select-panel.js';
 import getString from './get-string.js';
+import SelectItem from './select-item.js';
 
 import type {
     Option,
@@ -148,4 +149,4 @@ const styles = {
 };
 
 export default MultiSelect;
-export {Dropdown, SelectPanel};
+export {Dropdown, SelectPanel, SelectItem};
