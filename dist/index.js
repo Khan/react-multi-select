@@ -23,6 +23,10 @@ var _getString = require('./get-string.js');
 
 var _getString2 = _interopRequireDefault(_getString);
 
+var _selectItem = require('./select-item.js');
+
+var _selectItem2 = _interopRequireDefault(_selectItem);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -144,9 +148,11 @@ var MultiSelect = function (_Component) {
                 disabled = _props3.disabled,
                 disableSearch = _props3.disableSearch,
                 filterOptions = _props3.filterOptions,
+                onSearchTextChanged = _props3.onSearchTextChanged,
                 shouldToggleOnHover = _props3.shouldToggleOnHover,
                 hasSelectAll = _props3.hasSelectAll,
-                overrideStrings = _props3.overrideStrings;
+                overrideStrings = _props3.overrideStrings,
+                labelledBy = _props3.labelledBy;
 
 
             return _react2.default.createElement(
@@ -165,12 +171,14 @@ var MultiSelect = function (_Component) {
                             hasSelectAll: hasSelectAll,
                             selectAllLabel: selectAllLabel,
                             onSelectedChanged: this.handleSelectedChanged,
+                            onSearchTextChanged: onSearchTextChanged,
                             disabled: disabled,
                             disableSearch: disableSearch,
                             filterOptions: filterOptions,
                             overrideStrings: overrideStrings
                         },
-                        disabled: disabled
+                        disabled: disabled,
+                        labelledBy: labelledBy
                     },
                     this.renderHeader()
                 )

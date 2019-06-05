@@ -1,6 +1,7 @@
 // @flow
 import React, {Component} from 'react';
 import {storiesOf} from '@storybook/react';
+import {action} from "@storybook/addon-actions";
 import MultiSelect from '../index.js';
 
 import type {
@@ -114,7 +115,8 @@ type SMSProps = {
     overrideStrings?: {[string]: string}
 };
 type SMSState = {
-    selected: Array<Option>
+    selected: Array<Option>,
+    searchText: string
 };
 
 class StatefulMultiSelect extends Component<SMSProps, SMSState> {
@@ -122,11 +124,17 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
         super();
         this.state = {
             selected: [],
+            searchText: "",
         };
     }
 
     handleSelectedChanged(selected) {
         this.setState({selected});
+    }
+
+    handleSearchTextChanged(searchText) {
+        this.setState({searchText});
+        action("onSearchTextChanged")(searchText);
     }
 
     render() {
@@ -147,6 +155,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
             <MultiSelect
                 options={options}
                 onSelectedChanged={this.handleSelectedChanged.bind(this)}
+                onSearchTextChanged={this.handleSearchTextChanged.bind(this)}
                 selected={selected}
                 valueRenderer={valueRenderer}
                 ItemRenderer={ItemRenderer}

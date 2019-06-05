@@ -80,14 +80,24 @@ var SelectPanel = function (_Component) {
                 _this.selectNone();
             }
         }, _this.handleSearchChange = function (e) {
+            var onSearchTextChanged = _this.props.onSearchTextChanged;
+
             _this.setState({
                 searchText: e.target.value,
                 focusIndex: -1
             });
+            if (typeof onSearchTextChanged === "function") {
+                onSearchTextChanged(e.target.value);
+            }
         }, _this.handleItemClicked = function (index) {
             _this.setState({ focusIndex: index });
         }, _this.clearSearch = function () {
+            var onSearchTextChanged = _this.props.onSearchTextChanged;
+
             _this.setState({ searchText: "" });
+            if (typeof onSearchTextChanged === "function") {
+                onSearchTextChanged("");
+            }
         }, _this.handleKeyDown = function (e) {
             switch (e.which) {
                 case 38:

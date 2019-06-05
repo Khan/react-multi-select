@@ -27,6 +27,7 @@ type Props = {
     options: Array<Option>,
     selected: Array<any>,
     onSelectedChanged?: (selected: Array<any>) => void,
+    onSearchTextChanged?: (filter: string) => void,
     valueRenderer?: (
         selected: Array<any>,
         options: Array<Option>
@@ -113,6 +114,7 @@ class MultiSelect extends Component<Props> {
             disabled,
             disableSearch,
             filterOptions,
+            onSearchTextChanged,
             shouldToggleOnHover,
             hasSelectAll,
             overrideStrings,
@@ -131,6 +133,7 @@ class MultiSelect extends Component<Props> {
                     hasSelectAll,
                     selectAllLabel,
                     onSelectedChanged: this.handleSelectedChanged,
+                    onSearchTextChanged,
                     disabled,
                     disableSearch,
                     filterOptions,

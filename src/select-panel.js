@@ -19,6 +19,7 @@ type Props = {
     selected: Array<any>,
     selectAllLabel?: string,
     onSelectedChanged: (selected: Array<any>) => void,
+    onSearchTextChanged?: (filter: string) => void,
     disabled?: boolean,
     disableSearch?: boolean,
     hasSelectAll: boolean,
@@ -61,10 +62,14 @@ class SelectPanel extends Component<Props, State> {
     }
 
     handleSearchChange = (e: {target: {value: any}}) => {
+        const {onSearchTextChanged} = this.props;
         this.setState({
             searchText: e.target.value,
             focusIndex: -1,
         });
+        if (typeof onSearchTextChanged === "function"){
+            onSearchTextChanged(e.target.value);
+        }
     }
 
     handleItemClicked = (index: number) => {
@@ -72,7 +77,11 @@ class SelectPanel extends Component<Props, State> {
     }
 
     clearSearch = () => {
+        const {onSearchTextChanged} = this.props;
         this.setState({searchText: ""});
+        if (typeof onSearchTextChanged === "function"){
+            onSearchTextChanged("");
+        }
     }
 
     handleKeyDown = (e: KeyboardEvent) => {
