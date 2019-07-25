@@ -15,7 +15,7 @@ type Props = {
     isLoading?: boolean,
     disabled?: boolean,
     shouldToggleOnHover?: boolean,
-    labelledBy?: string,
+    labelledBy?: string
 };
 
 type State = {
