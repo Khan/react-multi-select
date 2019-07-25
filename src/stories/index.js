@@ -166,7 +166,7 @@ class StatefulMultiSelect extends Component<SMSProps, SMSState> {
 
 function studentValueRenderer(selected, options) {
     if (selected.length === 0) {
-        return "Slect some students...";
+        return "Select some students...";
     }
 
     if (selected.length === options.length) {
