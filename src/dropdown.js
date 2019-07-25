@@ -14,7 +14,7 @@ type Props = {
     contentProps: Object,
     isLoading?: boolean,
     disabled?: boolean,
-    shouldToggleOnHover?: boolean
+    shouldToggleOnHover?: boolean,
     labelledBy?: string,
 };
 
