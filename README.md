@@ -1,6 +1,7 @@
 # React Multi Select Component
 
-React Multi Select Component
+**Note (9/30/2022)**: I clearly haven't maintained this component in years.  I think this is likely a good candidate to transfer the repo to someone else if anyone wants to take it over.  There's likely much better options out there today, but if someone wants this, I expect we can do something here. -- BrianGenisio at Gmail
+
 
 ![Animated GIF demo](react-multi-select.gif)
 
