@@ -247,16 +247,12 @@ const styles = {
         bottom: 0,
         color: '#333',
         left: 0,
-        lineHeight: '34px',
-        paddingLeft: 10,
         paddingRight: 10,
-        position: 'absolute',
         right: 0,
         top: 0,
         maxWidth: '100%',
         overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis'
     },
     disabledDropdownChildren: {
         opacity: 0.5,
@@ -284,6 +280,7 @@ const styles = {
         overflow: 'hidden',
         position: 'relative',
         width: '100%',
+        paddingLeft: "10px"
     },
     dropdownHeaderFocused: {
         borderColor: focusColor,
@@ -312,8 +309,9 @@ const styles = {
         position: 'absolute',
         top: '100%',
         width: '100%',
-        zIndex: 1,
+        zIndex: 99,
         overflowY: 'auto',
+        marginBottom: "30px"
     },
 };
 
