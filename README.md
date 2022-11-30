@@ -14,7 +14,7 @@
 ## Usage:
 See the examples in `/src/stories/index.js` for how to use the component, but here is a minimum required setups:
 
-```
+```js
 import React from 'react';
 import MultiSelect from "@khanacademy/react-multi-select";
 
@@ -45,7 +45,7 @@ class Consumer extends React.Component {
 ## i18n:
 You can override the strings to be whatever you want, including translations for your languages.
 
-```
+```js
 <StatefulMultiSelect
     overrideStrings={{
         selectSomeItems: "Select Some items...",

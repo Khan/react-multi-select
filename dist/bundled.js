@@ -82,33 +82,6 @@ module.exports = require("react");
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var strings = {
-    selectSomeItems: "Select some items...",
-    allItemsAreSelected: "All items are selected",
-    selectAll: "Select All",
-    search: "Search"
-};
-
-function getString(key, overrideStrings) {
-    if (overrideStrings && overrideStrings[key]) {
-        return overrideStrings[key];
-    }
-
-    return strings[key];
-}
-
-exports.default = getString;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -326,7 +299,7 @@ var styles = {
 exports.default = SelectItem;
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -515,7 +488,8 @@ var Dropdown = function (_Component) {
             var _props2 = this.props,
                 children = _props2.children,
                 isLoading = _props2.isLoading,
-                disabled = _props2.disabled;
+                disabled = _props2.disabled,
+                labelledBy = _props2.labelledBy;
 
 
             var expandedHeaderStyle = expanded ? styles.dropdownHeaderExpanded : undefined;
@@ -534,6 +508,7 @@ var Dropdown = function (_Component) {
                     className: 'dropdown',
                     tabIndex: '0',
                     role: 'combobox',
+                    'aria-labelledby': labelledBy,
                     'aria-expanded': expanded,
                     'aria-readonly': 'true',
                     'aria-disabled': disabled,
@@ -725,7 +700,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _selectItem = __webpack_require__(2);
+var _selectItem = __webpack_require__(1);
 
 var _selectItem2 = _interopRequireDefault(_selectItem);
 
@@ -996,9 +971,13 @@ var _selectPanel = __webpack_require__(4);
 
 var _selectPanel2 = _interopRequireDefault(_selectPanel);
 
-var _getString = __webpack_require__(1);
+var _getString = __webpack_require__(2);
 
 var _getString2 = _interopRequireDefault(_getString);
+
+var _selectItem = __webpack_require__(1);
+
+var _selectItem2 = _interopRequireDefault(_selectItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1123,7 +1102,8 @@ var MultiSelect = function (_Component) {
                 filterOptions = _props3.filterOptions,
                 shouldToggleOnHover = _props3.shouldToggleOnHover,
                 hasSelectAll = _props3.hasSelectAll,
-                overrideStrings = _props3.overrideStrings;
+                overrideStrings = _props3.overrideStrings,
+                labelledBy = _props3.labelledBy;
 
 
             return _react2.default.createElement(
@@ -1147,7 +1127,8 @@ var MultiSelect = function (_Component) {
                             filterOptions: filterOptions,
                             overrideStrings: overrideStrings
                         },
-                        disabled: disabled
+                        disabled: disabled,
+                        labelledBy: labelledBy
                     },
                     this.renderHeader()
                 )
@@ -1307,7 +1288,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _selectItem = __webpack_require__(2);
+var _selectItem = __webpack_require__(1);
 
 var _selectItem2 = _interopRequireDefault(_selectItem);
 
