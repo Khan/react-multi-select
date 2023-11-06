@@ -53,7 +53,7 @@
     "babel-runtime": "^6.26.0"
   },
   "peerDependencies": {
-    "react": "^0.14.7 || ^15.0.0"
+    "react": "^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "dependencies": {
     "fuzzy-match-utils": "^1.2.0"
